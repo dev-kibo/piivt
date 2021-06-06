@@ -20,11 +20,14 @@
   },
   "homepage": "https://github.com/dev-kibo/piivt#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.12",
     "@types/node": "^15.12.0",
     "eslint": "^7.27.0",

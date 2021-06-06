@@ -16,6 +16,15 @@ const Config: IConfig = {
   logger: {
     path: "logs/access.log",
   },
+  database: {
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "mariadb",
+    database: "piivt",
+    charset: "utf8",
+    timezone: "+01:00",
+  },
 };
 
 export default Config;

@@ -10,6 +10,8 @@ import Router from "./router";
 import CinemaController from "./components/cinema/controller";
 import CinemaRouter from "./components/cinema/router";
 import CinemaService from "./components/cinema/service";
+import ActorService from "./components/actor/service";
+import ActorRouter from "./components/actor/router";
 
 async function main() {
   const application: express.Application = express();
@@ -48,6 +50,7 @@ async function main() {
 
   resources.services = {
     cinemaService: new CinemaService(resources),
+    actorService: new ActorService(resources),
   };
 
   application.use(
@@ -61,7 +64,10 @@ async function main() {
     })
   );
 
-  Router.setupRoutes(application, resources, [new CinemaRouter()]);
+  Router.setupRoutes(application, resources, [
+    new CinemaRouter(),
+    new ActorRouter(),
+  ]);
 
   application.use((err, req, res, next) => {
     console.dir(err);

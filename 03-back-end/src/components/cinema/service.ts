@@ -41,7 +41,7 @@ export default class CinemaService extends BaseService<CinemaModel> {
   }
 
   public async add(data: IAddCinema): Promise<CinemaModel> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<CinemaModel>(async (resolve, reject) => {
       const query: string = "INSERT cinema SET name = ?;";
 
       try {
@@ -72,7 +72,7 @@ export default class CinemaService extends BaseService<CinemaModel> {
       return null;
     }
 
-    return new Promise(async (resolve, reject) => {
+    return new Promise<CinemaModel>(async (resolve, reject) => {
       const query: string = "UPDATE cinema SET name = ? WHERE cinema_id = ?;";
 
       try {

@@ -7,11 +7,13 @@ import * as morgan from "morgan";
 import IApplicationResources from "./common/IApplicationResources.interface";
 import * as mysql2 from "mysql2/promise";
 import Router from "./router";
-import CinemaController from "./components/cinema/controller";
 import CinemaRouter from "./components/cinema/router";
 import CinemaService from "./components/cinema/service";
 import ActorService from "./components/actor/service";
 import ActorRouter from "./components/actor/router";
+import MovieService from "./components/movie/service";
+import MovieRouter from "./components/movie/router";
+import fileUpload = require("express-fileupload");
 
 async function main() {
   const application: express.Application = express();
@@ -32,6 +34,19 @@ async function main() {
 
   application.use(cors());
   application.use(express.json());
+  application.use(
+    fileUpload({
+      limits: {
+        fileSize: Config.fileUpload.maxSize,
+        files: 1,
+      },
+      useTempFiles: true,
+      tempFileDir: Config.fileUpload.tempDir,
+      safeFileNames: true,
+      createParentPath: true,
+      abortOnLimit: true,
+    })
+  );
 
   const resources: IApplicationResources = {
     databaseConnection: await mysql2.createConnection({
@@ -51,6 +66,7 @@ async function main() {
   resources.services = {
     cinemaService: new CinemaService(resources),
     actorService: new ActorService(resources),
+    movieService: new MovieService(resources),
   };
 
   application.use(
@@ -67,6 +83,7 @@ async function main() {
   Router.setupRoutes(application, resources, [
     new CinemaRouter(),
     new ActorRouter(),
+    new MovieRouter(),
   ]);
 
   application.use((err, req, res, next) => {

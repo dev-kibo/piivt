@@ -7,8 +7,7 @@ import CinemaModel from "./model";
 export default class CinemaController extends BaseController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const cinemas = await this.services.cinemaService.getAll();
-      res.send(cinemas);
+      res.send(await this.services.cinemaService.getAll());
     } catch (error) {
       next(error);
     }

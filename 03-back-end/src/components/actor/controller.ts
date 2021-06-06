@@ -7,8 +7,7 @@ import { IUpdateActor, IUpdateActorValidator } from "./dto/IUpdateActor";
 export default class ActorController extends BaseController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const actors = await this.services.actorService.getAll();
-      res.send(actors);
+      res.send(await this.services.actorService.getAll());
     } catch (error) {
       next(error);
     }

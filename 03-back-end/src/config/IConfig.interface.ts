@@ -1,5 +1,6 @@
 export default interface IConfig {
   server: {
+    baseUrl: string;
     port: number;
     static: {
       path: string;
@@ -22,5 +23,18 @@ export default interface IConfig {
     database: string;
     charset: string;
     timezone: string;
+  };
+  fileUpload: {
+    maxSize: number;
+    tempDir: string;
+    uploadDest: string;
+    photos: {
+      resizes: {
+        sufix: string;
+        width: number;
+        height: number;
+        fit: "cover" | "contain";
+      }[];
+    };
   };
 }

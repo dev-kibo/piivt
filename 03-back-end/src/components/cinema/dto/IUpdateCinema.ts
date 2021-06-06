@@ -4,9 +4,7 @@ interface IUpdateCinema {
   name: string;
 }
 
-const ajv = new Ajv();
-
-const IUpdateCinemaValidator = ajv.compile({
+const IUpdateCinemaValidator = new Ajv().compile({
   type: "object",
   properties: {
     name: {

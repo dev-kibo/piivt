@@ -63,8 +63,7 @@ export default class CinemaService extends BaseService<CinemaModel> {
 
   public async update(
     data: IUpdateCinema,
-    id: number,
-    options: Partial<CinemaModelAdapterOptions> = {}
+    id: number
   ): Promise<CinemaModel | null> {
     const cinema: CinemaModel | null = await this.getById(id);
 
@@ -78,7 +77,7 @@ export default class CinemaService extends BaseService<CinemaModel> {
       try {
         await this.db.execute(query, [data.name, id]);
 
-        resolve(await this.getById(id, options));
+        resolve(await this.getById(id));
       } catch (error) {
         const e: IErrorResponse = {
           code: error?.errno,

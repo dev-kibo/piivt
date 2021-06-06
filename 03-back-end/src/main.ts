@@ -7,6 +7,9 @@ import * as morgan from "morgan";
 import IApplicationResources from "./common/IApplicationResources.interface";
 import * as mysql2 from "mysql2/promise";
 import Router from "./router";
+import CinemaController from "./components/cinema/controller";
+import CinemaRouter from "./components/cinema/router";
+import CinemaService from "./components/cinema/service";
 
 async function main() {
   const application: express.Application = express();
@@ -43,7 +46,9 @@ async function main() {
 
   resources.databaseConnection.connect();
 
-  resources.services = {};
+  resources.services = {
+    cinemaService: new CinemaService(resources),
+  };
 
   application.use(
     Config.server.static.route,
@@ -56,7 +61,12 @@ async function main() {
     })
   );
 
-  Router.setupRoutes(application, resources, []);
+  Router.setupRoutes(application, resources, [new CinemaRouter()]);
+
+  application.use((err, req, res, next) => {
+    console.dir(err);
+    res.status(500).send(err);
+  });
 
   application.listen(Config.server.port);
 }

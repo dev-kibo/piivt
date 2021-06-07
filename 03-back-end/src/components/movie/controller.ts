@@ -2,6 +2,7 @@ import BaseController from "../../common/BaseController";
 import { NextFunction, Request, Response } from "express";
 import MovieModel from "./model";
 import { IAddMovie, IAddMovieValidator } from "./dto/IAddMovie";
+import { IUpdateMovie, IUpdateMovieValidator } from "./dto/IUpdateMovie";
 
 export default class MovieController extends BaseController {
   async getAll(req: Request, res: Response, next: NextFunction) {
@@ -73,6 +74,35 @@ export default class MovieController extends BaseController {
         await this.services.movieService.add(
           data as IAddMovie,
           req.files["poster"]
+        )
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async update(req: Request, res: Response, next: NextFunction) {
+    let posterFile: any;
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+      posterFile = null;
+    } else {
+      posterFile = req.files["poster"];
+    }
+
+    const data = req.body;
+    const movieId = +req.params.id;
+
+    if (!IUpdateMovieValidator(data)) {
+      return res.status(400).send(IUpdateMovieValidator.errors);
+    }
+
+    try {
+      res.send(
+        await this.services.movieService.update(
+          data as IUpdateMovie,
+          movieId,
+          posterFile
         )
       );
     } catch (error) {

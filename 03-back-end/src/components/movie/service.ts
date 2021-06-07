@@ -8,6 +8,7 @@ import { v4 } from "uuid";
 import * as path from "path";
 import RoleModel from "../role/model";
 import sharp = require("sharp");
+import { IUpdateMovie } from "./dto/IUpdateMovie";
 
 class MovieModelAdapterOptions implements IModelAdapterOptionsInterface {
   loadRoles: boolean;
@@ -140,5 +141,66 @@ export default class MovieService extends BaseService<MovieModel> {
     });
   }
 
-  // to do UPDATE
+  public async update(
+    data: IUpdateMovie,
+    id: number,
+    posterFile: any
+  ): Promise<MovieModel> | null {
+    const movie: MovieModel | null = await this.getById(id);
+
+    if (movie === null) {
+      return null;
+    }
+
+    return new Promise<MovieModel>(async (resolve, reject) => {
+      try {
+        if (posterFile !== null && !this.isPosterValid(posterFile)) {
+          const error: IErrorResponse = {
+            code: 9910,
+            description: "Image must be in jpg or png format.",
+          };
+
+          return reject(error);
+        }
+
+        await this.db.beginTransaction();
+
+        const updateQuery: string =
+          "UPDATE movie SET title = ?, description = ?, released_at = ?, duration = ? WHERE movie_id = ?;";
+
+        await this.db.execute(updateQuery, [
+          data.title,
+          data.description,
+          data.releasedAt,
+          data.duration,
+          movie.movieId,
+        ]);
+
+        if (posterFile !== null) {
+          const posterPath = await this.uploadMoviePoster(
+            posterFile,
+            movie.movieId
+          );
+          await this.resizeUploadedPhoto(posterPath);
+
+          const updateQuery: string =
+            "UPDATE movie SET poster_path = ? WHERE movie_id = ?;";
+
+          await this.db.execute(updateQuery, [posterPath, movie.movieId]);
+        }
+
+        await this.db.commit();
+
+        resolve(await this.getById(movie.movieId));
+      } catch (error) {
+        await this.db.rollback();
+
+        const e: IErrorResponse = {
+          code: error?.errno,
+          description: error?.message,
+        };
+        reject(e);
+      }
+    });
+  }
 }

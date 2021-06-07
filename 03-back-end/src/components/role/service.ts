@@ -1,28 +1,43 @@
+import e = require("express");
 import BaseService from "../../common/BaseService";
 import IErrorResponse from "../../common/IErrorResponse.interface";
 import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.interface";
+import { IAddRole } from "./dto/IAddRole";
 import RoleModel from "./model";
+import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";
+
+class RoleModelAdapterOptions implements IModelAdapterOptions {
+  loadActor: boolean;
+}
 
 export default class RoleService extends BaseService<RoleModel> {
   protected async adaptModel(
     data: any,
-    options: Partial<IModelAdapterOptionsInterface> = {}
+    options: Partial<RoleModelAdapterOptions> = {}
   ): Promise<RoleModel> {
     const model = new RoleModel();
 
     model.roleId = +data?.movie_actor_id;
     model.role = data?.role_name;
-    model.actor = {
-      actorId: data?.actor_id,
-      firstName: data?.first_name,
-      middleName: data?.middle_name,
-      lastName: data?.last_name,
-    };
+
+    if (options.loadActor) {
+      model.actor = await this.services.actorService.getById(data?.actor_id);
+    }
 
     return model;
   }
 
-  public async getAllRolesForMovie(id: number): Promise<RoleModel[] | null> {
+  public async getById(
+    id: number,
+    options: RoleModelAdapterOptions = { loadActor: true }
+  ): Promise<RoleModel | null> {
+    return await this.getByIdFromTable("movie_actor", id, options);
+  }
+
+  public async getAllRolesForMovie(
+    id: number,
+    options: RoleModelAdapterOptions = { loadActor: true }
+  ): Promise<RoleModel[] | null> {
     const movie = await this.services.movieService.getById(id);
 
     if (movie === null) {
@@ -59,7 +74,7 @@ export default class RoleService extends BaseService<RoleModel> {
 
         if (Array.isArray(roles)) {
           for (const row of rows) {
-            roles.push(await this.adaptModel(row));
+            roles.push(await this.adaptModel(row, options));
           }
 
           resolve(roles);
@@ -69,6 +84,44 @@ export default class RoleService extends BaseService<RoleModel> {
           code: error?.errno,
           description: error?.message,
         };
+        reject(e);
+      }
+    });
+  }
+
+  public async add(data: IAddRole): Promise<RoleModel> {
+    return new Promise<RoleModel>(async (resolve, reject) => {
+      if (!(await this.services.actorService.getById(data.actorId))) {
+        return reject({
+          code: 9404,
+          description: "Actor not found",
+        } as IErrorResponse);
+      }
+      if (!(await this.services.movieService.getById(data.movieId))) {
+        return reject({
+          code: 9404,
+          description: "Movie not found",
+        } as IErrorResponse);
+      }
+
+      const insertQuery =
+        "INSERT movie_actor SET movie_id = ?, actor_id = ?, role_name = ?;";
+
+      try {
+        const result = await this.db.execute(insertQuery, [
+          data.movieId,
+          data.actorId,
+          data.role,
+        ]);
+
+        const insertInfo: any = result[0];
+        resolve(await this.getById(+insertInfo?.insertId));
+      } catch (error) {
+        const e: IErrorResponse = {
+          code: error?.errno,
+          description: error?.message,
+        };
+
         reject(e);
       }
     });

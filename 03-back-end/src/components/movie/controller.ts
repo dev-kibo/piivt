@@ -34,6 +34,29 @@ export default class MovieController extends BaseController {
     }
   }
 
+  async getAllMoviesWithRoles(req: Request, res: Response, next: NextFunction) {
+    const id: number = +req.params.id;
+
+    if (id <= 0) {
+      return res.status(400).send("Invalid ID number");
+    }
+
+    try {
+      const movie: MovieModel | null = await this.services.movieService.getById(
+        id,
+        { loadRoles: true }
+      );
+
+      if (movie === null) {
+        return res.sendStatus(404);
+      }
+
+      res.send(movie);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async add(req: Request, res: Response, next: NextFunction) {
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).send("You must upload image poster.");

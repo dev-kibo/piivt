@@ -6,14 +6,17 @@ import IErrorResponse from "../../common/IErrorResponse.interface";
 import Config from "../../config/dev";
 import { v4 } from "uuid";
 import * as path from "path";
+import RoleModel from "../role/model";
 import sharp = require("sharp");
 
-class MovieModelAdapterOptions implements IModelAdapterOptionsInterface {}
+class MovieModelAdapterOptions implements IModelAdapterOptionsInterface {
+  loadRoles: boolean;
+}
 
 export default class MovieService extends BaseService<MovieModel> {
   protected async adaptModel(
     data: any,
-    options: Partial<IModelAdapterOptionsInterface>
+    options: Partial<MovieModelAdapterOptions>
   ): Promise<MovieModel> {
     const model = new MovieModel();
 
@@ -21,8 +24,14 @@ export default class MovieService extends BaseService<MovieModel> {
     model.title = data?.title;
     model.description = data?.description;
     model.duration = +data?.duration;
-    model.releasedAt = new Date(data?.released_at);
+    model.releasedAt = data?.released_at;
     model.posterUrl = `${Config.server.baseUrl}/${data.poster_path}`;
+
+    if (options.loadRoles) {
+      model.roles = await this.services.roleService.getAllRolesForMovie(
+        model.movieId
+      );
+    }
 
     return model;
   }

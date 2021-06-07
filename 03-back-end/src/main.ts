@@ -14,6 +14,7 @@ import ActorRouter from "./components/actor/router";
 import MovieService from "./components/movie/service";
 import MovieRouter from "./components/movie/router";
 import fileUpload = require("express-fileupload");
+import RoleService from "./components/role/service";
 
 async function main() {
   const application: express.Application = express();
@@ -67,6 +68,7 @@ async function main() {
     cinemaService: new CinemaService(resources),
     actorService: new ActorService(resources),
     movieService: new MovieService(resources),
+    roleService: new RoleService(resources),
   };
 
   application.use(

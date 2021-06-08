@@ -8,9 +8,10 @@ import * as jwt from "jsonwebtoken";
 import Config from "../../config/dev";
 import * as crypto from "crypto";
 import IErrorResponse from "../../common/IErrorResponse.interface";
+import { IRefreshToken, IRefreshTokenValidator } from "./dto/IRefreshToken";
 
 export default class AuthController extends BaseController {
-  public async signIn(req: Request, res: Response, next: NextFunction) {
+  async signIn(req: Request, res: Response, next: NextFunction) {
     if (!IAddAdminValidator(req.body)) {
       return res.status(400).send(IAddAdminValidator.errors);
     }
@@ -34,13 +35,8 @@ export default class AuthController extends BaseController {
       role: "admin",
     };
 
-    const accessToken = jwt.sign(accessTokenData, Config.accessToken.secret, {
-      algorithm: "HS256",
-      issuer: Config.accessToken.issuer,
-      expiresIn: Config.accessToken.duration,
-    });
-
-    const refreshToken = crypto.randomBytes(64).toString("hex");
+    const { accessToken, refreshToken } =
+      this.generateApiTokens(accessTokenData);
 
     try {
       const query: string =
@@ -49,15 +45,71 @@ export default class AuthController extends BaseController {
       await this.db.execute(query, [refreshToken, admin.adminId]);
 
       res.send({
-        accessToken: accessToken,
-        refreshToken: refreshToken,
+        accessToken,
+        refreshToken,
       });
     } catch (error) {
       const e: IErrorResponse = {
         code: +error?.errno,
-        description: error.message,
+        description: error?.message,
       };
       next(e);
     }
+  }
+
+  async refreshToken(req: Request, res: Response, next: NextFunction) {
+    if (!IRefreshTokenValidator(req.body)) {
+      res.status(400).send(IRefreshTokenValidator.errors);
+    }
+
+    const data = req.body as IRefreshToken;
+
+    try {
+      const query: string = "SELECT * FROM admin WHERE refresh_token = ?;";
+
+      const [rows] = await this.db.execute(query, [data.refreshToken]);
+
+      if (!Array.isArray(rows)) {
+        return res.sendStatus(404);
+      }
+
+      if (rows.length === 0) {
+        return res.sendStatus(404);
+      }
+
+      const admin: any = rows[0];
+      const adminId: number = admin?.admin_id;
+      const adminEmail: string = admin?.email;
+
+      const tokenData: IToken = {
+        id: adminId,
+        email: adminEmail,
+        role: "admin",
+      };
+
+      const { accessToken, refreshToken } = this.generateApiTokens(tokenData);
+      res.send({
+        accessToken,
+        refreshToken,
+      });
+    } catch (error) {
+      const e: IErrorResponse = {
+        code: +error?.errno,
+        description: error?.message,
+      };
+      next(e);
+    }
+  }
+
+  private generateApiTokens(data: IToken) {
+    const accessToken = jwt.sign(data, Config.accessToken.secret, {
+      algorithm: "HS256",
+      issuer: Config.accessToken.issuer,
+      expiresIn: Config.accessToken.duration,
+    });
+
+    const refreshToken = crypto.randomBytes(64).toString("hex");
+
+    return { accessToken, refreshToken };
   }
 }

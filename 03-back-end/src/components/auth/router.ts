@@ -14,5 +14,9 @@ export default class AuthRouter implements IRouter {
       "/auth/sign-in",
       authController.signIn.bind(authController)
     );
+    application.post(
+      "/auth/token/refresh",
+      authController.refreshToken.bind(authController)
+    );
   }
 }

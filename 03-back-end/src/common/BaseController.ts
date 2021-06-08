@@ -10,4 +10,8 @@ export default abstract class BaseController {
   protected get services(): IServices {
     return this.resources.services;
   }
+
+  protected get db() {
+    return this.resources.databaseConnection;
+  }
 }

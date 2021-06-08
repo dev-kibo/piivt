@@ -1,4 +1,7 @@
 import IConfig from "./IConfig.interface";
+import * as dotenv from "dotenv";
+
+const env = dotenv.config();
 
 const Config: IConfig = {
   server: {
@@ -46,6 +49,11 @@ const Config: IConfig = {
         },
       ],
     },
+  },
+  accessToken: {
+    secret: process.env?.SECRET_KEY,
+    duration: 60 * 60,
+    issuer: "localhost",
   },
 };
 

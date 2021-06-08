@@ -21,6 +21,8 @@ import RepertoireService from "./components/repertoire/service";
 import RepertoireRouter from "./components/repertoire/router";
 import AdminService from "./components/admin/service";
 import AdminRouter from "./components/admin/router";
+import AuthController from "./components/auth/controller";
+import AuthRouter from "./components/auth/router";
 
 async function main() {
   const application: express.Application = express();
@@ -99,6 +101,7 @@ async function main() {
     new RoleRouter(),
     new RepertoireRouter(),
     new AdminRouter(),
+    new AuthRouter(),
   ]);
 
   application.use((err, req, res, next) => {

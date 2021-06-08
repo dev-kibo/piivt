@@ -37,4 +37,9 @@ export default interface IConfig {
       }[];
     };
   };
+  accessToken: {
+    secret: string;
+    issuer: string;
+    duration: number;
+  };
 }

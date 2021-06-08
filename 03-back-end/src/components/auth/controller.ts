@@ -88,6 +88,12 @@ export default class AuthController extends BaseController {
       };
 
       const { accessToken, refreshToken } = this.generateApiTokens(tokenData);
+
+      const updateRefreshTokenQuery: string =
+        "UPDATE admin SET refresh_token = ? WHERE admin_id = ?;";
+
+      await this.db.execute(updateRefreshTokenQuery, [refreshToken, adminId]);
+
       res.send({
         accessToken,
         refreshToken,

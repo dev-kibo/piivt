@@ -19,6 +19,8 @@ import RoleRouter from "./components/role/router";
 import ProjectionService from "./components/projection/service";
 import RepertoireService from "./components/repertoire/service";
 import RepertoireRouter from "./components/repertoire/router";
+import AdminService from "./components/admin/service";
+import AdminRouter from "./components/admin/router";
 
 async function main() {
   const application: express.Application = express();
@@ -76,6 +78,7 @@ async function main() {
     roleService: new RoleService(resources),
     projectionService: new ProjectionService(resources),
     repertoireService: new RepertoireService(resources),
+    adminService: new AdminService(resources),
   };
 
   application.use(
@@ -95,6 +98,7 @@ async function main() {
     new MovieRouter(),
     new RoleRouter(),
     new RepertoireRouter(),
+    new AdminRouter(),
   ]);
 
   application.use((err, req, res, next) => {

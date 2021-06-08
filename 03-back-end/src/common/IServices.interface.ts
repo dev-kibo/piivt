@@ -4,6 +4,8 @@ import MovieService from "../components/movie/service";
 import RoleService from "../components/role/service";
 import ProjectionService from "../components/projection/service";
 import RepertoireService from "../components/repertoire/service";
+import AdminService from "../components/admin/service";
+
 export default interface IServices {
   cinemaService: CinemaService;
   actorService: ActorService;
@@ -11,4 +13,5 @@ export default interface IServices {
   roleService: RoleService;
   projectionService: ProjectionService;
   repertoireService: RepertoireService;
+  adminService: AdminService;
 }

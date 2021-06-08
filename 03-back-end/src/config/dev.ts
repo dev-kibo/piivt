@@ -24,7 +24,7 @@ const Config: IConfig = {
     password: "mariadb",
     database: "piivt",
     charset: "utf8",
-    timezone: "+01:00",
+    timezone: "+00:00",
   },
   fileUpload: {
     maxSize: 5 * 1024 * 1024,

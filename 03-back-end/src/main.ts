@@ -16,6 +16,9 @@ import MovieRouter from "./components/movie/router";
 import fileUpload = require("express-fileupload");
 import RoleService from "./components/role/service";
 import RoleRouter from "./components/role/router";
+import ProjectionService from "./components/projection/service";
+import RepertoireService from "./components/repertoire/service";
+import RepertoireRouter from "./components/repertoire/router";
 
 async function main() {
   const application: express.Application = express();
@@ -60,6 +63,7 @@ async function main() {
       charset: Config.database.charset,
       timezone: Config.database.timezone,
       supportBigNumbers: true,
+      dateStrings: ["DATE", "DATETIME"],
     }),
   };
 
@@ -70,6 +74,8 @@ async function main() {
     actorService: new ActorService(resources),
     movieService: new MovieService(resources),
     roleService: new RoleService(resources),
+    projectionService: new ProjectionService(resources),
+    repertoireService: new RepertoireService(resources),
   };
 
   application.use(
@@ -88,6 +94,7 @@ async function main() {
     new ActorRouter(),
     new MovieRouter(),
     new RoleRouter(),
+    new RepertoireRouter(),
   ]);
 
   application.use((err, req, res, next) => {

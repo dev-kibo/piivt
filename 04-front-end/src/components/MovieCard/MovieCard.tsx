@@ -1,12 +1,12 @@
 import React from "react";
-import { Col, Card, Button, Row, Image } from "react-bootstrap";
+import { Col, Row, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import poster from "../../assets/poster.jpg";
 
 export default function MovieCard() {
   return (
     <Col className="gy-4">
-      <Link to="/" className="btn btn-outline-secondary">
+      <Link to="/movies/3" className="btn btn-outline-secondary">
         <Row className="text-start">
           <Col className="align-items-center d-flex">
             <Image fluid src={poster} className="img-thumb rounded" />

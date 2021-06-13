@@ -7,6 +7,7 @@ import MoviePage from "../MoviePage/MoviePage";
 import MoviePageProjections from "../MoviePage/MoviePageProjections";
 import MoviePageDetails from "../MoviePage/MoviePageDetails";
 import SignInPage from "../SignInPage/SignInPage";
+import Dashboard from "../Dashboard/Dashboard";
 
 export default function Application() {
   return (
@@ -23,6 +24,7 @@ export default function Application() {
           render={() => <MoviePage component={MoviePageDetails} />}
         />
         <Route path="/admin" component={SignInPage} />
+        <Route exact path="/dashboard" component={Dashboard} />
       </Switch>
     </Container>
   );

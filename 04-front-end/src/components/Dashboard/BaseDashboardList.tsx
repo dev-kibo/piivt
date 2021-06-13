@@ -1,16 +1,16 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import DashboardLink from "../Dashboard/DashboardLink";
+import DashboardLink from "./DashboardLink";
 
-interface IBaseCinemasListProps {
+interface IBaseDashboardListProps {
   title: string;
   relativePath: string;
 }
 
-export default function BaseCinemasList({
+export default function BaseDashboardList({
   title,
   relativePath,
-}: IBaseCinemasListProps) {
+}: IBaseDashboardListProps) {
   return (
     <Row>
       <Col>

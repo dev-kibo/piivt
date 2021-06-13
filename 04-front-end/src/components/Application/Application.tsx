@@ -11,8 +11,10 @@ import Dashboard from "../Dashboard/Dashboard";
 import DashboardCinemas from "../DashboardCinemas/DashboardCinemas";
 import DashboardCinemasAdd from "../DashboardCinemas/DashboardCinemasAdd";
 import DashboardCinemasEditSelected from "../DashboardCinemas/DashboardCinemasEditSelected";
-import BaseCinemasList from "../DashboardCinemas/BaseCinemasList";
+import BaseDashboardList from "../Dashboard/BaseDashboardList";
 import DashboardCinemasDeleteSelected from "../DashboardCinemas/DashboardCinemasDeleteSelected";
+import DashboardMovies from "../DashboardMovies/DashboardMovies";
+import DashboardMoviesAdd from "../DashboardMovies/DashboardMoviesAdd";
 
 export default function Application() {
   return (
@@ -36,7 +38,7 @@ export default function Application() {
           exact
           path="/dashboard/cinemas/edit"
           render={() => (
-            <BaseCinemasList
+            <BaseDashboardList
               relativePath="/dashboard/cinemas/edit/3"
               title="Edit cinema"
             />
@@ -51,7 +53,7 @@ export default function Application() {
           exact
           path="/dashboard/cinemas/delete"
           render={() => (
-            <BaseCinemasList
+            <BaseDashboardList
               relativePath="/dashboard/cinemas/delete/3"
               title="Delete cinema"
             />
@@ -61,6 +63,8 @@ export default function Application() {
           path="/dashboard/cinemas/delete/:id"
           component={DashboardCinemasDeleteSelected}
         />
+        <Route exact path="/dashboard/movies" component={DashboardMovies} />
+        <Route path="/dashboard/movies/add" component={DashboardMoviesAdd} />
       </Switch>
     </Container>
   );

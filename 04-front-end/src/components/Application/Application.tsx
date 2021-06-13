@@ -6,10 +6,11 @@ import HomePage from "../HomePage/HomePage";
 import MoviePage from "../MoviePage/MoviePage";
 import MoviePageProjections from "../MoviePage/MoviePageProjections";
 import MoviePageDetails from "../MoviePage/MoviePageDetails";
+import SignInPage from "../SignInPage/SignInPage";
 
 export default function Application() {
   return (
-    <Container className="Application p-4">
+    <Container className="Application p-4 vh-100 min-vh-100">
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route
@@ -21,6 +22,7 @@ export default function Application() {
           path="/movies/:id/details"
           render={() => <MoviePage component={MoviePageDetails} />}
         />
+        <Route path="/admin" component={SignInPage} />
       </Switch>
     </Container>
   );

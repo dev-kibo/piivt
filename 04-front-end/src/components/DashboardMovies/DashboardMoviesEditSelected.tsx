@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 
-export default function DashboardMoviesAdd() {
+export default function DashboardMoviesEditSelected() {
   return (
     <Row>
       <Col>
@@ -88,7 +88,7 @@ export default function DashboardMoviesAdd() {
                 type="submit"
                 className="w-100"
               >
-                Add movie
+                Apply changes
               </Button>
             </Col>
           </Row>

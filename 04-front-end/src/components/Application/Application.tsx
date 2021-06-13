@@ -15,6 +15,8 @@ import BaseDashboardList from "../Dashboard/BaseDashboardList";
 import DashboardCinemasDeleteSelected from "../DashboardCinemas/DashboardCinemasDeleteSelected";
 import DashboardMovies from "../DashboardMovies/DashboardMovies";
 import DashboardMoviesAdd from "../DashboardMovies/DashboardMoviesAdd";
+import DashboardMoviesEdit from "../DashboardMovies/DashboardMoviesEdit";
+import DashboardMoviesEditSelected from "../DashboardMovies/DashboardMoviesEditSelected";
 
 export default function Application() {
   return (
@@ -65,6 +67,15 @@ export default function Application() {
         />
         <Route exact path="/dashboard/movies" component={DashboardMovies} />
         <Route path="/dashboard/movies/add" component={DashboardMoviesAdd} />
+        <Route
+          exact
+          path="/dashboard/movies/edit"
+          component={DashboardMoviesEdit}
+        />
+        <Route
+          path="/dashboard/movies/edit/:id"
+          component={DashboardMoviesEditSelected}
+        />
       </Switch>
     </Container>
   );

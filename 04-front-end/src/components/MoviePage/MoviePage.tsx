@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Row, Col, Image, Nav } from "react-bootstrap";
 import poster from "../../assets/poster.jpg";
-import { NavLink, Switch, Route } from "react-router-dom";
-import MoviePageBody from "./MoviePageBody";
-import IMoviePageBodyProps from "./IMoviePageBodyProps";
+import { NavLink } from "react-router-dom";
 
-export default function MoviePage() {
-  const [bodyType, setBodyType] = useState<IMoviePageBodyProps>({
-    type: "projections",
-  });
+interface MoviePageProps {
+  component: React.ComponentType;
+}
 
+export default function MoviePage({
+  component: MoviePageBody,
+}: MoviePageProps) {
   return (
     <Row>
       <Col>
@@ -27,31 +27,28 @@ export default function MoviePage() {
         </Row>
         <Row className="mt-5">
           <Col>
-            <Nav justify variant="pills" defaultActiveKey="#projections">
+            <Nav
+              justify
+              variant="pills"
+              className="border"
+              defaultActiveKey="/movies/3"
+            >
               <Nav.Item>
-                <Nav.Link
-                  href="#projections"
-                  className="nav-link"
-                  onClick={() => setBodyType({ type: "projections" })}
-                >
+                <NavLink exact to="/movies/3" className="nav-link">
                   Projections
-                </Nav.Link>
+                </NavLink>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link
-                  href="#details"
-                  className="nav-link"
-                  onClick={() => setBodyType({ type: "details" })}
-                >
+                <NavLink to="/movies/3/details" className="nav-link">
                   Details
-                </Nav.Link>
+                </NavLink>
               </Nav.Item>
             </Nav>
           </Col>
         </Row>
         <Row>
-          <Col>
-            <MoviePageBody type={bodyType.type} />
+          <Col className="p-4">
+            <MoviePageBody />
           </Col>
         </Row>
       </Col>

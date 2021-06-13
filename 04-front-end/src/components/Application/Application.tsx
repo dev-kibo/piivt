@@ -8,6 +8,11 @@ import MoviePageProjections from "../MoviePage/MoviePageProjections";
 import MoviePageDetails from "../MoviePage/MoviePageDetails";
 import SignInPage from "../SignInPage/SignInPage";
 import Dashboard from "../Dashboard/Dashboard";
+import DashboardCinemas from "../DashboardCinemas/DashboardCinemas";
+import DashboardCinemasAdd from "../DashboardCinemas/DashboardCinemasAdd";
+import DashboardCinemasEditSelected from "../DashboardCinemas/DashboardCinemasEditSelected";
+import BaseCinemasList from "../DashboardCinemas/BaseCinemasList";
+import DashboardCinemasDeleteSelected from "../DashboardCinemas/DashboardCinemasDeleteSelected";
 
 export default function Application() {
   return (
@@ -25,6 +30,37 @@ export default function Application() {
         />
         <Route path="/admin" component={SignInPage} />
         <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/dashboard/cinemas" component={DashboardCinemas} />
+        <Route path="/dashboard/cinemas/add" component={DashboardCinemasAdd} />
+        <Route
+          exact
+          path="/dashboard/cinemas/edit"
+          render={() => (
+            <BaseCinemasList
+              relativePath="/dashboard/cinemas/edit/3"
+              title="Edit cinema"
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/dashboard/cinemas/edit/:id"
+          component={DashboardCinemasEditSelected}
+        />
+        <Route
+          exact
+          path="/dashboard/cinemas/delete"
+          render={() => (
+            <BaseCinemasList
+              relativePath="/dashboard/cinemas/delete/3"
+              title="Delete cinema"
+            />
+          )}
+        />
+        <Route
+          path="/dashboard/cinemas/delete/:id"
+          component={DashboardCinemasDeleteSelected}
+        />
       </Switch>
     </Container>
   );

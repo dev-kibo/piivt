@@ -1,16 +1,17 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import DashboardLink from "./DashboardLink";
-import IBaseOptionsProps from "./IBaseOptionsProps";
+import IBaseNavigationProps from "./IBaseNavigationProps";
 
-export default function BaseOptions({ options }: IBaseOptionsProps) {
+export default function BaseNavigation({ options }: IBaseNavigationProps) {
   return (
     <Col>
       <Row xs={1} lg={3} className="gy-4 justify-content-center">
         {options.map((option) => (
           <DashboardLink
+            key={option.path}
             path={option.path}
-            linkTitle={option.name}
+            title={option.name}
             styleClass="btn-outline-secondary"
           />
         ))}

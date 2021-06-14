@@ -1,22 +1,18 @@
 import React from "react";
-import { Row } from "react-bootstrap";
 import BaseNavigation from "../Dashboard/BaseNavigation";
+import { Row } from "react-bootstrap";
 import IBaseNavigationProps from "../Dashboard/IBaseNavigationProps";
 
-export default function DashboardMovies() {
+export default function DashboardActors() {
   const props: IBaseNavigationProps = {
     options: [
       {
-        name: "Add movie",
-        path: "/dashboard/movies/add",
+        name: "Add actor",
+        path: "/dashboard/actors/add",
       },
       {
-        name: "Edit Movie",
-        path: "/dashboard/movies/edit",
-      },
-      {
-        name: "Delete movie",
-        path: "/dashboard/movies/delete",
+        name: "Edit actor",
+        path: "/dashboard/actors/edit",
       },
     ],
   };

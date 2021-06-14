@@ -1,39 +1,37 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
-import DashboardLink from "./DashboardLink";
+import { Row } from "react-bootstrap";
+import BaseNavigation from "./BaseNavigation";
+import IBaseNavigationProps from "./IBaseNavigationProps";
 
 export default function Dashboard() {
+  const props: IBaseNavigationProps = {
+    options: [
+      {
+        name: "Cinemas",
+        path: "/dashboard/cinemas",
+      },
+      {
+        name: "Movies",
+        path: "/dashboard/movies",
+      },
+      {
+        name: "Actors",
+        path: "/dashboard/actors",
+      },
+      {
+        name: "Projections",
+        path: "/dashboard/projections",
+      },
+      {
+        name: "Repertoire",
+        path: "/dashboard/repertoires",
+      },
+    ],
+  };
+
   return (
     <Row className="h-100 align-items-center">
-      <Col>
-        <Row xs={1} lg={3} className="gy-4 justify-content-center">
-          <DashboardLink
-            path="/dashboard/cinemas"
-            linkTitle="Cinemas"
-            styleClass="btn-outline-secondary"
-          />
-          <DashboardLink
-            path="/dashboard/movies"
-            linkTitle="Movies"
-            styleClass="btn-outline-secondary"
-          />
-          <DashboardLink
-            path="/dashboard/actors"
-            linkTitle="Actors"
-            styleClass="btn-outline-secondary"
-          />
-          <DashboardLink
-            path="/dashboard/projections"
-            linkTitle="Projections"
-            styleClass="btn-outline-secondary"
-          />
-          <DashboardLink
-            path="/dashboard/repertoire"
-            linkTitle="Repertoire"
-            styleClass="btn-outline-secondary"
-          />
-        </Row>
-      </Col>
+      <BaseNavigation options={props.options} />
     </Row>
   );
 }

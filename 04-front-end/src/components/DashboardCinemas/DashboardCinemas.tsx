@@ -1,29 +1,29 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
-import DashboardLink from "../Dashboard/DashboardLink";
+import { Row } from "react-bootstrap";
+import BaseNavigation from "../Dashboard/BaseNavigation";
+import IBaseNavigationProps from "../Dashboard/IBaseNavigationProps";
 
 export default function DashboardCinemas() {
+  const props: IBaseNavigationProps = {
+    options: [
+      {
+        name: "Add cinema",
+        path: "/dashboard/cinemas/add",
+      },
+      {
+        name: "Edit cinema",
+        path: "/dashboard/cinemas/edit",
+      },
+      {
+        name: "Delete cinema",
+        path: "/dashboard/cinemas/delete",
+      },
+    ],
+  };
+
   return (
-    <Row className="h-100 align-items-center justify-content-center">
-      <Col>
-        <Row xs={1} lg={3} className="gy-4 justify-content-center">
-          <DashboardLink
-            path="/dashboard/cinemas/add"
-            linkTitle="Add cinema"
-            styleClass="btn-outline-secondary"
-          />
-          <DashboardLink
-            path="/dashboard/cinemas/edit"
-            linkTitle="Edit cinema"
-            styleClass="btn-outline-secondary"
-          />
-          <DashboardLink
-            path="/dashboard/cinemas/delete"
-            linkTitle="Delete cinema"
-            styleClass="btn-outline-secondary"
-          />
-        </Row>
-      </Col>
+    <Row className="h-100 align-items-center">
+      <BaseNavigation options={props.options} />
     </Row>
   );
 }

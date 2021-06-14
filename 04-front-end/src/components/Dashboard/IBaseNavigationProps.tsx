@@ -1,4 +1,4 @@
-export default interface IBaseOptionsProps {
+export default interface IBaseNavigationProps {
   options: {
     name: string;
     path: string;

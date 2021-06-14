@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
 
-export default function DashboardCinemasEditSelected() {
+export default function CinemaEditSelectedPage() {
   return (
     <Row xs={1} md={2} lg={3} className="justify-content-center">
       <Col>

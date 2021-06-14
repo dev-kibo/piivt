@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 
-export default function DashboardMoviesAdd() {
+export default function MovieAddPage() {
   return (
     <Form>
       <Row xs={1} lg={3}>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
 
-export default function DashboardMoviesDeleteSelected() {
+export default function MovieDeleteSelectedPage() {
   return (
     <Row className="align-items-center h-100">
       <Col className="d-flex flex-column align-items-center">

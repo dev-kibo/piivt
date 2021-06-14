@@ -1,9 +1,9 @@
 import React from "react";
 import { Row } from "react-bootstrap";
-import BaseNavigation from "../Dashboard/BaseNavigation";
-import IBaseNavigationProps from "../Dashboard/IBaseNavigationProps";
+import BaseNavigation from "../BaseNavigation";
+import IBaseNavigationProps from "../IBaseNavigationProps";
 
-export default function DashboardCinemas() {
+export default function CinemaPage() {
   const props: IBaseNavigationProps = {
     options: [
       {

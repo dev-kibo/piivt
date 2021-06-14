@@ -3,30 +3,30 @@ import { Container } from "react-bootstrap";
 import { Switch, Route } from "react-router-dom";
 import "./Application.sass";
 import HomePage from "../HomePage/HomePage";
-import MoviePage from "../MoviePage/MoviePage";
 import MoviePageProjections from "../MoviePage/MoviePageProjections";
 import MoviePageDetails from "../MoviePage/MoviePageDetails";
+import MoviePage from "../MoviePage/MoviePage";
 import SignInPage from "../SignInPage/SignInPage";
-import Dashboard from "../Dashboard/Dashboard";
-import DashboardCinemas from "../DashboardCinemas/DashboardCinemas";
-import DashboardCinemasAdd from "../DashboardCinemas/DashboardCinemasAdd";
-import DashboardCinemasEditSelected from "../DashboardCinemas/DashboardCinemasEditSelected";
+import DashboardPage from "../Dashboard/DashboardPage";
+import CinemaPage from "../Dashboard/Cinema/CinemaPage";
+import CinemaAddPage from "../Dashboard/Cinema/CinemaAddPage";
+import CinemaEditSelectedPage from "../Dashboard/Cinema/CinemaEditSelectedPage";
 import BaseDashboardListPage from "../Dashboard/BaseDashboardListPage";
-import DashboardCinemasDeleteSelected from "../DashboardCinemas/DashboardCinemasDeleteSelected";
-import DashboardMovies from "../DashboardMovies/DashboardMovies";
-import DashboardMoviesAdd from "../DashboardMovies/DashboardMoviesAdd";
-import DashboardMoviesEditSelected from "../DashboardMovies/DashboardMoviesEditSelected";
-import DashboardMoviesDeleteSelected from "../DashboardMovies/DashboardMoviesDeleteSelected";
-import DashboardActors from "../DashboardActors/DashboardActors";
-import DashboardActorsAdd from "../DashboardActors/DashboardActorsAdd";
+import DashboardCinemasDeleteSelected from "../Dashboard/Cinema/CinemaDeleteSelectedPage";
+import MovieOperationsPage from "../Dashboard/Movie/MovieOperationsPage";
+import MovieAddPage from "../Dashboard/Movie/MovieAddPage";
+import MovieEditSelectedPage from "../Dashboard/Movie/MovieEditSelectedPage";
+import MovieDeleteSelectedPage from "../Dashboard/Movie/MovieDeleteSelectedPage";
+import ActorPage from "../Dashboard/Actor/ActorPage";
+import ActorAddPage from "../Dashboard/Actor/ActorAddPage";
 import BaseFormPage from "../Dashboard/BaseFormPage";
 import DashboardLink from "../Dashboard/DashboardLink";
-import DashboardMoviesListItem from "../DashboardMovies/DashboardMoviesListItem";
-import DashboardActorsEditSelected from "../DashboardActors/DashboardActorsEditSelected";
-import DashboardProjectionsEditSelected from "../DashboardProjection/DashboardProjectionsEditSelected";
-import DashboardRepertoire from "../DashboardRepertoire/DashboardRepertoire";
-import DashboardRepertoireAdd from "../DashboardRepertoire/DashboardRepertoireAdd";
-import DashboardRepertoireEdit from "../DashboardRepertoire/DashboardRepertoireEdit";
+import MovieListItem from "../Dashboard/Movie/MovieListItem";
+import ActorEditSelectedPage from "../Dashboard/Actor/ActorEditSelectedPage";
+import ProjectionEditSelectedPage from "../Dashboard/Projection/ProjectionEditSelectedPage";
+import RepertoirePage from "../Dashboard/Repertoire/RepertoirePage";
+import RepertoireAddPage from "../Dashboard/Repertoire/RepertoireAddPage";
+import RepertoireEditPage from "../Dashboard/Repertoire/RepertoireEditPage";
 
 export default function Application() {
   return (
@@ -43,12 +43,12 @@ export default function Application() {
           render={() => <MoviePage component={MoviePageDetails} />}
         />
         <Route path="/admin" component={SignInPage} />
-        <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/dashboard/cinemas" component={DashboardCinemas} />
+        <Route exact path="/dashboard" component={DashboardPage} />
+        <Route exact path="/dashboard/cinemas" component={CinemaPage} />
         <Route
           path="/dashboard/cinemas/add"
           render={() => (
-            <BaseFormPage form={DashboardCinemasAdd} title="Add new cinema" />
+            <BaseFormPage form={CinemaAddPage} title="Add new cinema" />
           )}
         />
         <Route
@@ -67,10 +67,7 @@ export default function Application() {
           exact
           path="/dashboard/cinemas/edit/:id"
           render={() => (
-            <BaseFormPage
-              title="Edit cinema 1"
-              form={DashboardCinemasEditSelected}
-            />
+            <BaseFormPage title="Edit cinema 1" form={CinemaEditSelectedPage} />
           )}
         />
         <Route
@@ -89,11 +86,11 @@ export default function Application() {
           path="/dashboard/cinemas/delete/:id"
           component={DashboardCinemasDeleteSelected}
         />
-        <Route exact path="/dashboard/movies" component={DashboardMovies} />
+        <Route exact path="/dashboard/movies" component={MovieOperationsPage} />
         <Route
           path="/dashboard/movies/add"
           render={() => (
-            <BaseFormPage title="Add new movie" form={DashboardMoviesAdd} />
+            <BaseFormPage title="Add new movie" form={MovieAddPage} />
           )}
         />
         <Route
@@ -103,7 +100,7 @@ export default function Application() {
             <BaseDashboardListPage
               title="Edit movie"
               relativePath="/dashboard/movies/edit/3"
-              item={DashboardMoviesListItem}
+              item={MovieListItem}
               searchLabel="Search movies"
             />
           )}
@@ -112,7 +109,7 @@ export default function Application() {
           path="/dashboard/movies/edit/:id"
           render={() => (
             <BaseFormPage
-              form={DashboardMoviesEditSelected}
+              form={MovieEditSelectedPage}
               title="Edit Title (1989)"
             />
           )}
@@ -122,7 +119,7 @@ export default function Application() {
           path="/dashboard/movies/delete"
           render={() => (
             <BaseDashboardListPage
-              item={DashboardMoviesListItem}
+              item={MovieListItem}
               relativePath="/dashboard/movies/delete/3"
               searchLabel="Search movies"
               title="Delete movie"
@@ -132,13 +129,13 @@ export default function Application() {
         <Route
           exact
           path="/dashboard/movies/delete/:id"
-          component={DashboardMoviesDeleteSelected}
+          component={MovieDeleteSelectedPage}
         />
-        <Route exact path="/dashboard/actors" component={DashboardActors} />
+        <Route exact path="/dashboard/actors" component={ActorPage} />
         <Route
           path="/dashboard/actors/add"
           render={() => (
-            <BaseFormPage form={DashboardActorsAdd} title="Add new actor" />
+            <BaseFormPage form={ActorAddPage} title="Add new actor" />
           )}
         />
         <Route
@@ -157,7 +154,7 @@ export default function Application() {
           path="/dashboard/actors/edit/:id"
           render={() => (
             <BaseFormPage
-              form={DashboardActorsEditSelected}
+              form={ActorEditSelectedPage}
               title="Edit John Smith"
             />
           )}
@@ -178,23 +175,16 @@ export default function Application() {
           path="/dashboard/projections/edit/:id"
           render={() => (
             <BaseFormPage
-              form={DashboardProjectionsEditSelected}
+              form={ProjectionEditSelectedPage}
               title="Projection of Title (1989)"
             />
           )}
         />
-        <Route
-          exact
-          path="/dashboard/repertoires"
-          component={DashboardRepertoire}
-        />
+        <Route exact path="/dashboard/repertoires" component={RepertoirePage} />
         <Route
           path="/dashboard/repertoires/add"
           render={() => (
-            <BaseFormPage
-              form={DashboardRepertoireAdd}
-              title="Add new repertoire"
-            />
+            <BaseFormPage form={RepertoireAddPage} title="Add new repertoire" />
           )}
         />
         <Route
@@ -212,10 +202,7 @@ export default function Application() {
         <Route
           path="/dashboard/repertoires/edit/:id"
           render={() => (
-            <BaseFormPage
-              form={DashboardRepertoireEdit}
-              title="Edit repertoire"
-            />
+            <BaseFormPage form={RepertoireEditPage} title="Edit repertoire" />
           )}
         />
       </Switch>

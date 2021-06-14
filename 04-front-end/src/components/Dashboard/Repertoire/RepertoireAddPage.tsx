@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 
-export default function DashboardRepertoireAdd() {
+export default function RepertoireAddPage() {
   return (
     <Form>
       <Row xs={1} md={2}>

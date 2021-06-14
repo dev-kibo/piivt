@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
-export default function DashboardActorsAdd() {
+export default function ActorEditSelectedPage() {
   return (
     <Row xs={1} md={2} lg={3} className="justify-content-center">
       <Col>
@@ -19,7 +19,7 @@ export default function DashboardActorsAdd() {
             <Form.Control type="text" placeholder="Enter name" size="lg" />
           </Form.Group>
           <Button variant="primary" type="submit" className="w-100 mt-4">
-            Add
+            Apply changes
           </Button>
         </Form>
       </Col>

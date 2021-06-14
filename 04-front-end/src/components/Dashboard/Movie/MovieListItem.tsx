@@ -1,16 +1,16 @@
 import React from "react";
 import { Col, Row, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import poster from "../../assets/poster.jpg";
-import BaseLink from "../Dashboard/BaseLink";
+import poster from "../../../assets/poster.jpg";
+import BaseLink from "../BaseLink";
 
-interface IDashboardMoviesListItemProps {
+interface IMovieListItemProps {
   path: string;
   title: string;
   styleClass: "btn-outline-secondary" | "btn-outline-primary";
 }
 
-export default class DashboardMoviesListItem extends BaseLink<IDashboardMoviesListItemProps> {
+export default class MovieListItem extends BaseLink<IMovieListItemProps> {
   render() {
     return (
       <Col className="w-auto">

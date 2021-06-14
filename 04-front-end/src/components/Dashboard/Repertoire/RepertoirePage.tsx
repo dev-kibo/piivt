@@ -1,9 +1,9 @@
 import React from "react";
-import IBaseNavigationProps from "../Dashboard/IBaseNavigationProps";
-import BaseNavigation from "../Dashboard/BaseNavigation";
+import IBaseNavigationProps from "../IBaseNavigationProps";
+import BaseNavigation from "../BaseNavigation";
 import { Row } from "react-bootstrap";
 
-export default function DashboardRepertoire() {
+export default function RepertoirePage() {
   const props: IBaseNavigationProps = {
     options: [
       {

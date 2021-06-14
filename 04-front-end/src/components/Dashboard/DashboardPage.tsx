@@ -3,7 +3,7 @@ import { Row } from "react-bootstrap";
 import BaseNavigation from "./BaseNavigation";
 import IBaseNavigationProps from "./IBaseNavigationProps";
 
-export default function Dashboard() {
+export default function DashboardPage() {
   const props: IBaseNavigationProps = {
     options: [
       {

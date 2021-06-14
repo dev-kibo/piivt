@@ -23,8 +23,10 @@ import BaseFormPage from "../Dashboard/BaseFormPage";
 import DashboardLink from "../Dashboard/DashboardLink";
 import DashboardMoviesListItem from "../DashboardMovies/DashboardMoviesListItem";
 import DashboardActorsEditSelected from "../DashboardActors/DashboardActorsEditSelected";
-import DashboardProjectionsEditSelected from "../Projections/DashboardProjectionsEditSelected";
+import DashboardProjectionsEditSelected from "../DashboardProjection/DashboardProjectionsEditSelected";
 import DashboardRepertoire from "../DashboardRepertoire/DashboardRepertoire";
+import DashboardRepertoireAdd from "../DashboardRepertoire/DashboardRepertoireAdd";
+import DashboardRepertoireEdit from "../DashboardRepertoire/DashboardRepertoireEdit";
 
 export default function Application() {
   return (
@@ -185,6 +187,36 @@ export default function Application() {
           exact
           path="/dashboard/repertoires"
           component={DashboardRepertoire}
+        />
+        <Route
+          path="/dashboard/repertoires/add"
+          render={() => (
+            <BaseFormPage
+              form={DashboardRepertoireAdd}
+              title="Add new repertoire"
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/dashboard/repertoires/edit"
+          render={() => (
+            <BaseDashboardListPage
+              item={DashboardLink}
+              relativePath="/dashboard/repertoires/edit/3"
+              searchLabel="Search repertoires"
+              title="Edit repertoire"
+            />
+          )}
+        />
+        <Route
+          path="/dashboard/repertoires/edit/:id"
+          render={() => (
+            <BaseFormPage
+              form={DashboardRepertoireEdit}
+              title="Edit repertoire"
+            />
+          )}
         />
       </Switch>
     </Container>

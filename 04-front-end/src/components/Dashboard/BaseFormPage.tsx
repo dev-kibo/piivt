@@ -17,7 +17,7 @@ export default function BaseFormPage({
                 <p className="display-4">{title}</p>
               </Col>
             </Row>
-            <Row className="mt-5">
+            <Row className="mt-5 justify-content-center">
               <Col>
                 <FormComponent />
               </Col>

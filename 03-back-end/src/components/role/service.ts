@@ -1,7 +1,4 @@
-import e = require("express");
 import BaseService from "../../common/BaseService";
-import IErrorResponse from "../../common/IErrorResponse.interface";
-import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.interface";
 import { IAddRole } from "./dto/IAddRole";
 import RoleModel from "./model";
 import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";

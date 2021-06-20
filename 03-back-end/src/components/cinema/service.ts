@@ -2,7 +2,6 @@ import BaseService from "../../common/BaseService";
 import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.interface";
 import { IAddCinema } from "./dto/IAddCinema";
 import CinemaModel from "./model";
-import IErrorResponse from "../../common/IErrorResponse.interface";
 import { IUpdateCinema } from "./dto/IUpdateCinema";
 import ApiError from "../error/ApiError";
 export default class CinemaService extends BaseService<CinemaModel> {

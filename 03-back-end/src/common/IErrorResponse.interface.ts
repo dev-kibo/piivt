@@ -1,4 +1,4 @@
 export default interface IErrorResponse {
-  code: number;
+  code: string;
   description: string;
 }

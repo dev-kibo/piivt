@@ -3,7 +3,7 @@ import IApplicationResources from "./IApplicationResources.interface";
 import * as mysql2 from "mysql2/promise";
 import IServices from "./IServices.interface";
 import IModelAdapterOptions from "./IModelAdapterOptions.interface";
-import IErrorResponse from "./IErrorResponse.interface";
+import ApiError from "../components/error/ApiError";
 
 export default abstract class BaseService<ReturnModel extends IModel> {
   private resources: IApplicationResources;
@@ -45,11 +45,9 @@ export default abstract class BaseService<ReturnModel extends IModel> {
 
         resolve(response);
       } catch (error) {
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-        reject(e);
+        reject(
+          new ApiError("FAILED_FETCH", "Failed getting all from the database.")
+        );
       }
     });
   }
@@ -75,12 +73,12 @@ export default abstract class BaseService<ReturnModel extends IModel> {
 
         resolve(await this.adaptModel(rows[0], options));
       } catch (error) {
-        const e: IErrorResponse = {
-          code: error?.code,
-          description: error?.message,
-        };
-
-        reject(e);
+        reject(
+          new ApiError(
+            "FETCH_FAILED",
+            "Failed getting from the database by id."
+          )
+        );
       }
     });
   }

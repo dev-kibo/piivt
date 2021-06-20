@@ -2,7 +2,6 @@ import BaseService from "../../common/BaseService";
 import ActorModel from "./model";
 import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";
 import { IAddActor } from "./dto/IAddActor";
-import IErrorResponse from "../../common/IErrorResponse.interface";
 import { IUpdateActor } from "./dto/IUpdateActor";
 import ApiError from "../error/ApiError";
 

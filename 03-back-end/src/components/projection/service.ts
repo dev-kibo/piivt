@@ -2,7 +2,6 @@ import BaseService from "../../common/BaseService";
 import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.interface";
 import { IAddProjection } from "./dto/IAddProjection";
 import ProjectionModel from "./model";
-import IErrorResponse from "../../common/IErrorResponse.interface";
 import ApiError from "../error/ApiError";
 
 export default class ProjectionService extends BaseService<ProjectionModel> {
@@ -112,11 +111,9 @@ export default class ProjectionService extends BaseService<ProjectionModel> {
 
       try {
       } catch (error) {
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-        reject(e);
+        reject(
+          new ApiError("PROJECTION_ADD_FAILED", "Failed adding new projection.")
+        );
       }
     });
   }

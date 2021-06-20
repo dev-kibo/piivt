@@ -2,7 +2,6 @@ import BaseService from "../../common/BaseService";
 import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.interface";
 import { IAddRepertoire } from "./dto/IAddRepertoire";
 import RepertoireModel from "./model";
-import IErrorResponse from "../../common/IErrorResponse.interface";
 import MovieModel from "../movie/model";
 import CinemaModel from "../cinema/model";
 import ApiError from "../error/ApiError";

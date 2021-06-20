@@ -25,6 +25,7 @@ import AuthController from "./components/auth/controller";
 import AuthRouter from "./components/auth/router";
 import ProjectionRouter from "./components/projection/router";
 import ApiError from "./components/error/ApiError";
+import IErrorResponse from "./common/IErrorResponse.interface";
 
 async function main() {
   const application: express.Application = express();
@@ -114,7 +115,7 @@ async function main() {
       res.status(409).send({
         code: err.code,
         description: err.description,
-      });
+      } as IErrorResponse);
     } else {
       res.status(500).send(err);
     }

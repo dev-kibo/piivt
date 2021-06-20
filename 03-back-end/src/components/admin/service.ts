@@ -3,7 +3,6 @@ import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.int
 import AdminModel from "./model";
 import * as bcrypt from "bcrypt";
 import { IAddAdmin } from "./dto/IAddAdmin";
-import IErrorResponse from "../../common/IErrorResponse.interface";
 import ApiError from "../error/ApiError";
 
 export default class AdminService extends BaseService<AdminModel> {

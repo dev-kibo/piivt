@@ -7,8 +7,8 @@ import IToken from "../admin/dto/IToken";
 import * as jwt from "jsonwebtoken";
 import Config from "../../config/dev";
 import * as crypto from "crypto";
-import IErrorResponse from "../../common/IErrorResponse.interface";
 import { IRefreshToken, IRefreshTokenValidator } from "./dto/IRefreshToken";
+import ApiError from "../error/ApiError";
 
 export default class AuthController extends BaseController {
   async signIn(req: Request, res: Response, next: NextFunction) {
@@ -49,11 +49,7 @@ export default class AuthController extends BaseController {
         refreshToken,
       });
     } catch (error) {
-      const e: IErrorResponse = {
-        code: +error?.errno,
-        description: error?.message,
-      };
-      next(e);
+      next(new ApiError("SIGN_IN_FAILED", "Sign in failed."));
     }
   }
 
@@ -99,11 +95,7 @@ export default class AuthController extends BaseController {
         refreshToken,
       });
     } catch (error) {
-      const e: IErrorResponse = {
-        code: +error?.errno,
-        description: error?.message,
-      };
-      next(e);
+      next(new ApiError("TOKEN_REFRESH_FAILED", "Failed refreshing token."));
     }
   }
 

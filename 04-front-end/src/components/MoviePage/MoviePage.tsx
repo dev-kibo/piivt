@@ -1,56 +1,49 @@
-import React from "react";
-import { Row, Col, Image, Nav } from "react-bootstrap";
-import poster from "../../assets/poster.jpg";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Row, Col } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import MovieService from "../../services/MovieService";
+import MovieModel from "../../../../03-back-end/src/components/movie/model";
+import MoviePageInfo from "./MoviePageInfo";
 
-interface MoviePageProps {
-  component: React.ComponentType;
+interface IParams {
+  id: string;
 }
 
-export default function MoviePage({
-  component: MoviePageBody,
-}: MoviePageProps) {
+interface IMoviePageProps {
+  component: React.ComponentType<any>;
+}
+
+export default function MoviePage({ component: Component }: IMoviePageProps) {
+  const [movie, setMovie] = useState<MovieModel>({
+    description: "",
+    duration: 0,
+    movieId: 0,
+    posterUrl: "",
+    releasedAt: "",
+    title: "",
+  });
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const { id } = useParams<IParams>();
+
+  useEffect(() => {
+    MovieService.getMovieById(+id).then((x) => {
+      setMovie(x);
+      setIsLoading(false);
+    });
+  }, [id]);
+
+  if (isLoading) {
+    return <h2>Loading....</h2>;
+  }
   return (
     <Row>
       <Col>
-        <Row>
-          <Col xs={5} md={4} lg={2}>
-            <Image fluid src={poster} />
-          </Col>
-          <Col className="d-flex flex-column">
-            <div>
-              <h2>Title</h2>
-              <h4>1989</h4>
-            </div>
-            <p className="mt-auto">121 minutes</p>
-          </Col>
-        </Row>
-        <Row className="mt-5">
-          <Col>
-            <Nav
-              justify
-              variant="pills"
-              className="border"
-              defaultActiveKey="/movies/3"
-            >
-              <Nav.Item>
-                <NavLink exact to="/movies/3" className="nav-link">
-                  Projections
-                </NavLink>
-              </Nav.Item>
-              <Nav.Item>
-                <NavLink to="/movies/3/details" className="nav-link">
-                  Details
-                </NavLink>
-              </Nav.Item>
-            </Nav>
-          </Col>
-        </Row>
-        <Row>
-          <Col className="p-4">
-            <MoviePageBody />
-          </Col>
-        </Row>
+        <MoviePageInfo movie={movie} />
+        <Col className="p-4">
+          <Component movie={movie} />
+        </Col>
       </Col>
     </Row>
   );

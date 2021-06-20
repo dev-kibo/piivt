@@ -17,7 +17,7 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
   ): Promise<RepertoireModel> {
     const model = new RepertoireModel();
 
-    model.date = data?.date_at;
+    model.date = data?.show_at;
     model.repertoireId = +data?.repertoire_id;
 
     if (options.loadProjections) {
@@ -34,6 +34,44 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
     options: RepertoireModelAdapterOptions = { loadProjections: true }
   ): Promise<RepertoireModel[]> {
     return await this.getAllFromTable("repertoire", options);
+  }
+
+  public async getByDate(
+    date: string,
+    options: Partial<RepertoireModelAdapterOptions> = { loadProjections: true }
+  ): Promise<RepertoireModel | null> {
+    return new Promise<RepertoireModel | null>(async (resolve, reject) => {
+      if (!Date.parse(date)) {
+        return reject({
+          code: 99400,
+          description: "Invalid date format.",
+        } as IErrorResponse);
+      }
+
+      const dateFilter: Date = new Date(date);
+      const mariaDbDate: string = date.slice(0, 10);
+      // next 7 days
+      dateFilter.setDate(dateFilter.getDate() + 7);
+      const mariaDbDateFilter: string = dateFilter.toISOString().slice(0, 10);
+
+      const query: string =
+        "SELECT * FROM repertoire WHERE show_at BETWEEN ? AND ?;";
+
+      const [rows] = await this.db.execute(query, [
+        mariaDbDate,
+        mariaDbDateFilter,
+      ]);
+
+      if (!Array.isArray(rows)) {
+        return resolve(null);
+      }
+
+      if (rows.length === 0) {
+        return resolve(null);
+      }
+
+      resolve(await this.adaptModel(rows[0], options));
+    });
   }
 
   public async getById(

@@ -23,6 +23,7 @@ import AdminService from "./components/admin/service";
 import AdminRouter from "./components/admin/router";
 import AuthController from "./components/auth/controller";
 import AuthRouter from "./components/auth/router";
+import ProjectionRouter from "./components/projection/router";
 
 async function main() {
   const application: express.Application = express();
@@ -102,6 +103,7 @@ async function main() {
     new RepertoireRouter(),
     new AdminRouter(),
     new AuthRouter(),
+    new ProjectionRouter(),
   ]);
 
   application.use((err, req, res, next) => {

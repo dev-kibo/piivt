@@ -4,7 +4,6 @@ import * as mysql2 from "mysql2/promise";
 import IServices from "./IServices.interface";
 import IModelAdapterOptions from "./IModelAdapterOptions.interface";
 import IErrorResponse from "./IErrorResponse.interface";
-import { resolve } from "url";
 
 export default abstract class BaseService<ReturnModel extends IModel> {
   private resources: IApplicationResources;

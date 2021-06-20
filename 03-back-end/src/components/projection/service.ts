@@ -57,6 +57,41 @@ export default class ProjectionService extends BaseService<ProjectionModel> {
     });
   }
 
+  public async getAllProjectionsForMovie(
+    id: number,
+    options: Partial<IModelAdapterOptionsInterface> = {}
+  ): Promise<ProjectionModel[]> {
+    return new Promise<ProjectionModel[]>(async (resolve, reject) => {
+      const query: string = `SELECT
+                                  projection.*
+                              FROM
+                                  projection
+                                  INNER JOIN movie ON projection.movie_id = movie.movie_id
+                              WHERE
+                                  movie.movie_id = ?;`;
+      try {
+        const [rows] = await this.db.execute(query, [id]);
+
+        const res: ProjectionModel[] = [];
+
+        if (Array.isArray(rows)) {
+          for (const row of rows) {
+            res.push(await this.adaptModel(row, options));
+          }
+        }
+
+        resolve(res);
+      } catch (error) {
+        const e: IErrorResponse = {
+          code: error?.code,
+          description: error?.message,
+        };
+
+        reject(e);
+      }
+    });
+  }
+
   public async add(data: IAddProjection): Promise<ProjectionModel> {
     return new Promise(async (resolve, reject) => {
       const movie = await this.services.movieService.getById(data.movieId);

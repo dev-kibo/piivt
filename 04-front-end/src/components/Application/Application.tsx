@@ -5,7 +5,6 @@ import "./Application.sass";
 import HomePage from "../HomePage/HomePage";
 import MoviePageProjections from "../MoviePage/MoviePageProjections";
 import MoviePageDetails from "../MoviePage/MoviePageDetails";
-import MoviePage from "../MoviePage/MoviePage";
 import SignInPage from "../SignInPage/SignInPage";
 import DashboardPage from "../Dashboard/DashboardPage";
 import CinemaPage from "../Dashboard/Cinema/CinemaPage";
@@ -27,6 +26,7 @@ import ProjectionEditSelectedPage from "../Dashboard/Projection/ProjectionEditSe
 import RepertoirePage from "../Dashboard/Repertoire/RepertoirePage";
 import RepertoireAddPage from "../Dashboard/Repertoire/RepertoireAddPage";
 import RepertoireEditPage from "../Dashboard/Repertoire/RepertoireEditPage";
+import MoviePage from "../MoviePage/MoviePage";
 
 export default function Application() {
   return (

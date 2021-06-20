@@ -10,11 +10,11 @@ export default class RepertoireRouter implements IRouter {
   ) {
     const repController = new RepertoireController(resources);
 
-    application.get("/repertoire", repController.getAll.bind(repController));
+    application.get("/repertoires", repController.getAll.bind(repController));
     application.get(
-      "/repertoire/:id",
+      "/repertoires/:id",
       repController.getById.bind(repController)
     );
-    application.post("/repertoire", repController.add.bind(repController));
+    application.post("/repertoires", repController.add.bind(repController));
   }
 }

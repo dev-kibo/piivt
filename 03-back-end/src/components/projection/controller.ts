@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import BaseController from "../../common/BaseController";
+import ProjectionModel from "./model";
 
 export default class ProjectionController extends BaseController {
   async getAllProjectionsForMovie(
@@ -14,9 +15,14 @@ export default class ProjectionController extends BaseController {
     }
 
     try {
-      res.send(
-        await this.services.projectionService.getAllProjectionsForMovie(id)
-      );
+      const result: ProjectionModel[] | null =
+        await this.services.projectionService.getAllProjectionsForMovie(id);
+
+      if (!result) {
+        return res.sendStatus(404);
+      }
+
+      res.send(result);
     } catch (error) {
       next(error);
     }

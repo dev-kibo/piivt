@@ -3,6 +3,7 @@ import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.int
 import { IAddProjection } from "./dto/IAddProjection";
 import ProjectionModel from "./model";
 import IErrorResponse from "../../common/IErrorResponse.interface";
+import ApiError from "../error/ApiError";
 
 export default class ProjectionService extends BaseService<ProjectionModel> {
   protected async adaptModel(
@@ -48,11 +49,12 @@ export default class ProjectionService extends BaseService<ProjectionModel> {
 
         resolve(results);
       } catch (error) {
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-        reject(e);
+        reject(
+          new ApiError(
+            "FAILED_GETTING_PROJECTIONS",
+            "Failed getting projections."
+          )
+        );
       }
     });
   }
@@ -60,7 +62,11 @@ export default class ProjectionService extends BaseService<ProjectionModel> {
   public async getAllProjectionsForMovie(
     id: number,
     options: Partial<IModelAdapterOptionsInterface> = {}
-  ): Promise<ProjectionModel[]> {
+  ): Promise<ProjectionModel[]> | null {
+    if (!(await this.services.movieService.getById(id))) {
+      return null;
+    }
+
     return new Promise<ProjectionModel[]>(async (resolve, reject) => {
       const query: string = `SELECT
                                   projection.*
@@ -82,12 +88,12 @@ export default class ProjectionService extends BaseService<ProjectionModel> {
 
         resolve(res);
       } catch (error) {
-        const e: IErrorResponse = {
-          code: error?.code,
-          description: error?.message,
-        };
-
-        reject(e);
+        reject(
+          new ApiError(
+            "FAILED_GETTING_PROJECTIONS",
+            "Failed getting projections."
+          )
+        );
       }
     });
   }

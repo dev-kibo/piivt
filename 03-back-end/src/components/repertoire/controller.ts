@@ -5,10 +5,6 @@ import RepertoireModel from "./model";
 
 export default class RepertoireController extends BaseController {
   async getAll(req: Request, res: Response, next: NextFunction) {
-    if (req.query["date"]) {
-      return this.getByDate(req, res, next);
-    }
-
     try {
       res.send(await this.services.repertoireService.getAll());
     } catch (error) {
@@ -18,8 +14,15 @@ export default class RepertoireController extends BaseController {
 
   async getByDate(req: Request, res: Response, next: NextFunction) {
     try {
-      const date: string = (req.query["date"] as string) ?? null;
-      res.send(await this.services.repertoireService.getByDate(date));
+      const date: string = req.params.date ?? null;
+      const result: RepertoireModel | null =
+        await this.services.repertoireService.getByDate(date);
+
+      if (result === null) {
+        return res.sendStatus(404);
+      }
+
+      res.send(result);
     } catch (error) {
       next(error);
     }

@@ -5,6 +5,7 @@ import RepertoireModel from "./model";
 import IErrorResponse from "../../common/IErrorResponse.interface";
 import MovieModel from "../movie/model";
 import CinemaModel from "../cinema/model";
+import ApiError from "../error/ApiError";
 
 class RepertoireModelAdapterOptions implements IModelAdapterOptionsInterface {
   loadProjections: boolean;
@@ -41,11 +42,14 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
     options: Partial<RepertoireModelAdapterOptions> = { loadProjections: true }
   ): Promise<RepertoireModel | null> {
     return new Promise<RepertoireModel | null>(async (resolve, reject) => {
+      console.log(date);
       if (!Date.parse(date)) {
-        return reject({
-          code: 99400,
-          description: "Invalid date format.",
-        } as IErrorResponse);
+        return reject(
+          new ApiError(
+            "DATE_INVALID",
+            "Invalid date format. Date must be in yyyy-MM-dd format."
+          )
+        );
       }
 
       const dateFilter: Date = new Date(date);
@@ -81,20 +85,24 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
     return await this.getByIdFromTable("repertoire", id, options);
   }
 
-  public async add(data: IAddRepertoire): Promise<RepertoireModel> {
-    return new Promise<RepertoireModel>(async (resolve, reject) => {
-      let error: IErrorResponse = { code: 0, description: "" };
-
-      if (isNaN(Date.parse(data.startsAt))) {
-        error.code = 99400;
-        error.description = "Invalid date format.";
-        return reject(error);
+  public async add(data: IAddRepertoire): Promise<RepertoireModel | null> {
+    return new Promise<RepertoireModel | null>(async (resolve, reject) => {
+      if (!Date.parse(data.startsAt)) {
+        return reject(
+          new ApiError(
+            "DATE_INVALID",
+            "Invalid date format. Date must be in yyyy-MM-dd format."
+          )
+        );
       }
 
       if (new Date(data.startsAt).getTime() < Date.now()) {
-        error.code = 99400;
-        error.description = "Projection can't start in past time.";
-        return reject(error);
+        return reject(
+          new ApiError(
+            "PROJECTION_DATE_INVALID",
+            "Invalid date. Projection can't start in the past."
+          )
+        );
       }
 
       for (const projection of data.projections) {
@@ -104,22 +112,28 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
           await this.services.cinemaService.getById(projection.cinemaId);
 
         if (movie === null) {
-          error.code = 99400;
-          error.description = `Movie with id ${projection.movieId} doesn't exist.`;
-          return reject(error);
+          return reject(
+            new ApiError(
+              "MOVIE_NOT_FOUND",
+              `Movie with id '${projection.movieId}' doesn't exist.`
+            )
+          );
         }
 
         if (cinema === null) {
-          error.code = 99400;
-          error.description = `Cinema with id ${projection.movieId} doesn't exist.`;
-          return reject(error);
+          return reject(
+            new ApiError(
+              "CINEMA_NOT_FOUND",
+              `Cinema with id '${projection.movieId}' doesn't exist.`
+            )
+          );
         }
       }
 
       try {
         await this.db.beginTransaction();
 
-        const query: string = "INSERT repertoire SET date_at = ?;";
+        const query: string = "INSERT repertoire SET show_at = ?;";
 
         const result = await this.db.execute(query, [
           this.toDateString(new Date(data.startsAt)),
@@ -166,11 +180,15 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
       } catch (error) {
         await this.db.rollback();
 
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-        reject(e);
+        console.log(error.errno);
+        console.log(error.message);
+
+        reject(
+          new ApiError(
+            "FAILED_ADDING_REPERTOIRE",
+            "Failed adding new repertoire."
+          )
+        );
       }
     });
   }

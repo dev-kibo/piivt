@@ -15,6 +15,10 @@ export default class RepertoireRouter implements IRouter {
       "/repertoires/:id",
       repController.getById.bind(repController)
     );
+    application.get(
+      "/repertoires/date/:date",
+      repController.getByDate.bind(repController)
+    );
     application.post("/repertoires", repController.add.bind(repController));
   }
 }

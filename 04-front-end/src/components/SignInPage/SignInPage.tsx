@@ -1,8 +1,14 @@
 import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import AuthService from "../../services/AuthService";
+import EventRegister from "../../api/EventRegister";
+import { withRouter } from "react-router";
+import { History } from "history";
+interface ISignInPageProps {
+  history: History;
+}
 
-export default class SignInPage extends React.Component {
+class SignInPage extends React.Component<ISignInPageProps> {
   state = {
     email: "",
     password: "",
@@ -25,6 +31,10 @@ export default class SignInPage extends React.Component {
 
     localStorage.setItem("access-token", res.accessToken);
     localStorage.setItem("refresh-token", res.refreshToken);
+
+    EventRegister.emit("AUTH_EVENT", "user_login");
+
+    this.props.history.push("/dashboard");
   }
 
   render() {
@@ -71,3 +81,5 @@ export default class SignInPage extends React.Component {
     );
   }
 }
+
+export default withRouter<any, any>(SignInPage);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { Switch, Route } from "react-router-dom";
 import "./Application.sass";
 import HomePage from "../HomePage/HomePage";
@@ -59,10 +59,12 @@ export default function Application() {
             path="/dashboard/cinemas/edit"
             render={() => (
               <BaseDashboardListPage
-                relativePath="/dashboard/cinemas/edit/3"
+                relativePath="/dashboard/cinemas/edit"
                 title="Edit cinema"
                 item={DashboardLink}
                 searchLabel="Search cinemas"
+                type="cinema"
+                action="get"
               />
             )}
           />
@@ -85,6 +87,8 @@ export default function Application() {
                 title="Delete cinema"
                 item={DashboardLink}
                 searchLabel="Search cinemas"
+                type="cinema"
+                action="delete"
               />
             )}
           />
@@ -112,6 +116,8 @@ export default function Application() {
                 relativePath="/dashboard/movies/edit/3"
                 item={MovieListItem}
                 searchLabel="Search movies"
+                type="movie"
+                action="get"
               />
             )}
           />
@@ -133,6 +139,8 @@ export default function Application() {
                 relativePath="/dashboard/movies/delete/3"
                 searchLabel="Search movies"
                 title="Delete movie"
+                type="movie"
+                action="get"
               />
             )}
           />
@@ -157,6 +165,8 @@ export default function Application() {
                 relativePath="/dashboard/actors/edit/3"
                 searchLabel="Search actors"
                 title="Edit actor"
+                action="get"
+                type="actor"
               />
             )}
           />
@@ -178,6 +188,8 @@ export default function Application() {
                 relativePath="/dashboard/projections/edit/3"
                 searchLabel="Search projections"
                 title="Projections"
+                action="get"
+                type="projection"
               />
             )}
           />
@@ -213,6 +225,8 @@ export default function Application() {
                 relativePath="/dashboard/repertoires/edit/3"
                 searchLabel="Search repertoires"
                 title="Edit repertoire"
+                action="get"
+                type="repertoire"
               />
             )}
           />

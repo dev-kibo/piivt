@@ -46,7 +46,7 @@ export default function MovieEditSelectedPage() {
           </Form.Group>
           <Form.Group>
             <Form.Label>Poster:</Form.Label>
-            <Form.File />
+            <Form.Control type="file" />
           </Form.Group>
         </Col>
         <Col>

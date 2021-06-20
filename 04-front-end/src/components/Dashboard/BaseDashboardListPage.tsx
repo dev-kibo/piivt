@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import BaseLink from "../Dashboard/BaseLink";
+import CinemaService from "../../services/CinemaService";
 
 interface IBaseDashboardListPageProps {
   title: string;
   relativePath: string;
   searchLabel: string;
   item: typeof BaseLink;
+  type: "cinema" | "movie" | "actor" | "projection" | "repertoire";
+  action: "get" | "delete";
 }
 
 export default function BaseDashboardListPage({
@@ -14,7 +17,31 @@ export default function BaseDashboardListPage({
   relativePath,
   searchLabel,
   item: Item,
+  type,
+  action,
 }: IBaseDashboardListPageProps) {
+  const [data, setData] = useState<any[]>([]);
+
+  useEffect(() => {
+    switch (type) {
+      case "cinema":
+        handleAction(action);
+        break;
+    }
+  }, [type, action]);
+
+  const handleAction = async (action: "get" | "delete") => {
+    if (action === "get") {
+      try {
+        const res = await CinemaService.getAllCinemas();
+
+        setData(res);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <Row>
       <Col>
@@ -30,66 +57,16 @@ export default function BaseDashboardListPage({
           </Form.Group>
         </Row>
         <Row xs={1} md={2} lg={3} className="gy-4 mt-5 justify-content-center">
-          <Item
-            title="Edit Cinema 1"
-            path={relativePath}
-            styleClass="btn-outline-secondary"
-          />
-          <Item
-            title="Edit Cinema 2"
-            path={relativePath}
-            styleClass="btn-outline-secondary"
-          />
-          <Item
-            title="Edit Cinema 3"
-            path={relativePath}
-            styleClass="btn-outline-secondary"
-          />
-          <Item
-            title="Edit Cinema 4"
-            path={relativePath}
-            styleClass="btn-outline-secondary"
-          />
-          <Item
-            title="Edit Cinema 5"
-            path={relativePath}
-            styleClass="btn-outline-secondary"
-          />
-          <Item
-            title="Edit Cinema 6"
-            path={relativePath}
-            styleClass="btn-outline-secondary"
-          />
-          {/* <DashboardLink
-            linkTitle="Cinema 1"
-            path={relativePath}
-            styleClass="btn-outline-primary"
-          />
-          <DashboardLink
-            linkTitle="Cinema 1"
-            path={relativePath}
-            styleClass="btn-outline-primary"
-          />
-          <DashboardLink
-            linkTitle="Cinema 1"
-            path={relativePath}
-            styleClass="btn-outline-primary"
-          />
-          <DashboardLink
-            linkTitle="Cinema 1"
-            path={relativePath}
-            styleClass="btn-outline-primary"
-          />
-          <DashboardLink
-            linkTitle="Cinema 1"
-            path={relativePath}
-            styleClass="btn-outline-primary"
-          />
-          <DashboardLink
-            linkTitle="Cinema 1"
-            path={relativePath}
-            styleClass="btn-outline-primary"
-          /> */}
+          {data.map((x: any) => {
+            console.log(x);
+            return (
+              <Item
+                title={x?.name}
+                path={`${relativePath}/${x?.cinemaId}`}
+                styleClass="btn-outline-secondary"
+              />
+            );
+          })}
         </Row>
       </Col>
     </Row>

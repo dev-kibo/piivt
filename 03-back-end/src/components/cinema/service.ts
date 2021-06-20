@@ -1,9 +1,11 @@
 import BaseService from "../../common/BaseService";
 import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.interface";
-import { IAddCinema } from "./dto/IAddCinema";
+import IAddCinema from "./dto/IAddCinema";
 import CinemaModel from "./model";
 import { IUpdateCinema } from "./dto/IUpdateCinema";
 import ApiError from "../error/ApiError";
+import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";
+
 export default class CinemaService extends BaseService<CinemaModel> {
   protected async adaptModel(
     row: any,
@@ -35,6 +37,32 @@ export default class CinemaService extends BaseService<CinemaModel> {
       id,
       options
     );
+  }
+
+  public async getCinemasThatMatchSearchTerm(
+    searchTerm: string,
+    options: IModelAdapterOptions = {}
+  ): Promise<CinemaModel[]> {
+    return new Promise<CinemaModel[]>(async (resolve, reject) => {
+      const query: string =
+        "SELECT * FROM cinema WHERE LOWER(name) LIKE CONCAT('%', ?, '%');";
+
+      try {
+        const [rows] = await this.db.execute(query, [searchTerm.toLowerCase()]);
+
+        const res: CinemaModel[] = [];
+
+        if (Array.isArray(rows)) {
+          for (const row of rows) {
+            res.push(await this.adaptModel(row, options));
+          }
+        }
+
+        resolve(res);
+      } catch (error) {
+        reject(new ApiError("CINEMA_SEARCH_FAILED", "Failed cinema search."));
+      }
+    });
   }
 
   public async add(data: IAddCinema): Promise<CinemaModel> {

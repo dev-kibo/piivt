@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import BaseController from "../../common/BaseController";
-import { IAddCinema, IAddCinemaValidator } from "./dto/IAddCinema";
+import IAddCinemaValidator from "./dto/IAddCinemaValidator";
+import IAddCinema from "./dto/IAddCinema";
 import { IUpdateCinema, IUpdateCinemaValidator } from "./dto/IUpdateCinema";
 import CinemaModel from "./model";
 
@@ -8,6 +9,20 @@ export default class CinemaController extends BaseController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       res.send(await this.services.cinemaService.getAll());
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getAllBySearchTerm(req: Request, res: Response, next: NextFunction) {
+    const searchTerm = "" + req.params["search"] ?? "";
+
+    try {
+      res.send(
+        await this.services.cinemaService.getCinemasThatMatchSearchTerm(
+          searchTerm
+        )
+      );
     } catch (error) {
       next(error);
     }

@@ -6,6 +6,10 @@ type ApiMethod = "get" | "post" | "put" | "delete";
 export interface ApiResponse {
   status: number;
   data: any;
+  message?: {
+    code?: string;
+    description?: string;
+  };
 }
 
 export default function api(
@@ -14,62 +18,84 @@ export default function api(
   body: any | undefined = undefined,
   attemptToRefresh: boolean = true
 ): Promise<ApiResponse> {
-  return new Promise<ApiResponse>((resolve) => {
-    axios({
-      method: method,
-      baseURL: AppConfiguration.API_URL,
-      url: path,
-      data: body ? JSON.stringify(body) : "",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + getAuthToken(),
-      },
-    })
-      .then((res) => responseHandler(res, resolve))
-      .catch(async (err) => {
-        if (attemptToRefresh && err?.status === 401) {
-          const newToken: string | null = await refreshToken();
-
-          if (newToken === null) {
-            return resolve({
-              status: 401,
-              data: null,
-            });
-          }
-
-          saveAuthToken(newToken);
-
-          api(method, path, body, false)
-            .then((res) => resolve(res))
-            .catch(() => {
-              resolve({
-                status: 401,
-                data: null,
-              });
-            });
-
-          return;
-        }
-
-        if (err?.response?.status === 401) {
-          return resolve({
-            status: 401,
-            data: null,
-          });
-        }
-
-        if (err?.response?.status === 403) {
-          return resolve({
-            status: 403,
-            data: "Not authorized",
-          });
-        }
-
-        resolve({
-          status: err?.status,
-          data: err?.response,
-        });
+  return new Promise<ApiResponse>(async (resolve, reject) => {
+    try {
+      const res = await axios({
+        method: method,
+        baseURL: AppConfiguration.API_URL,
+        url: path,
+        data: body ? JSON.stringify(body) : "",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + getAuthToken(),
+        },
       });
+
+      return responseHandler(res, resolve);
+    } catch (error: any) {
+      if (error.response) {
+        reject({
+          status: error?.response?.status,
+          message: error?.response?.data,
+        } as ApiResponse);
+      }
+    }
+
+    // axios({
+    //   method: method,
+    //   baseURL: AppConfiguration.API_URL,
+    //   url: path,
+    //   data: body ? JSON.stringify(body) : "",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: "Bearer " + getAuthToken(),
+    //   },
+    // })
+    //   .then((res) => responseHandler(res, resolve))
+    //   .catch(async (err) => {
+    //     if (attemptToRefresh && err?.status === 401) {
+    //       const newToken: string | null = await refreshToken();
+
+    //       if (newToken === null) {
+    //         return resolve({
+    //           status: 401,
+    //           data: null,
+    //         });
+    //       }
+
+    //       saveAuthToken(newToken);
+
+    //       api(method, path, body, false)
+    //         .then((res) => resolve(res))
+    //         .catch(() => {
+    //           resolve({
+    //             status: 401,
+    //             data: null,
+    //           });
+    //         });
+
+    //       return;
+    //     }
+
+    //     if (err?.response?.status === 401) {
+    //       return resolve({
+    //         status: 401,
+    //         data: null,
+    //       });
+    //     }
+
+    //     if (err?.response?.status === 403) {
+    //       return resolve({
+    //         status: 403,
+    //         data: "Not authorized",
+    //       });
+    //     }
+
+    //     resolve({
+    //       status: err?.status,
+    //       data: err?.response,
+    //     });
+    //   });
   });
 }
 

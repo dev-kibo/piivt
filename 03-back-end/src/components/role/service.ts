@@ -5,6 +5,7 @@ import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.int
 import { IAddRole } from "./dto/IAddRole";
 import RoleModel from "./model";
 import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";
+import ApiError from "../error/ApiError";
 
 class RoleModelAdapterOptions implements IModelAdapterOptions {
   loadActor: boolean;
@@ -37,7 +38,7 @@ export default class RoleService extends BaseService<RoleModel> {
   public async getAllRolesForMovie(
     id: number,
     options: RoleModelAdapterOptions = { loadActor: true }
-  ): Promise<RoleModel[] | null> {
+  ): Promise<RoleModel[] | null> | null {
     const movie = await this.services.movieService.getById(id);
 
     if (movie === null) {
@@ -80,11 +81,12 @@ export default class RoleService extends BaseService<RoleModel> {
           resolve(roles);
         }
       } catch (error) {
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-        reject(e);
+        reject(
+          new ApiError(
+            "FAILED_FETCHING_ROLES",
+            "Failed getting roles for the movie."
+          )
+        );
       }
     });
   }
@@ -92,16 +94,21 @@ export default class RoleService extends BaseService<RoleModel> {
   public async add(data: IAddRole): Promise<RoleModel> {
     return new Promise<RoleModel>(async (resolve, reject) => {
       if (!(await this.services.actorService.getById(data.actorId))) {
-        return reject({
-          code: 9404,
-          description: "Actor not found",
-        } as IErrorResponse);
+        return reject(
+          new ApiError(
+            "ACTOR_NOT_FOUND",
+            `Actor with id '${data.actorId}' not found.`
+          )
+        );
       }
+
       if (!(await this.services.movieService.getById(data.movieId))) {
-        return reject({
-          code: 9404,
-          description: "Movie not found",
-        } as IErrorResponse);
+        return reject(
+          new ApiError(
+            "MOVIE_NOT_FOUND",
+            `Movie with id '${data.movieId}' not found.`
+          )
+        );
       }
 
       const insertQuery =
@@ -117,12 +124,7 @@ export default class RoleService extends BaseService<RoleModel> {
         const insertInfo: any = result[0];
         resolve(await this.getById(+insertInfo?.insertId));
       } catch (error) {
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-
-        reject(e);
+        reject(new ApiError("ROLE_ADD_FAILED", "Failed adding new role."));
       }
     });
   }

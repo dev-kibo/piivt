@@ -4,13 +4,11 @@ import { IAddCinema } from "./dto/IAddCinema";
 import CinemaModel from "./model";
 import IErrorResponse from "../../common/IErrorResponse.interface";
 import { IUpdateCinema } from "./dto/IUpdateCinema";
-
-class CinemaModelAdapterOptions implements IModelAdapterOptionsInterface {}
-
+import ApiError from "../error/ApiError";
 export default class CinemaService extends BaseService<CinemaModel> {
   protected async adaptModel(
     row: any,
-    options: Partial<CinemaModelAdapterOptions>
+    options: Partial<IModelAdapterOptionsInterface>
   ): Promise<CinemaModel> {
     const model = new CinemaModel();
 
@@ -21,9 +19,9 @@ export default class CinemaService extends BaseService<CinemaModel> {
   }
 
   public async getAll(
-    options: Partial<CinemaModelAdapterOptions> = {}
+    options: Partial<IModelAdapterOptionsInterface> = {}
   ): Promise<CinemaModel[]> {
-    return await this.getAllFromTable<CinemaModelAdapterOptions>(
+    return await this.getAllFromTable<IModelAdapterOptionsInterface>(
       "cinema",
       options
     );
@@ -31,9 +29,9 @@ export default class CinemaService extends BaseService<CinemaModel> {
 
   public async getById(
     id: number,
-    options: Partial<CinemaModelAdapterOptions> = {}
+    options: Partial<IModelAdapterOptionsInterface> = {}
   ): Promise<CinemaModel | null> {
-    return await this.getByIdFromTable<CinemaModelAdapterOptions>(
+    return await this.getByIdFromTable<IModelAdapterOptionsInterface>(
       "cinema",
       id,
       options
@@ -51,12 +49,12 @@ export default class CinemaService extends BaseService<CinemaModel> {
 
         resolve(await this.getById(+insertInfo?.insertId));
       } catch (error) {
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-
-        reject(e);
+        reject(
+          new ApiError(
+            "CINEMA_EXISTS",
+            `Cinema with name '${data.name}' already exists.`
+          )
+        );
       }
     });
   }
@@ -64,7 +62,7 @@ export default class CinemaService extends BaseService<CinemaModel> {
   public async update(
     data: IUpdateCinema,
     id: number
-  ): Promise<CinemaModel | null> {
+  ): Promise<CinemaModel> | null {
     const cinema: CinemaModel | null = await this.getById(id);
 
     if (cinema === null) {
@@ -79,11 +77,9 @@ export default class CinemaService extends BaseService<CinemaModel> {
 
         resolve(await this.getById(id));
       } catch (error) {
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-        reject(e);
+        reject(
+          new ApiError("CINEMA_UPDATE_FAILED", "Update of cinema failed.")
+        );
       }
     });
   }

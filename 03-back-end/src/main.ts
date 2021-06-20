@@ -24,6 +24,7 @@ import AdminRouter from "./components/admin/router";
 import AuthController from "./components/auth/controller";
 import AuthRouter from "./components/auth/router";
 import ProjectionRouter from "./components/projection/router";
+import ApiError from "./components/error/ApiError";
 
 async function main() {
   const application: express.Application = express();
@@ -108,7 +109,15 @@ async function main() {
 
   application.use((err, req, res, next) => {
     console.dir(err);
-    res.status(500).send(err);
+
+    if (err instanceof ApiError) {
+      res.status(409).send({
+        code: err.code,
+        description: err.description,
+      });
+    } else {
+      res.status(500).send(err);
+    }
   });
 
   application.listen(Config.server.port);

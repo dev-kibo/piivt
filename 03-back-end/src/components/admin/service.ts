@@ -4,6 +4,7 @@ import AdminModel from "./model";
 import * as bcrypt from "bcrypt";
 import { IAddAdmin } from "./dto/IAddAdmin";
 import IErrorResponse from "../../common/IErrorResponse.interface";
+import ApiError from "../error/ApiError";
 
 export default class AdminService extends BaseService<AdminModel> {
   protected async adaptModel(
@@ -45,11 +46,7 @@ export default class AdminService extends BaseService<AdminModel> {
 
         resolve(await this.adaptModel(rows[0], options));
       } catch (error) {
-        const e: IErrorResponse = {
-          code: +error?.errno,
-          description: error?.message,
-        };
-        reject(e);
+        reject(new ApiError("FAILED_GETTING_ADMIN", "Failed getting admin."));
       }
     });
   }
@@ -68,11 +65,16 @@ export default class AdminService extends BaseService<AdminModel> {
 
         resolve(await this.getById(+insertInfo?.insertId));
       } catch (error) {
-        const e: IErrorResponse = {
-          code: +error?.errno,
-          description: error?.message,
-        };
-        reject(error);
+        if (error?.errno === 1062) {
+          return reject(
+            new ApiError(
+              "ADMIN_ALREADY_EXISTS",
+              `Admin with email '${data.email}' already exists.`
+            )
+          );
+        }
+
+        reject(new ApiError("ADMIN_ADD_FAILED", "Failed adding new admin."));
       }
     });
   }

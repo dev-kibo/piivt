@@ -1,17 +1,15 @@
 import BaseService from "../../common/BaseService";
-import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.interface";
 import ActorModel from "./model";
 import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";
 import { IAddActor } from "./dto/IAddActor";
 import IErrorResponse from "../../common/IErrorResponse.interface";
 import { IUpdateActor } from "./dto/IUpdateActor";
-
-class ActorModelAdapterOptions implements IModelAdapterOptions {}
+import ApiError from "../error/ApiError";
 
 export default class ActorService extends BaseService<ActorModel> {
   protected async adaptModel(
     data: any,
-    options: Partial<IModelAdapterOptionsInterface>
+    options: Partial<IModelAdapterOptions>
   ): Promise<ActorModel> {
     const model = new ActorModel();
 
@@ -24,14 +22,14 @@ export default class ActorService extends BaseService<ActorModel> {
   }
 
   public async getAll(
-    options: Partial<ActorModelAdapterOptions> = {}
+    options: Partial<IModelAdapterOptions> = {}
   ): Promise<ActorModel[]> {
     return await this.getAllFromTable("actor", options);
   }
 
   public async getById(
     id: number,
-    options: Partial<ActorModelAdapterOptions> = {}
+    options: Partial<IModelAdapterOptions> = {}
   ): Promise<ActorModel | null> {
     return await this.getByIdFromTable("actor", id, options);
   }
@@ -52,11 +50,14 @@ export default class ActorService extends BaseService<ActorModel> {
 
         resolve(await this.getById(+insertInfo?.insertId));
       } catch (error) {
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-        reject(e);
+        reject(
+          new ApiError(
+            "ACTOR_ALREADY_EXISTS",
+            `Actor with name '${data.firstName} ${data.middleName ?? ""} ${
+              data.lastName
+            }' already exists.`
+          )
+        );
       }
     });
   }
@@ -64,7 +65,7 @@ export default class ActorService extends BaseService<ActorModel> {
   public async update(
     data: IUpdateActor,
     id: number
-  ): Promise<ActorModel | null> {
+  ): Promise<ActorModel> | null {
     const actor: ActorModel | null = await this.getById(id);
 
     if (actor === null) {
@@ -85,11 +86,7 @@ export default class ActorService extends BaseService<ActorModel> {
 
         resolve(await this.getById(id));
       } catch (error) {
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-        reject(e);
+        reject(new ApiError("ACTOR_UPDATE_FAILED", "Updating actor failed."));
       }
     });
   }

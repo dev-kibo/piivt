@@ -2,13 +2,12 @@ import BaseService from "../../common/BaseService";
 import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.interface";
 import { IAddMovie } from "./dto/IAddMovie";
 import MovieModel from "./model";
-import IErrorResponse from "../../common/IErrorResponse.interface";
 import Config from "../../config/dev";
 import { v4 } from "uuid";
 import * as path from "path";
-import RoleModel from "../role/model";
 import sharp = require("sharp");
 import { IUpdateMovie } from "./dto/IUpdateMovie";
+import ApiError from "../error/ApiError";
 
 class MovieModelAdapterOptions implements IModelAdapterOptionsInterface {
   loadRoles: boolean;
@@ -50,6 +49,131 @@ export default class MovieService extends BaseService<MovieModel> {
     return await this.getByIdFromTable("movie", id, options);
   }
 
+  public async add(data: IAddMovie, posterFile: any): Promise<MovieModel> {
+    return new Promise<MovieModel>(async (resolve, reject) => {
+      try {
+        if (!this.isPosterValid(posterFile)) {
+          return reject(
+            new ApiError(
+              "INVALID_IMAGE",
+              "Image must be in .jpg or .png format."
+            )
+          );
+        }
+
+        await this.db.beginTransaction();
+
+        const insertQuery: string =
+          "INSERT movie SET title = ?, description = ?, released_at = ?, duration = ?;";
+
+        const result = await this.db.execute(insertQuery, [
+          data.title,
+          data.description,
+          data.releasedAt,
+          data.duration,
+        ]);
+
+        const insertInfo: any = result[0];
+        const movieId = +insertInfo?.insertId;
+
+        const posterPath = await this.uploadMoviePoster(posterFile, movieId);
+        await this.resizeUploadedPhoto(posterPath);
+
+        const updateQuery: string =
+          "UPDATE movie SET poster_path = ? WHERE movie_id = ?;";
+
+        await this.db.execute(updateQuery, [posterPath, movieId]);
+
+        await this.db.commit();
+
+        resolve(await this.getById(movieId));
+      } catch (error) {
+        await this.db.rollback();
+
+        console.log(error.errno);
+
+        if (error?.errno === 1292) {
+          return reject(
+            new ApiError(
+              "MOVIE_ADD_FAILED",
+              "Invalid date format. Date must be in yyyy-MM-dd format."
+            )
+          );
+        }
+
+        reject(new ApiError("MOVIE_ADD_FAILED", "Failed adding new movie."));
+      }
+    });
+  }
+
+  public async update(
+    data: IUpdateMovie,
+    id: number,
+    posterFile: any
+  ): Promise<MovieModel> | null {
+    const movie: MovieModel | null = await this.getById(id);
+
+    if (movie === null) {
+      return null;
+    }
+
+    return new Promise<MovieModel>(async (resolve, reject) => {
+      try {
+        if (posterFile !== null && !this.isPosterValid(posterFile)) {
+          return reject(
+            new ApiError(
+              "INVALID_IMAGE",
+              "Image must be in .jpg or .png format."
+            )
+          );
+        }
+
+        await this.db.beginTransaction();
+
+        const updateQuery: string =
+          "UPDATE movie SET title = ?, description = ?, released_at = ?, duration = ? WHERE movie_id = ?;";
+
+        await this.db.execute(updateQuery, [
+          data.title,
+          data.description,
+          data.releasedAt,
+          data.duration,
+          movie.movieId,
+        ]);
+
+        if (posterFile !== null) {
+          const posterPath = await this.uploadMoviePoster(
+            posterFile,
+            movie.movieId
+          );
+          await this.resizeUploadedPhoto(posterPath);
+
+          const updateQuery: string =
+            "UPDATE movie SET poster_path = ? WHERE movie_id = ?;";
+
+          await this.db.execute(updateQuery, [posterPath, movie.movieId]);
+        }
+
+        await this.db.commit();
+
+        resolve(await this.getById(movie.movieId));
+      } catch (error) {
+        await this.db.rollback();
+
+        if (error?.errno === 1292) {
+          return reject(
+            new ApiError(
+              "MOVIE_ADD_FAILED",
+              "Invalid date format. Date must be in yyyy-MM-dd format."
+            )
+          );
+        }
+
+        reject(new ApiError("MOVIE_ADD_FAILED", "Failed adding new movie."));
+      }
+    });
+  }
+
   private async uploadMoviePoster(file: any, movieId: number): Promise<string> {
     return new Promise<string>(async (resolve) => {
       const imagePath: string = `${
@@ -89,118 +213,5 @@ export default class MovieService extends BaseService<MovieModel> {
         })
         .toFile(resizedImagePath);
     }
-  }
-
-  public async add(data: IAddMovie, posterFile: any): Promise<MovieModel> {
-    return new Promise<MovieModel>(async (resolve, reject) => {
-      try {
-        if (!this.isPosterValid(posterFile)) {
-          const error: IErrorResponse = {
-            code: 9910,
-            description: "Image must be in jpg or png format.",
-          };
-
-          return reject(error);
-        }
-
-        await this.db.beginTransaction();
-
-        const insertQuery: string =
-          "INSERT movie SET title = ?, description = ?, released_at = ?, duration = ?;";
-
-        const result = await this.db.execute(insertQuery, [
-          data.title,
-          data.description,
-          data.releasedAt,
-          data.duration,
-        ]);
-
-        const insertInfo: any = result[0];
-        const movieId = +insertInfo?.insertId;
-
-        const posterPath = await this.uploadMoviePoster(posterFile, movieId);
-        await this.resizeUploadedPhoto(posterPath);
-
-        const updateQuery: string =
-          "UPDATE movie SET poster_path = ? WHERE movie_id = ?;";
-
-        await this.db.execute(updateQuery, [posterPath, movieId]);
-
-        await this.db.commit();
-
-        resolve(await this.getById(movieId));
-      } catch (error) {
-        await this.db.rollback();
-
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-        reject(e);
-      }
-    });
-  }
-
-  public async update(
-    data: IUpdateMovie,
-    id: number,
-    posterFile: any
-  ): Promise<MovieModel> | null {
-    const movie: MovieModel | null = await this.getById(id);
-
-    if (movie === null) {
-      return null;
-    }
-
-    return new Promise<MovieModel>(async (resolve, reject) => {
-      try {
-        if (posterFile !== null && !this.isPosterValid(posterFile)) {
-          const error: IErrorResponse = {
-            code: 9910,
-            description: "Image must be in jpg or png format.",
-          };
-
-          return reject(error);
-        }
-
-        await this.db.beginTransaction();
-
-        const updateQuery: string =
-          "UPDATE movie SET title = ?, description = ?, released_at = ?, duration = ? WHERE movie_id = ?;";
-
-        await this.db.execute(updateQuery, [
-          data.title,
-          data.description,
-          data.releasedAt,
-          data.duration,
-          movie.movieId,
-        ]);
-
-        if (posterFile !== null) {
-          const posterPath = await this.uploadMoviePoster(
-            posterFile,
-            movie.movieId
-          );
-          await this.resizeUploadedPhoto(posterPath);
-
-          const updateQuery: string =
-            "UPDATE movie SET poster_path = ? WHERE movie_id = ?;";
-
-          await this.db.execute(updateQuery, [posterPath, movie.movieId]);
-        }
-
-        await this.db.commit();
-
-        resolve(await this.getById(movie.movieId));
-      } catch (error) {
-        await this.db.rollback();
-
-        const e: IErrorResponse = {
-          code: error?.errno,
-          description: error?.message,
-        };
-        reject(e);
-      }
-    });
   }
 }

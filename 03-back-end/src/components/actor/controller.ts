@@ -1,7 +1,8 @@
 import BaseController from "../../common/BaseController";
 import { Request, Response, NextFunction } from "express";
 import ActorModel from "./model";
-import { IAddActor, IAddActorValidator } from "./dto/IAddActor";
+import IAddActor from "./dto/IAddActor";
+import IAddActorValidator from "./dto/IAddActorValidator";
 import { IUpdateActor, IUpdateActorValidator } from "./dto/IUpdateActor";
 
 export default class ActorController extends BaseController {
@@ -30,6 +31,18 @@ export default class ActorController extends BaseController {
       }
 
       res.send(actor);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getAllBySearchTerm(req: Request, res: Response, next: NextFunction) {
+    const searchTerm = "" + req.params["search"] ?? "";
+
+    try {
+      res.send(
+        await this.services.actorService.getActorsBySearchTerm(searchTerm)
+      );
     } catch (error) {
       next(error);
     }

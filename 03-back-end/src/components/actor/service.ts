@@ -1,7 +1,7 @@
 import BaseService from "../../common/BaseService";
 import ActorModel from "./model";
 import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";
-import { IAddActor } from "./dto/IAddActor";
+import IAddActor from "./dto/IAddActor";
 import { IUpdateActor } from "./dto/IUpdateActor";
 import ApiError from "../error/ApiError";
 
@@ -31,6 +31,38 @@ export default class ActorService extends BaseService<ActorModel> {
     options: Partial<IModelAdapterOptions> = {}
   ): Promise<ActorModel | null> {
     return await this.getByIdFromTable("actor", id, options);
+  }
+
+  public async getActorsBySearchTerm(
+    searchTerm: string,
+    options: IModelAdapterOptions = {}
+  ): Promise<ActorModel[]> {
+    return new Promise<ActorModel[]>(async (resolve, reject) => {
+      const query: string = `
+          SELECT 
+              * 
+          FROM 
+              actor 
+          WHERE 
+              LOWER(first_name) LIKE CONCAT('%', ?, '%') AND
+              is_deleted = 0;`;
+
+      try {
+        const [rows] = await this.db.execute(query, [searchTerm.toLowerCase()]);
+
+        const res: ActorModel[] = [];
+
+        if (Array.isArray(rows)) {
+          for (const row of rows) {
+            res.push(await this.adaptModel(row, options));
+          }
+        }
+
+        resolve(res);
+      } catch (error) {
+        reject(new ApiError("ACTOR_SEARCH_FAILED", "Failed actor search."));
+      }
+    });
   }
 
   public async add(data: IAddActor): Promise<ActorModel> {
@@ -85,6 +117,17 @@ export default class ActorService extends BaseService<ActorModel> {
 
         resolve(await this.getById(id));
       } catch (error) {
+        if (error?.errno === 1062) {
+          return reject(
+            new ApiError(
+              "ACTOR_ALREADY_EXISTS",
+              `Actor with name '${data.firstName} ${data.middleName ?? ""} ${
+                data.lastName
+              }' already exists.`
+            )
+          );
+        }
+
         reject(new ApiError("ACTOR_UPDATE_FAILED", "Updating actor failed."));
       }
     });

@@ -1,12 +1,6 @@
 import Ajv from "ajv";
 
-interface IUpdateActor {
-  firstName: string;
-  middleName?: string | null;
-  lastName: string;
-}
-
-const IUpdateActorValidator = new Ajv().compile({
+const IAddActorValidator = new Ajv().compile({
   type: "object",
   properties: {
     firstName: {
@@ -27,4 +21,4 @@ const IUpdateActorValidator = new Ajv().compile({
   additionalProperties: false,
 });
 
-export { IUpdateActor, IUpdateActorValidator };
+export default IAddActorValidator;

@@ -29,6 +29,7 @@ import RepertoireEditPage from "../Dashboard/Repertoire/RepertoireEditPage";
 import MoviePage from "../MoviePage/MoviePage";
 import Navigation from "../Navigation/Navigation";
 import CinemaSearch from "../Dashboard/Cinema/CinemaSearch";
+import ActorSearch from "../Dashboard/Actor/ActorSearch";
 
 export default function Application() {
   return (
@@ -67,7 +68,6 @@ export default function Application() {
             path="/dashboard/cinemas/edit/:id"
             component={CinemaEditSelectedPage}
           />
-
           <Route
             exact
             path="/dashboard/cinemas/delete"
@@ -138,23 +138,16 @@ export default function Application() {
             component={MovieDeleteSelectedPage}
           />
           <Route exact path="/dashboard/actors" component={ActorPage} />
-          <Route
-            path="/dashboard/actors/add"
-            render={() => (
-              <BaseFormPage form={ActorAddPage} title="Add new actor" />
-            )}
-          />
+          <Route path="/dashboard/actors/add" component={ActorAddPage} />
           <Route
             exact
             path="/dashboard/actors/edit"
             render={() => (
-              <BaseDashboardListPage
+              <ActorSearch
                 item={DashboardLink}
-                relativePath="/dashboard/actors/edit/3"
+                relativePath="/dashboard/actors/edit"
                 searchLabel="Search actors"
                 title="Edit actor"
-                action="get"
-                type="actor"
               />
             )}
           />

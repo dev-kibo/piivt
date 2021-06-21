@@ -14,6 +14,17 @@ export default class ProjectionService {
     });
   }
 
+  public static async getById(id: number): Promise<ProjectionModel> {
+    return new Promise<ProjectionModel>(async (resolve, reject) => {
+      try {
+        const res = await api("get", `/projections/${id}`);
+        resolve(res.data as ProjectionModel);
+      } catch (error) {
+        reject(error as ApiResponse);
+      }
+    });
+  }
+
   public static async searchProjections(
     searchTerm: string
   ): Promise<ProjectionModel[]> {

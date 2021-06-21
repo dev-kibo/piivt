@@ -25,6 +25,10 @@ export default class ProjectionService extends BaseService<ProjectionModel> {
     return await this.getAllFromTable("projection");
   }
 
+  public async getById(id: number): Promise<ProjectionModel> {
+    return await this.getByIdFromTable("projection", id);
+  }
+
   public async getAllRepertoireProjections(
     id: number
   ): Promise<ProjectionModel[]> | null {

@@ -11,6 +11,27 @@ export default class ProjectionController extends BaseController {
     }
   }
 
+  async getById(req: Request, res: Response, next: NextFunction) {
+    const id: number = +req.params.id;
+
+    if (id <= 0) {
+      return res.status(400).send("Invalid ID number");
+    }
+
+    try {
+      const projection: ProjectionModel | null =
+        await this.services.projectionService.getById(id);
+
+      if (projection === null) {
+        return res.sendStatus(404);
+      }
+
+      res.send(projection);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getAllBySearchTerm(req: Request, res: Response, next: NextFunction) {
     const searchTerm = "" + req.params["search"] ?? "";
 

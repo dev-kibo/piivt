@@ -173,28 +173,9 @@ export default function Application() {
               />
             )}
           />
-          {/* <Route
-            exact
-            path="/dashboard/projections"
-            render={() => (
-              <BaseDashboardListPage
-                item={DashboardLink}
-                relativePath="/dashboard/projections/edit/3"
-                searchLabel="Search projections"
-                title="Projections"
-                action="get"
-                type="projection"
-              />
-            )}
-          /> */}
           <Route
             path="/dashboard/projections/edit/:id"
-            render={() => (
-              <BaseFormPage
-                form={ProjectionEditSelectedPage}
-                title="Projection of Title (1989)"
-              />
-            )}
+            component={ProjectionEditSelectedPage}
           />
           <Route
             exact

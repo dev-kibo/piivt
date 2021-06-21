@@ -3,24 +3,14 @@ import { Row, Col, Form } from "react-bootstrap";
 import ProjectionModel from "../../../../../03-back-end/src/components/projection/model";
 import BaseLink from "../BaseLink";
 import ProjectionService from "../../../services/ProjectionService";
-import CinemaModel from "../../../../../03-back-end/src/components/cinema/model";
-import MovieModel from "../../../../../03-back-end/src/components/movie/model";
-import MovieService from "../../../services/MovieService";
-import CinemaService from "../../../services/CinemaService";
+import IData from "./IData";
+import ProjectionUtility from "./ProjectionUtility";
 
 interface ICinemaSearchProps {
   title: string;
   searchLabel: string;
   item: typeof BaseLink;
   relativePath: string;
-}
-
-interface IData {
-  cinema: CinemaModel;
-  movie: MovieModel;
-  startsAt: string;
-  endsAt: string;
-  projectionId: number;
 }
 
 export default function ProjectionSearchPage({
@@ -36,7 +26,7 @@ export default function ProjectionSearchPage({
     async function fetch() {
       try {
         const res: ProjectionModel[] = await ProjectionService.getAll();
-        const mappedData = await mapData(res);
+        const mappedData = await ProjectionUtility.mapData(res);
 
         setData(mappedData);
       } catch (error) {
@@ -46,34 +36,13 @@ export default function ProjectionSearchPage({
     fetch();
   }, []);
 
-  const mapData = async (data: ProjectionModel[]): Promise<IData[]> => {
-    const mappedData: IData[] = [];
-
-    for (const result of data) {
-      const movie: MovieModel = await MovieService.getMovieById(result.movieId);
-      const cinema: CinemaModel = await CinemaService.getCinemaById(
-        result.cinemaId
-      );
-
-      mappedData.push({
-        cinema,
-        movie,
-        startsAt: result.startsAt,
-        endsAt: result.endsAt,
-        projectionId: result.projectionId,
-      });
-    }
-
-    return mappedData;
-  };
-
   const handleSearch = async (e: string) => {
     setSearch(e);
 
     if (e.length > 0) {
       try {
         const res = await ProjectionService.searchProjections(e);
-        const mappedData = await mapData(res);
+        const mappedData = await ProjectionUtility.mapData(res);
 
         setData(mappedData);
       } catch (error) {
@@ -81,7 +50,7 @@ export default function ProjectionSearchPage({
       }
     } else {
       const res = await ProjectionService.getAll();
-      const mappedData = await mapData(res);
+      const mappedData = await ProjectionUtility.mapData(res);
 
       setData(mappedData);
     }

@@ -60,14 +60,6 @@ export default function Application() {
                 item={DashboardLink}
                 searchLabel="Search cinemas"
               />
-              // <BaseDashboardListPage
-              //   relativePath="/dashboard/cinemas/edit"
-              //   title="Edit cinema"
-              //   item={DashboardLink}
-              //   searchLabel="Search cinemas"
-              //   type="cinema"
-              //   action="get"
-              // />
             )}
           />
           <Route
@@ -75,16 +67,7 @@ export default function Application() {
             path="/dashboard/cinemas/edit/:id"
             component={CinemaEditSelectedPage}
           />
-          {/* <Route
-            exact
-            path="/dashboard/cinemas/edit/:id"
-            render={() => (
-              <BaseFormPage
-                title="Edit cinema 1"
-                form={CinemaEditSelectedPage}
-              />
-            )}
-          /> */}
+
           <Route
             exact
             path="/dashboard/cinemas/delete"
@@ -95,14 +78,6 @@ export default function Application() {
                 item={DashboardLink}
                 searchLabel="Search cinemas"
               />
-              // <BaseDashboardListPage
-              //   relativePath="/dashboard/cinemas/delete/3"
-              //   title="Delete cinema"
-              //   item={DashboardLink}
-              //   searchLabel="Search cinemas"
-              //   type="cinema"
-              //   action="delete"
-              // />
             )}
           />
           <Route

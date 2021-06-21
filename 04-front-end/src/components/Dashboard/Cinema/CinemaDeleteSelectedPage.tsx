@@ -27,9 +27,11 @@ export default function CinemaDeleteSelectedPage() {
     e.preventDefault();
 
     try {
-      const res = await CinemaService.deleteCinema(+id);
+      const status: number = await CinemaService.deleteCinema(+id);
 
-      if (res.status === 204) {
+      console.log(status);
+
+      if (status === 204) {
         setStatus("success");
       }
     } catch (error) {
@@ -59,6 +61,13 @@ export default function CinemaDeleteSelectedPage() {
           <Col>
             <Alert variant="success">
               <Alert.Heading>Deleted successfully.</Alert.Heading>
+              <Button
+                variant="link"
+                className="alert-link"
+                onClick={(e) => goBack(e)}
+              >
+                Click here to go back.
+              </Button>
             </Alert>
           </Col>
         </Row>

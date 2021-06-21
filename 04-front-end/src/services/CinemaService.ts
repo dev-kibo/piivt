@@ -61,11 +61,11 @@ export default class CinemaService {
     });
   }
 
-  public static async deleteCinema(id: number): Promise<ApiResponse> {
-    return new Promise<ApiResponse>(async (resolve, reject) => {
+  public static async deleteCinema(id: number): Promise<number> {
+    return new Promise<number>(async (resolve, reject) => {
       try {
         const res = await api("delete", `/cinemas/${id}`);
-        resolve(res.data as ApiResponse);
+        resolve(res.status);
       } catch (error) {
         reject(error as ApiResponse);
       }

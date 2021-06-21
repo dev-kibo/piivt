@@ -4,10 +4,7 @@ import { useParams } from "react-router-dom";
 import MovieService from "../../services/MovieService";
 import MovieModel from "../../../../03-back-end/src/components/movie/model";
 import MoviePageInfo from "./MoviePageInfo";
-
-interface IParams {
-  id: string;
-}
+import IParams from "../Common/IParams";
 
 interface IMoviePageProps {
   component: React.ComponentType<any>;

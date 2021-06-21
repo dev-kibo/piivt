@@ -45,7 +45,7 @@ export default class CinemaService extends BaseService<CinemaModel> {
   ): Promise<CinemaModel[]> {
     return new Promise<CinemaModel[]>(async (resolve, reject) => {
       const query: string =
-        "SELECT * FROM cinema WHERE LOWER(name) LIKE CONCAT('%', ?, '%');";
+        "SELECT * FROM cinema WHERE LOWER(name) LIKE CONCAT('%', ?, '%') AND is_deleted = 0;";
 
       try {
         const [rows] = await this.db.execute(query, [searchTerm.toLowerCase()]);
@@ -107,6 +107,25 @@ export default class CinemaService extends BaseService<CinemaModel> {
         reject(
           new ApiError("CINEMA_UPDATE_FAILED", "Update of cinema failed.")
         );
+      }
+    });
+  }
+
+  public async deleteCinema(id: number): Promise<boolean> | null {
+    if (!(await this.getById(id))) {
+      return null;
+    }
+
+    return new Promise(async (resolve, reject) => {
+      const query: string =
+        "UPDATE cinema SET is_deleted = 1 WHERE cinema_id = ?;";
+
+      try {
+        await this.db.execute(query, [id]);
+
+        resolve(true);
+      } catch (error) {
+        reject(new ApiError("DELETE_FAILED", "Failed deleting cinema."));
       }
     });
   }

@@ -28,11 +28,12 @@ import RepertoireAddPage from "../Dashboard/Repertoire/RepertoireAddPage";
 import RepertoireEditPage from "../Dashboard/Repertoire/RepertoireEditPage";
 import MoviePage from "../MoviePage/MoviePage";
 import Navigation from "../Navigation/Navigation";
+import CinemaSearch from "../Dashboard/Cinema/CinemaSearch";
 
 export default function Application() {
   return (
     <>
-      <Navigation />
+      {/* <Navigation /> */}
       <Container className="Application p-4 vh-100 min-vh-100">
         <Switch>
           <Route exact path="/" component={HomePage} />
@@ -48,27 +49,33 @@ export default function Application() {
           <Route path="/admin" component={SignInPage} />
           <Route exact path="/dashboard" component={DashboardPage} />
           <Route exact path="/dashboard/cinemas" component={CinemaPage} />
-          <Route
-            path="/dashboard/cinemas/add"
-            render={() => (
-              <BaseFormPage form={CinemaAddPage} title="Add new cinema" />
-            )}
-          />
+          <Route path="/dashboard/cinemas/add" component={CinemaAddPage} />
           <Route
             exact
             path="/dashboard/cinemas/edit"
             render={() => (
-              <BaseDashboardListPage
+              <CinemaSearch
                 relativePath="/dashboard/cinemas/edit"
                 title="Edit cinema"
                 item={DashboardLink}
                 searchLabel="Search cinemas"
-                type="cinema"
-                action="get"
               />
+              // <BaseDashboardListPage
+              //   relativePath="/dashboard/cinemas/edit"
+              //   title="Edit cinema"
+              //   item={DashboardLink}
+              //   searchLabel="Search cinemas"
+              //   type="cinema"
+              //   action="get"
+              // />
             )}
           />
           <Route
+            exact
+            path="/dashboard/cinemas/edit/:id"
+            component={CinemaEditSelectedPage}
+          />
+          {/* <Route
             exact
             path="/dashboard/cinemas/edit/:id"
             render={() => (
@@ -77,19 +84,25 @@ export default function Application() {
                 form={CinemaEditSelectedPage}
               />
             )}
-          />
+          /> */}
           <Route
             exact
             path="/dashboard/cinemas/delete"
             render={() => (
-              <BaseDashboardListPage
-                relativePath="/dashboard/cinemas/delete/3"
+              <CinemaSearch
+                relativePath="/dashboard/cinemas/delete"
                 title="Delete cinema"
                 item={DashboardLink}
                 searchLabel="Search cinemas"
-                type="cinema"
-                action="delete"
               />
+              // <BaseDashboardListPage
+              //   relativePath="/dashboard/cinemas/delete/3"
+              //   title="Delete cinema"
+              //   item={DashboardLink}
+              //   searchLabel="Search cinemas"
+              //   type="cinema"
+              //   action="delete"
+              // />
             )}
           />
           <Route

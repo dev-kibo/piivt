@@ -1,39 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
-import BaseLink from "../Dashboard/BaseLink";
-import CinemaService from "../../services/CinemaService";
-import CinemaModel from "../../../../03-back-end/src/components/cinema/model";
+import CinemaModel from "../../../../../03-back-end/src/components/cinema/model";
+import CinemaService from "../../../services/CinemaService";
+import BaseLink from "../BaseLink";
 
-interface IBaseDashboardListPageProps {
+interface ICinemaSearchProps {
   title: string;
-  relativePath: string;
   searchLabel: string;
   item: typeof BaseLink;
-  type: "cinema" | "movie" | "actor" | "projection" | "repertoire";
-  action: "get" | "delete";
+  relativePath: string;
 }
 
-export default function BaseDashboardListPage({
+export default function CinemaSearch({
   title,
   relativePath,
   searchLabel,
   item: Item,
-  type,
-  action,
-}: IBaseDashboardListPageProps) {
+}: ICinemaSearchProps) {
   const [data, setData] = useState<CinemaModel[]>([]);
   const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
-    switch (type) {
-      case "cinema":
-        handleAction(action);
-        break;
-    }
-  }, [type, action]);
-
-  const handleAction = async (action: "get" | "delete") => {
-    if (action === "get") {
+    async function fetch() {
       try {
         const res = await CinemaService.getAllCinemas();
 
@@ -42,7 +30,8 @@ export default function BaseDashboardListPage({
         console.log(error);
       }
     }
-  };
+    fetch();
+  }, []);
 
   const handleSearch = async (e: string) => {
     setSearch(e);

@@ -24,5 +24,9 @@ export default class CinemaRouter implements IRouter {
       "/cinemas/:id",
       cinemaController.update.bind(cinemaController)
     );
+    application.delete(
+      "/cinemas/:id",
+      cinemaController.delete.bind(cinemaController)
+    );
   }
 }

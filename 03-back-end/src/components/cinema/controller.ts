@@ -89,4 +89,27 @@ export default class CinemaController extends BaseController {
       next(error);
     }
   }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    const id = +req.params?.id;
+
+    if (id <= 0) {
+      return res.status(400).send("Invalid ID number.");
+    }
+
+    try {
+      const result: boolean | null =
+        await this.services.cinemaService.deleteCinema(id);
+
+      if (result === null) {
+        return res.sendStatus(404);
+      }
+
+      if (result) {
+        return res.sendStatus(204);
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
 }

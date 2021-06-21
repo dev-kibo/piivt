@@ -41,39 +41,71 @@ export default function CinemaAddPage() {
       setName("");
     }
   };
+  // Template
+  /* <Row className="justify-content-center">
+          <Col>
+            <Row>
+              <Col className="text-center">
+                <p className="display-4">{title}</p>
+              </Col>
+            </Row>
+            <Row className="mt-5 justify-content-center">
+              <Col>
+                <FormComponent />
+              </Col>
+            </Row>
+          </Col>
+        </Row> */
 
   return (
-    <Row xs={1} md={2} lg={3} className="justify-content-center">
+    <Row className="justify-content-center h-100 align-items-center">
       <Col>
-        {isAlertShown ? (
-          <CustomAlert
-            message={message}
-            setIsAlertShown={setIsAlertShown}
-            variant={alertVariant}
-          />
-        ) : (
-          ""
-        )}
-        <Form onSubmit={(e) => handleSubmit(e)}>
-          <Form.Group>
-            <Form.Label>Cinema name:</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter name"
-              size="lg"
-              onChange={handleChange}
-              value={name}
-            />
-          </Form.Group>
-          <Button
-            variant="primary"
-            type="submit"
-            className="w-100 mt-4"
-            disabled={isDisabled}
-          >
-            Add
-          </Button>
-        </Form>
+        <Row className="justify-content-center">
+          <Col>
+            <Row>
+              <Col className="text-center">
+                <p className="display-4">Add new cinema</p>
+              </Col>
+            </Row>
+            <Row className="mt-5 justify-content-center">
+              <Col>
+                <Row xs={1} md={2} lg={3} className="justify-content-center">
+                  <Col>
+                    {isAlertShown ? (
+                      <CustomAlert
+                        message={message}
+                        setIsAlertShown={setIsAlertShown}
+                        variant={alertVariant}
+                      />
+                    ) : (
+                      ""
+                    )}
+                    <Form onSubmit={(e) => handleSubmit(e)}>
+                      <Form.Group>
+                        <Form.Label>Cinema name:</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter name"
+                          size="lg"
+                          onChange={handleChange}
+                          value={name}
+                        />
+                      </Form.Group>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        className="w-100 mt-4"
+                        disabled={isDisabled}
+                      >
+                        Add
+                      </Button>
+                    </Form>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       </Col>
     </Row>
   );

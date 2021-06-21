@@ -30,7 +30,7 @@ export default abstract class BaseService<ReturnModel extends IModel> {
     options: Partial<AdapterOptions> = {}
   ): Promise<ReturnModel[]> {
     return new Promise<ReturnModel[]>(async (resolve, reject) => {
-      const query: string = `SELECT * FROM ${tableName};`;
+      const query: string = `SELECT * FROM ${tableName} WHERE is_deleted = 0;`;
 
       try {
         const [rows] = await this.db.execute(query);
@@ -58,7 +58,7 @@ export default abstract class BaseService<ReturnModel extends IModel> {
     options: Partial<AdapterOptions> = {}
   ): Promise<ReturnModel | null> {
     return new Promise<ReturnModel | null>(async (resolve, reject) => {
-      const query: string = `SELECT * FROM ${tableName} WHERE ${tableName}_id = ?;`;
+      const query: string = `SELECT * FROM ${tableName} WHERE ${tableName}_id = ? AND is_deleted = 0;`;
 
       try {
         const [rows] = await this.db.execute(query, [id]);

@@ -28,7 +28,7 @@ export default class CinemaService {
   ): Promise<CinemaModel[]> {
     return new Promise<CinemaModel[]>(async (resolve, reject) => {
       try {
-        const res = await api("get", `/cinemas?search=${searchTerm}`);
+        const res = await api("get", `/cinemas/search/${searchTerm}`);
         resolve(res.data as CinemaModel[]);
       } catch (error) {
         reject(error as ApiResponse);
@@ -41,6 +41,31 @@ export default class CinemaService {
       try {
         const res = await api("post", "/cinemas", data);
         resolve(res.data as CinemaModel);
+      } catch (error) {
+        reject(error as ApiResponse);
+      }
+    });
+  }
+
+  public static async editCinema(
+    id: number,
+    data: IAddCinema
+  ): Promise<CinemaModel> {
+    return new Promise<CinemaModel>(async (resolve, reject) => {
+      try {
+        const res = await api("put", `/cinemas/${id}`, data);
+        resolve(res.data as CinemaModel);
+      } catch (error) {
+        reject(error as ApiResponse);
+      }
+    });
+  }
+
+  public static async deleteCinema(id: number): Promise<ApiResponse> {
+    return new Promise<ApiResponse>(async (resolve, reject) => {
+      try {
+        const res = await api("delete", `/cinemas/${id}`);
+        resolve(res.data as ApiResponse);
       } catch (error) {
         reject(error as ApiResponse);
       }

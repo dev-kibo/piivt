@@ -3,6 +3,28 @@ import BaseController from "../../common/BaseController";
 import ProjectionModel from "./model";
 
 export default class ProjectionController extends BaseController {
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.send(await this.services.projectionService.getAll());
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getAllBySearchTerm(req: Request, res: Response, next: NextFunction) {
+    const searchTerm = "" + req.params["search"] ?? "";
+
+    try {
+      res.send(
+        await this.services.projectionService.getAllProjectionsThatMatchSearchTerm(
+          searchTerm
+        )
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getAllProjectionsForMovie(
     req: Request,
     res: Response,

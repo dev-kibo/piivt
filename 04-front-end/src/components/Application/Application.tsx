@@ -30,6 +30,7 @@ import MoviePage from "../MoviePage/MoviePage";
 import Navigation from "../Navigation/Navigation";
 import CinemaSearch from "../Dashboard/Cinema/CinemaSearch";
 import ActorSearch from "../Dashboard/Actor/ActorSearch";
+import ProjectionSearchPage from "../Dashboard/Projection/ProjectionSearchPage";
 
 export default function Application() {
   return (
@@ -164,6 +165,18 @@ export default function Application() {
             exact
             path="/dashboard/projections"
             render={() => (
+              <ProjectionSearchPage
+                item={DashboardLink}
+                relativePath="/dashboard/projections/edit"
+                searchLabel="Search projections"
+                title="Projections"
+              />
+            )}
+          />
+          {/* <Route
+            exact
+            path="/dashboard/projections"
+            render={() => (
               <BaseDashboardListPage
                 item={DashboardLink}
                 relativePath="/dashboard/projections/edit/3"
@@ -173,7 +186,7 @@ export default function Application() {
                 type="projection"
               />
             )}
-          />
+          /> */}
           <Route
             path="/dashboard/projections/edit/:id"
             render={() => (

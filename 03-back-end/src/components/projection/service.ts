@@ -3,6 +3,7 @@ import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.int
 import { IAddProjection } from "./dto/IAddProjection";
 import ProjectionModel from "./model";
 import ApiError from "../error/ApiError";
+import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";
 
 export default class ProjectionService extends BaseService<ProjectionModel> {
   protected async adaptModel(
@@ -53,6 +54,41 @@ export default class ProjectionService extends BaseService<ProjectionModel> {
             "FAILED_GETTING_PROJECTIONS",
             "Failed getting projections."
           )
+        );
+      }
+    });
+  }
+
+  public async getAllProjectionsThatMatchSearchTerm(
+    searchTerm: string,
+    options: IModelAdapterOptions = {}
+  ): Promise<ProjectionModel[]> {
+    return new Promise<ProjectionModel[]>(async (resolve, reject) => {
+      const query: string = `
+                            SELECT
+                                *
+                            FROM
+                                projection
+                                INNER  JOIN movie on projection.movie_id = movie.movie_id
+                            WHERE
+                                movie.title LIKE CONCAT('%', ?, '%') AND
+                                projection.is_deleted = 0`;
+
+      try {
+        const [rows] = await this.db.execute(query, [searchTerm.toLowerCase()]);
+
+        const res: ProjectionModel[] = [];
+
+        if (Array.isArray(rows)) {
+          for (const row of rows) {
+            res.push(await this.adaptModel(row, options));
+          }
+        }
+
+        resolve(res);
+      } catch (error) {
+        reject(
+          new ApiError("PROJECTION_SEARCH_FAILED", "Failed projection search.")
         );
       }
     });

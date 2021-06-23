@@ -11,6 +11,14 @@ interface IAddMovie {
   poster: Blob;
 }
 
+interface IUpdateMovie {
+  title: string;
+  description: string;
+  releaseDate: string;
+  duration: number;
+  poster?: Blob;
+}
+
 interface IAddRole {
   movieId: number;
   actorId: number;
@@ -29,9 +37,18 @@ export default class MovieService {
     });
   }
 
-  public static async getMovieById(id: number): Promise<MovieModel> {
+  public static async getMovieById(
+    id: number,
+    loadRoles?: boolean
+  ): Promise<MovieModel> {
     return new Promise<MovieModel>(async (resolve, reject) => {
-      const res = await api("get", `/movies/${id}`);
+      let endpoint: string = `/movies/${id}`;
+
+      if (loadRoles) {
+        endpoint = `${endpoint}/roles`;
+      }
+
+      const res = await api("get", endpoint);
       resolve(res.data as MovieModel);
     });
   }
@@ -73,6 +90,33 @@ export default class MovieService {
         data.append("poster", poster);
 
         const res = await apiAsForm("post", "/movies", data);
+        resolve(res.data as MovieModel);
+      } catch (error) {
+        reject(error as ApiResponse);
+      }
+    });
+  }
+
+  public static async update({
+    title,
+    description,
+    releaseDate,
+    duration,
+    poster,
+  }: IUpdateMovie): Promise<MovieModel> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = new FormData();
+        data.append("title", title);
+        data.append("description", description);
+        data.append("releasedAt", releaseDate);
+        data.append("duration", "" + duration);
+
+        if (poster) {
+          data.append("poster", poster);
+        }
+
+        const res = await apiAsForm("put", "/movies", data);
         resolve(res.data as MovieModel);
       } catch (error) {
         reject(error as ApiResponse);

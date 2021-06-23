@@ -3,6 +3,7 @@ import { IAddRole } from "./dto/IAddRole";
 import RoleModel from "./model";
 import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";
 import ApiError from "../error/ApiError";
+import { IUpdateRole } from "./dto/IUpdateRole";
 
 class RoleModelAdapterOptions implements IModelAdapterOptions {
   loadActor: boolean;
@@ -122,6 +123,28 @@ export default class RoleService extends BaseService<RoleModel> {
         resolve(await this.getById(+insertInfo?.insertId));
       } catch (error) {
         reject(new ApiError("ROLE_ADD_FAILED", "Failed adding new role."));
+      }
+    });
+  }
+
+  public async update(
+    id: number,
+    data: IUpdateRole
+  ): Promise<RoleModel> | null {
+    if (!(await this.getById(id))) {
+      return null;
+    }
+    return new Promise<RoleModel>(async (resolve, reject) => {
+      const query =
+        "UPDATE movie_actor SET role_name = ? WHERE movie_actor_id = ?;";
+
+      try {
+        await this.db.execute(query, [data.role, id]);
+
+        resolve(await this.getById(id));
+      } catch (error) {
+        console.log(error.message);
+        reject(new ApiError("ROLE_UPDATE_FAILED", "Failed updating role."));
       }
     });
   }

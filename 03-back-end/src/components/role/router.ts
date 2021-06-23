@@ -8,5 +8,6 @@ export default class RoleRouter implements IRouter {
     const roleController: RoleController = new RoleController(resources);
 
     application.post("/roles", roleController.add.bind(roleController));
+    application.put("/roles/:id", roleController.update.bind(roleController));
   }
 }

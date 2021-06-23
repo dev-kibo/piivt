@@ -106,12 +106,7 @@ export default function Application() {
           />
           <Route
             path="/dashboard/movies/edit/:id"
-            render={() => (
-              <BaseFormPage
-                form={MovieEditSelectedPage}
-                title="Edit Title (1989)"
-              />
-            )}
+            component={MovieEditSelectedPage}
           />
           <Route
             exact

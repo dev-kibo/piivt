@@ -172,7 +172,7 @@ export default function MovieAddPage() {
           <Col>
             <Row>
               <Col className="text-center">
-                <p className="display-4">Add new cinema</p>
+                <p className="display-4">Add new movie</p>
               </Col>
             </Row>
             <Row className="mt-5 justify-content-center">

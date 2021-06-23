@@ -58,6 +58,16 @@ export default class MovieController extends BaseController {
     }
   }
 
+  async searchByTitle(req: Request, res: Response, next: NextFunction) {
+    const searchTerm = "" + req.params["search"] ?? "";
+
+    try {
+      res.send(await this.services.movieService.getByTitle(searchTerm));
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async add(req: Request, res: Response, next: NextFunction) {
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).send("You must upload image poster.");

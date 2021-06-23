@@ -18,10 +18,34 @@ interface IAddRole {
 }
 
 export default class MovieService {
+  public static async getAll(): Promise<MovieModel[]> {
+    return new Promise<MovieModel[]>(async (resolve, reject) => {
+      try {
+        const res = await api("get", "/movies");
+        resolve(res.data as MovieModel[]);
+      } catch (error) {
+        reject(error as ApiResponse);
+      }
+    });
+  }
+
   public static async getMovieById(id: number): Promise<MovieModel> {
     return new Promise<MovieModel>(async (resolve, reject) => {
       const res = await api("get", `/movies/${id}`);
       resolve(res.data as MovieModel);
+    });
+  }
+
+  public static async getBySearchTerm(
+    searchTerm: string
+  ): Promise<MovieModel[]> {
+    return new Promise<MovieModel[]>(async (resolve, reject) => {
+      try {
+        const res = await api("get", `/movies/search/${searchTerm}`);
+        resolve(res.data as MovieModel[]);
+      } catch (error) {
+        reject(error as ApiResponse);
+      }
     });
   }
 

@@ -49,6 +49,32 @@ export default class MovieService extends BaseService<MovieModel> {
     return await this.getByIdFromTable("movie", id, options);
   }
 
+  public async getByTitle(
+    searchTerm: string,
+    options: MovieModelAdapterOptions = { loadRoles: false }
+  ): Promise<MovieModel[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const query: string =
+          "SELECT * FROM movie WHERE title LIKE CONCAT('%', ?, '%');";
+
+        const [rows] = await this.db.execute(query, [searchTerm]);
+
+        const results: MovieModel[] = [];
+
+        if (Array.isArray(rows)) {
+          for (const row of rows) {
+            results.push(await this.adaptModel(row, options));
+          }
+        }
+
+        resolve(results);
+      } catch (error) {
+        reject(new ApiError("FAILED_MOVIE_SEARCH", "Failed searching movies."));
+      }
+    });
+  }
+
   public async add(data: IAddMovie, posterFile: any): Promise<MovieModel> {
     return new Promise<MovieModel>(async (resolve, reject) => {
       try {

@@ -31,6 +31,7 @@ import Navigation from "../Navigation/Navigation";
 import CinemaSearch from "../Dashboard/Cinema/CinemaSearch";
 import ActorSearch from "../Dashboard/Actor/ActorSearch";
 import ProjectionSearchPage from "../Dashboard/Projection/ProjectionSearchPage";
+import MovieSearchPage from "../Dashboard/Movie/MovieSearchPage";
 
 export default function Application() {
   return (
@@ -90,23 +91,16 @@ export default function Application() {
             path="/dashboard/movies"
             component={MovieOperationsPage}
           />
-          <Route
-            path="/dashboard/movies/add"
-            render={() => (
-              <BaseFormPage title="Add new movie" form={MovieAddPage} />
-            )}
-          />
+          <Route path="/dashboard/movies/add" component={MovieAddPage} />
           <Route
             exact
             path="/dashboard/movies/edit"
             render={() => (
-              <BaseDashboardListPage
+              <MovieSearchPage
+                relativePath="/dashboard/movies/edit"
                 title="Edit movie"
-                relativePath="/dashboard/movies/edit/3"
                 item={MovieListItem}
                 searchLabel="Search movies"
-                type="movie"
-                action="get"
               />
             )}
           />

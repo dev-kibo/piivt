@@ -9,5 +9,9 @@ export default class RoleRouter implements IRouter {
 
     application.post("/roles", roleController.add.bind(roleController));
     application.put("/roles/:id", roleController.update.bind(roleController));
+    application.delete(
+      "/roles/:id",
+      roleController.delete.bind(roleController)
+    );
   }
 }

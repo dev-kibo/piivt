@@ -148,4 +148,22 @@ export default class RoleService extends BaseService<RoleModel> {
       }
     });
   }
+
+  public async delete(id: number): Promise<boolean> | null {
+    if (!(await this.getById(id))) {
+      return null;
+    }
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        const query: string =
+          "UPDATE movie_actor SET is_deleted = 1 WHERE movie_actor_id = ?;";
+        const result = await this.db.execute(query, [id]);
+
+        resolve(true);
+      } catch (error) {
+        reject(new ApiError("DELETE_FAILED", "Failed deleting role."));
+      }
+    });
+  }
 }

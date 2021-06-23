@@ -45,4 +45,24 @@ export default class RoleController extends BaseController {
       next(error);
     }
   }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    const id = +req.params?.id;
+
+    if (id <= 0) {
+      return res.status(400).send("Invalid ID number");
+    }
+
+    try {
+      const result = await this.services.roleService.delete(id);
+
+      if (result === null) {
+        return res.sendStatus(404);
+      }
+
+      res.sendStatus(204);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

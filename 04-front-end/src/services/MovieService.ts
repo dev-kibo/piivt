@@ -25,6 +25,13 @@ interface IAddRole {
   role: string;
 }
 
+interface IUpdateRole {
+  roleId: string;
+  role: string;
+  actorId: number;
+  movieId: number;
+}
+
 export default class MovieService {
   public static async getAll(): Promise<MovieModel[]> {
     return new Promise<MovieModel[]>(async (resolve, reject) => {
@@ -97,13 +104,10 @@ export default class MovieService {
     });
   }
 
-  public static async update({
-    title,
-    description,
-    releaseDate,
-    duration,
-    poster,
-  }: IUpdateMovie): Promise<MovieModel> {
+  public static async update(
+    movieId: number,
+    { title, description, releaseDate, duration, poster }: IUpdateMovie
+  ): Promise<MovieModel> {
     return new Promise(async (resolve, reject) => {
       try {
         const data = new FormData();
@@ -116,7 +120,7 @@ export default class MovieService {
           data.append("poster", poster);
         }
 
-        const res = await apiAsForm("put", "/movies", data);
+        const res = await apiAsForm("put", `/movies/${movieId}`, data);
         resolve(res.data as MovieModel);
       } catch (error) {
         reject(error as ApiResponse);
@@ -133,6 +137,40 @@ export default class MovieService {
 
         for (const role of data) {
           const response = await api("post", "/roles", role);
+          result.push(response.data as RoleModel);
+        }
+
+        resolve(result);
+      } catch (error) {
+        reject(error as ApiResponse);
+      }
+    });
+  }
+
+  public static async updateRolesForMovie(
+    data: IUpdateRole[]
+  ): Promise<RoleModel[]> {
+    return new Promise(async (resolve, reject) => {
+      // console.log(data);
+      try {
+        const result: RoleModel[] = [];
+
+        for (const role of data) {
+          let response: ApiResponse;
+
+          console.log(`ROLE - ${role.roleId}`, Number.isNaN(role.roleId));
+
+          if (Number.isInteger(role.roleId)) {
+            response = await api("put", `/roles/${role.roleId}`, {
+              role: role.role,
+            });
+          } else {
+            response = await api("post", `/roles`, {
+              movieId: role.movieId,
+              role: role.role,
+              actorId: role.actorId,
+            });
+          }
           result.push(response.data as RoleModel);
         }
 

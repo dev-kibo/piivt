@@ -121,13 +121,14 @@ export default function MovieEditSelectedPage() {
           data["poster"] = poster;
         }
 
-        const movie: MovieModel = await MovieService.update(data);
+        const updatedMovie: MovieModel = await MovieService.update(+id, data);
 
-        const response = await MovieService.addRolesToMovie(
+        const response = await MovieService.updateRolesForMovie(
           roles.map((x) => ({
-            actorId: x.actorId,
-            movieId: movie.movieId,
             role: x.role,
+            roleId: x.uid,
+            actorId: x.actorId,
+            movieId: updatedMovie.movieId,
           }))
         );
 

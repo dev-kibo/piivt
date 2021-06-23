@@ -139,4 +139,24 @@ export default class MovieController extends BaseController {
       next(error);
     }
   }
+
+  async deleteMovie(req: Request, res: Response, next: NextFunction) {
+    const movieId = +req.params.id;
+
+    if (movieId <= 0) {
+      return res.status(400).send("Invalid ID number");
+    }
+
+    try {
+      const result = await this.services.movieService.deleteMovie(movieId);
+
+      if (result === null) {
+        return res.sendStatus(404);
+      }
+
+      res.sendStatus(204);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

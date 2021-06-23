@@ -154,4 +154,15 @@ export default class MovieService {
       }
     });
   }
+
+  public static async delete(id: number): Promise<number> {
+    return new Promise<number>(async (resolve, reject) => {
+      try {
+        const res = await api("delete", `/movies/${id}`);
+        resolve(res.status);
+      } catch (error) {
+        reject(error as ApiResponse);
+      }
+    });
+  }
 }

@@ -218,6 +218,24 @@ export default class MovieService extends BaseService<MovieModel> {
     });
   }
 
+  public async deleteMovie(id: number): Promise<boolean> | null {
+    if (!(await this.getById(id))) {
+      return null;
+    }
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        const query: string =
+          "UPDATE movie SET is_deleted = 1 WHERE movie_id = ?;";
+        await this.db.execute(query, [id]);
+
+        resolve(true);
+      } catch (error) {
+        reject(new ApiError("DELETE_FAILED", "Failed deleting movie."));
+      }
+    });
+  }
+
   private async uploadMoviePoster(file: any, movieId: number): Promise<string> {
     return new Promise<string>(async (resolve) => {
       const imagePath: string = `${

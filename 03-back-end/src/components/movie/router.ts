@@ -32,5 +32,9 @@ export default class MovieRouter implements IRouter {
       "/movies/:id/roles",
       movieController.deleteMovieRoles.bind(movieController)
     );
+    application.delete(
+      "/movies/:id",
+      movieController.deleteMovie.bind(movieController)
+    );
   }
 }

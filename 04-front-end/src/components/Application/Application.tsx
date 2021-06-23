@@ -112,13 +112,11 @@ export default function Application() {
             exact
             path="/dashboard/movies/delete"
             render={() => (
-              <BaseDashboardListPage
+              <MovieSearchPage
                 item={MovieListItem}
-                relativePath="/dashboard/movies/delete/3"
+                relativePath="/dashboard/movies/delete"
                 searchLabel="Search movies"
                 title="Delete movie"
-                type="movie"
-                action="get"
               />
             )}
           />

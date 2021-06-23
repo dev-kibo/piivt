@@ -1,6 +1,7 @@
 import BaseController from "../../common/BaseController";
 import { NextFunction, Request, Response } from "express";
-import { IAddRepertoire, IAddRepertoireValidator } from "./dto/IAddRepertoire";
+import IAddRepertoire from "./dto/IAddRepertoire";
+import IAddRepertoireValidator from "./dto/IAddRepertoireValidator";
 import RepertoireModel from "./model";
 
 export default class RepertoireController extends BaseController {

@@ -1,6 +1,6 @@
 import BaseService from "../../common/BaseService";
 import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.interface";
-import { IAddProjection } from "./dto/IAddProjection";
+import IAddProjection from "./dto/IAddProjection";
 import ProjectionModel from "./model";
 import ApiError from "../error/ApiError";
 import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";

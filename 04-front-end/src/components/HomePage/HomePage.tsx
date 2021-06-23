@@ -24,7 +24,7 @@ export default function HomePage() {
 
   useEffect(() => {
     async function fetch() {
-      const res = await RepertoireService.GetRepertoire(date);
+      const res = await RepertoireService.getRepertoire(date);
 
       if (res !== null && res.projections) {
         console.log(res.projections);

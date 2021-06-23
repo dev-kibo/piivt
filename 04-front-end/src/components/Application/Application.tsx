@@ -171,12 +171,7 @@ export default function Application() {
           />
           <Route
             path="/dashboard/repertoires/add"
-            render={() => (
-              <BaseFormPage
-                form={RepertoireAddPage}
-                title="Add new repertoire"
-              />
-            )}
+            component={RepertoireAddPage}
           />
           <Route
             exact

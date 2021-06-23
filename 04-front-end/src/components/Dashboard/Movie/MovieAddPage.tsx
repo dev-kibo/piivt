@@ -293,9 +293,6 @@ export default function MovieAddPage() {
                           <div>
                             <p className="m-0">Roles:</p>
                           </div>
-                          {/* <div className="border p-2 mt-2">
-                            <p className="m-0">John Smith Jr ... Indy</p>
-                          </div> */}
                           <div className="mt-3">
                             {roles.map((x) => {
                               const actor = actors?.find(

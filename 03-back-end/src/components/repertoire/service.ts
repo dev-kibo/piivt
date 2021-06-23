@@ -1,6 +1,6 @@
 import BaseService from "../../common/BaseService";
 import IModelAdapterOptionsInterface from "../../common/IModelAdapterOptions.interface";
-import { IAddRepertoire } from "./dto/IAddRepertoire";
+import IAddRepertoire from "./dto/IAddRepertoire";
 import RepertoireModel from "./model";
 import MovieModel from "../movie/model";
 import CinemaModel from "../cinema/model";
@@ -181,6 +181,17 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
 
         console.log(error.errno);
         console.log(error.message);
+
+        if (error?.errno === 1062) {
+          reject(
+            new ApiError(
+              "FAILED_ADDING_REPERTOIRE",
+              `Repertoire for '${new Date(data.startsAt).toLocaleDateString(
+                "sr-RS"
+              )}' already exists.`
+            )
+          );
+        }
 
         reject(
           new ApiError(

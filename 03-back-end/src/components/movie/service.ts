@@ -56,7 +56,7 @@ export default class MovieService extends BaseService<MovieModel> {
     return new Promise(async (resolve, reject) => {
       try {
         const query: string =
-          "SELECT * FROM movie WHERE title LIKE CONCAT('%', ?, '%');";
+          "SELECT * FROM movie WHERE title LIKE CONCAT('%', ?, '%') AND is_deleted = 0;";
 
         const [rows] = await this.db.execute(query, [searchTerm]);
 
@@ -196,6 +196,24 @@ export default class MovieService extends BaseService<MovieModel> {
         }
 
         reject(new ApiError("MOVIE_ADD_FAILED", "Failed adding new movie."));
+      }
+    });
+  }
+
+  public async deleteMovieRoles(id: number): Promise<boolean> | null {
+    if (!(await this.getById(id))) {
+      return null;
+    }
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        const query: string =
+          "UPDATE movie_actor SET is_deleted = 1 WHERE movie_id = ?;";
+        await this.db.execute(query, [id]);
+
+        resolve(true);
+      } catch (error) {
+        reject(new ApiError("DELETE_FAILED", "Failed deleting roles."));
       }
     });
   }

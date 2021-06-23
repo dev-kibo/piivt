@@ -57,7 +57,8 @@ export default class RoleService extends BaseService<RoleModel> {
             movie_actor
             INNER JOIN actor ON movie_actor.actor_id = actor.actor_id
         WHERE
-            movie_id = ?;`;
+            movie_id = ? AND
+            movie_actor.is_deleted = 0;`;
 
         const [rows] = await this.db.execute(query, [id]);
 
@@ -158,7 +159,8 @@ export default class RoleService extends BaseService<RoleModel> {
       try {
         const query: string =
           "UPDATE movie_actor SET is_deleted = 1 WHERE movie_actor_id = ?;";
-        const result = await this.db.execute(query, [id]);
+
+        await this.db.execute(query, [id]);
 
         resolve(true);
       } catch (error) {

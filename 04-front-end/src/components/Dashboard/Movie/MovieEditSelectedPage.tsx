@@ -60,7 +60,7 @@ export default function MovieEditSelectedPage() {
                 actorId: x.actor.actorId,
                 movieId: movie.movieId,
                 role: x.role,
-                uid: x.roleId.toString(),
+                uid: uuidv4(),
               };
             })
           );
@@ -124,11 +124,11 @@ export default function MovieEditSelectedPage() {
         const updatedMovie: MovieModel = await MovieService.update(+id, data);
 
         const response = await MovieService.updateRolesForMovie(
+          updatedMovie.movieId,
           roles.map((x) => ({
-            role: x.role,
-            roleId: x.uid,
             actorId: x.actorId,
             movieId: updatedMovie.movieId,
+            role: x.role,
           }))
         );
 

@@ -23,10 +23,10 @@ export default class ActorService {
     });
   }
 
-  public static async searchActors(searchTerm: string): Promise<ActorModel[]> {
+  public static async search(query: string): Promise<ActorModel[]> {
     return new Promise<ActorModel[]>(async (resolve, reject) => {
       try {
-        const res = await api("get", `/actors/search/${searchTerm}`);
+        const res = await api("get", `/actors/search/${query}`);
         resolve(res.data as ActorModel[]);
       } catch (error) {
         reject(error as ApiResponse);

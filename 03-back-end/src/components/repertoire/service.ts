@@ -5,6 +5,7 @@ import RepertoireModel from "./model";
 import MovieModel from "../movie/model";
 import CinemaModel from "../cinema/model";
 import ApiError from "../error/ApiError";
+import IUpdateRepertoire from "./dto/IUpdateRepertoire";
 
 class RepertoireModelAdapterOptions implements IModelAdapterOptionsInterface {
   loadProjections: boolean;
@@ -173,6 +174,163 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
 
         resolve(
           await this.getById(repId, {
+            loadProjections: true,
+          })
+        );
+      } catch (error) {
+        await this.db.rollback();
+
+        console.log(error.errno);
+        console.log(error.message);
+
+        if (error?.errno === 1062) {
+          reject(
+            new ApiError(
+              "FAILED_ADDING_REPERTOIRE",
+              `Repertoire for '${new Date(data.startsAt).toLocaleDateString(
+                "sr-RS"
+              )}' already exists.`
+            )
+          );
+        }
+
+        reject(
+          new ApiError(
+            "FAILED_ADDING_REPERTOIRE",
+            "Failed adding new repertoire."
+          )
+        );
+      }
+    });
+  }
+
+  public async addOrUpdate(
+    id: number,
+    data: IUpdateRepertoire
+  ): Promise<RepertoireModel> | null {
+    if (!(await this.getById(id))) {
+      return null;
+    }
+
+    return new Promise<RepertoireModel>(async (resolve, reject) => {
+      if (!Date.parse(data.startsAt)) {
+        return reject(
+          new ApiError(
+            "DATE_INVALID",
+            "Invalid date format. Date must be in yyyy-MM-dd format."
+          )
+        );
+      }
+
+      if (new Date(data.startsAt).getTime() < Date.now()) {
+        return reject(
+          new ApiError(
+            "PROJECTION_DATE_INVALID",
+            "Invalid date. Projection can't start in the past."
+          )
+        );
+      }
+
+      for (const projection of data.projections) {
+        const movie: MovieModel | null =
+          await this.services.movieService.getById(projection.movieId);
+        const cinema: CinemaModel | null =
+          await this.services.cinemaService.getById(projection.cinemaId);
+
+        if (movie === null) {
+          return reject(
+            new ApiError(
+              "MOVIE_NOT_FOUND",
+              `Movie with id '${projection.movieId}' doesn't exist.`
+            )
+          );
+        }
+
+        if (cinema === null) {
+          return reject(
+            new ApiError(
+              "CINEMA_NOT_FOUND",
+              `Cinema with id '${projection.movieId}' doesn't exist.`
+            )
+          );
+        }
+      }
+
+      try {
+        await this.db.beginTransaction();
+
+        const query: string = `
+                          UPDATE
+                              repertoire
+                          SET 
+                              show_at = ?
+                          WHERE
+                              repertoire_id = ?;`;
+
+        await this.db.execute(query, [
+          this.toDateString(new Date(data.startsAt)),
+          id,
+        ]);
+
+        const updateQuery: string = `
+                          UPDATE
+                              projection
+                          SET
+                              starts_at = ?,
+                              ends_at = ?,
+                              cinema_id = ?,
+                              movie_id = ?
+                          WHERE
+                              repertoire_id = ?;`;
+
+        const insertQuery = `
+                          INSERT 
+                              projection 
+                          SET 
+                              repertoire_id = ?, 
+                              starts_at = ?, 
+                              ends_at = ?, 
+                              cinema_id = ?, 
+                              movie_id = ?;`;
+
+        let date: Date = new Date(data.startsAt);
+
+        for (const projection of data.projections) {
+          const movie = await this.services.movieService.getById(
+            projection.movieId
+          );
+
+          const startsAt: Date = date;
+
+          const min: number = movie.duration + 10 + 15;
+
+          date = this.addMinutes(date, min);
+
+          const endsAt: Date = date;
+
+          if (Number.isInteger(projection.projectionId)) {
+            await this.db.execute(updateQuery, [
+              startsAt,
+              endsAt,
+              projection.cinemaId,
+              projection.movieId,
+              id,
+            ]);
+          } else {
+            await this.db.execute(insertQuery, [
+              id,
+              startsAt,
+              endsAt,
+              projection.cinemaId,
+              projection.movieId,
+            ]);
+          }
+        }
+
+        await this.db.commit();
+
+        resolve(
+          await this.getById(id, {
             loadProjections: true,
           })
         );

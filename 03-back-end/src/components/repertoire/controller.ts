@@ -3,6 +3,10 @@ import { NextFunction, Request, Response } from "express";
 import IAddRepertoire from "./dto/IAddRepertoire";
 import IAddRepertoireValidator from "./dto/IAddRepertoireValidator";
 import RepertoireModel from "./model";
+import IUpdateRepertoireValidator from "./dto/IUpdateRepertoireValidator";
+import IUpdateRepertoire from "./dto/IUpdateRepertoire";
+import IDeleteProjectionValidator from "../projection/dto/IDeleteProjectionValidator";
+import IDeleteProjection from "../projection/dto/IDeleteProjection";
 
 export default class RepertoireController extends BaseController {
   async getAll(req: Request, res: Response, next: NextFunction) {
@@ -61,6 +65,63 @@ export default class RepertoireController extends BaseController {
       res.send(
         await this.services.repertoireService.add(data as IAddRepertoire)
       );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async update(req: Request, res: Response, next: NextFunction) {
+    const id: number = +req.params.id;
+    const data = req.body;
+
+    if (id <= 0) {
+      res.status(400).send("Invalid ID number.");
+    }
+
+    if (!IUpdateRepertoireValidator(data)) {
+      res.status(400).send(IUpdateRepertoireValidator.errors);
+    }
+
+    try {
+      const repertoire = await this.services.repertoireService.addOrUpdate(
+        id,
+        data as IUpdateRepertoire
+      );
+
+      if (repertoire === null) {
+        return res.sendStatus(404);
+      }
+
+      res.send(repertoire);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    const id: number = +req.params.id;
+    const data = req.body;
+
+    if (id <= 0) {
+      res.status(400).send("Invalid ID number.");
+    }
+
+    if (!IDeleteProjectionValidator(data)) {
+      res.status(400).send(IDeleteProjectionValidator.errors);
+    }
+
+    try {
+      const result: boolean | null =
+        await this.services.projectionService.deleteProjections(
+          id,
+          data as IDeleteProjection[]
+        );
+
+      if (result === null) {
+        return res.sendStatus(404);
+      }
+
+      res.sendStatus(204);
     } catch (error) {
       next(error);
     }

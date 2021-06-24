@@ -4,6 +4,7 @@ import IAddProjection from "./dto/IAddProjection";
 import ProjectionModel from "./model";
 import ApiError from "../error/ApiError";
 import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";
+import IDeleteProjection from "./dto/IDeleteProjection";
 
 export default class ProjectionService extends BaseService<ProjectionModel> {
   protected async adaptModel(
@@ -39,7 +40,7 @@ export default class ProjectionService extends BaseService<ProjectionModel> {
     return new Promise<ProjectionModel[]>(async (resolve, reject) => {
       try {
         const query: string =
-          "SELECT * FROM projection WHERE repertoire_id = ?;";
+          "SELECT * FROM projection WHERE repertoire_id = ? AND is_deleted = 0;";
 
         const [rows] = await this.db.execute(query, [id]);
 
@@ -155,6 +156,35 @@ export default class ProjectionService extends BaseService<ProjectionModel> {
           new ApiError("PROJECTION_ADD_FAILED", "Failed adding new projection.")
         );
       }
+    });
+  }
+
+  public async deleteProjections(
+    repertoireId: number,
+    data: IDeleteProjection[]
+  ): Promise<boolean> | null {
+    if (!(await this.services.repertoireService.getById(repertoireId))) {
+      return null;
+    }
+
+    return new Promise<boolean>(async (resolve, reject) => {
+      const query: string =
+        "UPDATE projection SET is_deleted = 1 WHERE projection_id = ?;";
+
+      for (const item of data) {
+        try {
+          await this.db.execute(query, [item.projectionId]);
+        } catch (error) {
+          return reject(
+            new ApiError(
+              "DELETE_FAILED",
+              `Failed deleting projection with id '${item.projectionId}'`
+            )
+          );
+        }
+      }
+
+      resolve(true);
     });
   }
 }

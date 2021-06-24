@@ -38,7 +38,7 @@ export default function ActorSearch({
 
     if (e.length > 0) {
       try {
-        const res = await ActorService.searchActors(e);
+        const res = await ActorService.search(e);
         setData(res);
       } catch (error) {
         console.error(error);

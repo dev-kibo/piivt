@@ -20,5 +20,13 @@ export default class RepertoireRouter implements IRouter {
       repController.getByDate.bind(repController)
     );
     application.post("/repertoires", repController.add.bind(repController));
+    application.put(
+      "/repertoires/:id",
+      repController.update.bind(repController)
+    );
+    application.delete(
+      "/repertoires/:id/projections",
+      repController.delete.bind(repController)
+    );
   }
 }

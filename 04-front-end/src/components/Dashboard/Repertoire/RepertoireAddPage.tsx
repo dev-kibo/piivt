@@ -8,12 +8,7 @@ import CinemaService from "../../../services/CinemaService";
 import RepertoireProjectionItem from "./RepertoireProjectionItem";
 import { v4 as uuidv4 } from "uuid";
 import RepertoireService from "../../../services/RepertoireService";
-
-interface IAddProjection {
-  cinemaId: number;
-  movieId: number;
-  uid: string;
-}
+import IAddProjection from "./IAddProjection";
 
 export default function RepertoireAddPage() {
   const [movies, setMovies] = useState<MovieModel[]>([]);

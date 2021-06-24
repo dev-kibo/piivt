@@ -10,7 +10,6 @@ import DashboardPage from "../Dashboard/DashboardPage";
 import CinemaPage from "../Dashboard/Cinema/CinemaPage";
 import CinemaAddPage from "../Dashboard/Cinema/CinemaAddPage";
 import CinemaEditSelectedPage from "../Dashboard/Cinema/CinemaEditSelectedPage";
-import BaseDashboardListPage from "../Dashboard/BaseDashboardListPage";
 import DashboardCinemasDeleteSelected from "../Dashboard/Cinema/CinemaDeleteSelectedPage";
 import MovieOperationsPage from "../Dashboard/Movie/MovieOperationsPage";
 import MovieAddPage from "../Dashboard/Movie/MovieAddPage";
@@ -32,6 +31,7 @@ import CinemaSearch from "../Dashboard/Cinema/CinemaSearch";
 import ActorSearch from "../Dashboard/Actor/ActorSearch";
 import ProjectionSearchPage from "../Dashboard/Projection/ProjectionSearchPage";
 import MovieSearchPage from "../Dashboard/Movie/MovieSearchPage";
+import RepertoireSearchPage from "../Dashboard/Repertoire/RepertoireSearchPage";
 
 export default function Application() {
   return (
@@ -177,21 +177,16 @@ export default function Application() {
             exact
             path="/dashboard/repertoires/edit"
             render={() => (
-              <BaseDashboardListPage
+              <RepertoireSearchPage
                 item={DashboardLink}
-                relativePath="/dashboard/repertoires/edit/3"
-                searchLabel="Search repertoires"
+                relativePath="/dashboard/repertoires/edit"
                 title="Edit repertoire"
-                action="get"
-                type="repertoire"
               />
             )}
           />
           <Route
             path="/dashboard/repertoires/edit/:id"
-            render={() => (
-              <BaseFormPage form={RepertoireEditPage} title="Edit repertoire" />
-            )}
+            component={RepertoireEditPage}
           />
         </Switch>
       </Container>

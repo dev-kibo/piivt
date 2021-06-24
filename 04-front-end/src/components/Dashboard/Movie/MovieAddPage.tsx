@@ -156,7 +156,7 @@ export default function MovieAddPage() {
   const handleSearch = async (value: string) => {
     if (value.length > 0) {
       try {
-        setActors(await ActorService.searchActors(value));
+        setActors(await ActorService.search(value));
       } catch (error) {
         console.log(error);
       }

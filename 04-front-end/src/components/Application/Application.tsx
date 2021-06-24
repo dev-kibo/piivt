@@ -21,15 +21,13 @@ import BaseFormPage from "../Dashboard/BaseFormPage";
 import DashboardLink from "../Dashboard/DashboardLink";
 import MovieListItem from "../Dashboard/Movie/MovieListItem";
 import ActorEditSelectedPage from "../Dashboard/Actor/ActorEditSelectedPage";
-import ProjectionEditSelectedPage from "../Dashboard/Projection/ProjectionEditSelectedPage";
 import RepertoirePage from "../Dashboard/Repertoire/RepertoirePage";
 import RepertoireAddPage from "../Dashboard/Repertoire/RepertoireAddPage";
 import RepertoireEditPage from "../Dashboard/Repertoire/RepertoireEditPage";
 import MoviePage from "../MoviePage/MoviePage";
 import Navigation from "../Navigation/Navigation";
-import CinemaSearch from "../Dashboard/Cinema/CinemaSearch";
+import CinemaSearchPage from "../Dashboard/Cinema/CinemaSearchPage";
 import ActorSearch from "../Dashboard/Actor/ActorSearch";
-import ProjectionSearchPage from "../Dashboard/Projection/ProjectionSearchPage";
 import MovieSearchPage from "../Dashboard/Movie/MovieSearchPage";
 import RepertoireSearchPage from "../Dashboard/Repertoire/RepertoireSearchPage";
 
@@ -57,7 +55,7 @@ export default function Application() {
             exact
             path="/dashboard/cinemas/edit"
             render={() => (
-              <CinemaSearch
+              <CinemaSearchPage
                 relativePath="/dashboard/cinemas/edit"
                 title="Edit cinema"
                 item={DashboardLink}
@@ -74,7 +72,7 @@ export default function Application() {
             exact
             path="/dashboard/cinemas/delete"
             render={() => (
-              <CinemaSearch
+              <CinemaSearchPage
                 relativePath="/dashboard/cinemas/delete"
                 title="Delete cinema"
                 item={DashboardLink}
@@ -147,22 +145,6 @@ export default function Application() {
                 title="Edit John Smith"
               />
             )}
-          />
-          <Route
-            exact
-            path="/dashboard/projections"
-            render={() => (
-              <ProjectionSearchPage
-                item={DashboardLink}
-                relativePath="/dashboard/projections/edit"
-                searchLabel="Search projections"
-                title="Projections"
-              />
-            )}
-          />
-          <Route
-            path="/dashboard/projections/edit/:id"
-            component={ProjectionEditSelectedPage}
           />
           <Route
             exact

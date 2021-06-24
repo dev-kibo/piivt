@@ -19,10 +19,6 @@ export default function DashboardPage() {
         path: "/dashboard/actors",
       },
       {
-        name: "Projections",
-        path: "/dashboard/projections",
-      },
-      {
         name: "Repertoire",
         path: "/dashboard/repertoires",
       },

@@ -289,20 +289,10 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
                               cinema_id = ?, 
                               movie_id = ?;`;
 
-        const deleteProjectionsQuery = `
-                          UPDATE
-                              projection 
-                          SET 
-                              is_deleted = 1
-                          WHERE
-                              repertoire_id = ?;`;
-
         await this.db.execute(updateRepertoireQuery, [
           this.toDateString(new Date(data.startsAt)),
           id,
         ]);
-
-        // await this.db.execute(deleteProjectionsQuery, [id]);
 
         let date: Date = new Date(data.startsAt);
 
@@ -322,7 +312,6 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
           console.log(projection.projectionId);
 
           if (!isNaN(Number(projection.projectionId))) {
-            console.log("UPDATE");
             await this.db.execute(updateQuery, [
               startsAt,
               endsAt,
@@ -332,7 +321,6 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
               id,
             ]);
           } else {
-            console.log("INSERT");
             await this.db.execute(insertQuery, [
               id,
               startsAt,

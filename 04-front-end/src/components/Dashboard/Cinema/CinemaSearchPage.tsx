@@ -11,7 +11,7 @@ interface ICinemaSearchProps {
   relativePath: string;
 }
 
-export default function CinemaSearch({
+export default function CinemaSearchPage({
   title,
   relativePath,
   searchLabel,
@@ -67,7 +67,13 @@ export default function CinemaSearch({
             />
           </Form.Group>
         </Row>
-        <Row xs={1} md={2} lg={3} className="gy-4 mt-5 justify-content-center">
+        <Row
+          xs={1}
+          md={2}
+          lg={3}
+          xxl={4}
+          className="gy-4 mt-5 justify-content-start"
+        >
           {data.map((x: any) => {
             console.log(x);
             return (

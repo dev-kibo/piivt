@@ -24,8 +24,6 @@ const IUpdateRepertoireValidator = new Ajv({ coerceTypes: true }).compile({
             minLength: 1,
           },
         },
-        required: ["cinemaId", "movieId", "projectionId"],
-        additionalProperties: false,
       },
     },
   },

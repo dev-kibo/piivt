@@ -3,6 +3,7 @@ import RepertioreModel from "../../../03-back-end/src/components/repertoire/mode
 import IAddRepertoire from "../../../03-back-end/src/components/repertoire/dto/IAddRepertoire";
 import { ApiResponse } from "../api/api";
 import RepertoireModel from "../../../03-back-end/src/components/repertoire/model";
+import IDeleteProjection from "../../../03-back-end/src/components/projection/dto/IDeleteProjection";
 
 export default class RepertoireService {
   public static async getAll(): Promise<RepertioreModel[]> {
@@ -62,6 +63,25 @@ export default class RepertoireService {
         const res = await api("put", `/repertoires/${repertoireId}`, data);
 
         resolve(res.data as RepertioreModel);
+      } catch (error) {
+        reject(error as ApiResponse);
+      }
+    });
+  }
+
+  public static async deleteProjections(
+    repertoireId: number,
+    data: IDeleteProjection[]
+  ): Promise<number> {
+    return new Promise<number>(async (resolve, reject) => {
+      try {
+        const res = await api(
+          "delete",
+          `/repertoires/${repertoireId}/projections`,
+          data
+        );
+
+        resolve(res.status);
       } catch (error) {
         reject(error as ApiResponse);
       }

@@ -12,6 +12,7 @@ import CinemaService from "../../../services/CinemaService";
 import { v4 as uuidv4 } from "uuid";
 import IAddProjection from "./IAddProjection";
 import RepertoireProjectionItem from "./RepertoireProjectionItem";
+import IDeleteProjection from "../../../../../03-back-end/src/components/projection/dto/IDeleteProjection";
 
 export default function RepertoireEditPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -23,6 +24,9 @@ export default function RepertoireEditPage() {
   const [cinema, setCinema] = useState<number>();
   const [movie, setMovie] = useState<number>();
   const [projections, setProjections] = useState<IAddProjection[]>([]);
+  const [toDeleteProjections, setToDeleteProjections] = useState<
+    IDeleteProjection[]
+  >([]);
   const [isStartsAtValid, setIsStartsAtValid] = useState<boolean | undefined>(
     undefined
   );
@@ -57,7 +61,7 @@ export default function RepertoireEditPage() {
           repertoire.projections!.map((x) => ({
             cinemaId: x.cinemaId,
             movieId: x.movieId,
-            uid: x.projectionId.toString(),
+            projectionId: x.projectionId.toString(),
           }))
         );
         setRepertoire(repertoire);
@@ -132,7 +136,12 @@ export default function RepertoireEditPage() {
   };
 
   const handleProjectionRemoveItem = (uid: string) => {
-    setProjections(projections.filter((x) => x.uid !== uid));
+    setToDeleteProjections(
+      projections
+        .filter((x) => x.projectionId === uid)
+        .map((x) => ({ projectionId: Number.parseInt(x.projectionId) }))
+    );
+    setProjections(projections.filter((x) => x.projectionId !== uid));
   };
 
   const handleAddProjection = () => {
@@ -141,7 +150,7 @@ export default function RepertoireEditPage() {
       {
         cinemaId: cinema!,
         movieId: movie!,
-        uid: uuidv4(),
+        projectionId: uuidv4(),
       },
     ]);
     setCinema(-1);
@@ -153,6 +162,10 @@ export default function RepertoireEditPage() {
 
     if (isSubmitValid()) {
       try {
+        if (toDeleteProjections.length > 0) {
+          await RepertoireService.deleteProjections(+id, toDeleteProjections);
+        }
+
         const timeParts: string[] = startsAt.split(":");
         const hours: number = Number.parseInt(timeParts[0]);
         const minutes: number = Number.parseInt(timeParts[1]);
@@ -321,8 +334,8 @@ export default function RepertoireEditPage() {
 
                               return (
                                 <RepertoireProjectionItem
-                                  key={x.uid}
-                                  uid={x.uid}
+                                  key={x.projectionId}
+                                  uid={x.projectionId}
                                   movieName={movieName}
                                   cinemaName={cinemaName}
                                   onRemove={handleProjectionRemoveItem}

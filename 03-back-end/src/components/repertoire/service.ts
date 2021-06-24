@@ -259,18 +259,13 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
       try {
         await this.db.beginTransaction();
 
-        const query: string = `
+        const updateRepertoireQuery: string = `
                           UPDATE
                               repertoire
                           SET 
                               show_at = ?
                           WHERE
                               repertoire_id = ?;`;
-
-        await this.db.execute(query, [
-          this.toDateString(new Date(data.startsAt)),
-          id,
-        ]);
 
         const updateQuery: string = `
                           UPDATE
@@ -281,6 +276,7 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
                               cinema_id = ?,
                               movie_id = ?
                           WHERE
+                              projection_id = ? AND
                               repertoire_id = ?;`;
 
         const insertQuery = `
@@ -292,6 +288,21 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
                               ends_at = ?, 
                               cinema_id = ?, 
                               movie_id = ?;`;
+
+        const deleteProjectionsQuery = `
+                          UPDATE
+                              projection 
+                          SET 
+                              is_deleted = 1
+                          WHERE
+                              repertoire_id = ?;`;
+
+        await this.db.execute(updateRepertoireQuery, [
+          this.toDateString(new Date(data.startsAt)),
+          id,
+        ]);
+
+        // await this.db.execute(deleteProjectionsQuery, [id]);
 
         let date: Date = new Date(data.startsAt);
 
@@ -308,15 +319,20 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
 
           const endsAt: Date = date;
 
-          if (Number.isInteger(projection.projectionId)) {
+          console.log(projection.projectionId);
+
+          if (!isNaN(Number(projection.projectionId))) {
+            console.log("UPDATE");
             await this.db.execute(updateQuery, [
               startsAt,
               endsAt,
               projection.cinemaId,
               projection.movieId,
+              Number(projection.projectionId),
               id,
             ]);
           } else {
+            console.log("INSERT");
             await this.db.execute(insertQuery, [
               id,
               startsAt,
@@ -343,7 +359,7 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
         if (error?.errno === 1062) {
           reject(
             new ApiError(
-              "FAILED_ADDING_REPERTOIRE",
+              "FAILED_UPDATING_REPERTOIRE",
               `Repertoire for '${new Date(data.startsAt).toLocaleDateString(
                 "sr-RS"
               )}' already exists.`

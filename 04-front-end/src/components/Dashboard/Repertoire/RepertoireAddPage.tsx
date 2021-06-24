@@ -105,7 +105,7 @@ export default function RepertoireAddPage() {
   };
 
   const handleProjectionRemoveItem = (uid: string) => {
-    setProjections(projections.filter((x) => x.uid !== uid));
+    setProjections(projections.filter((x) => x.projectionId !== uid));
   };
 
   const handleAddProjection = () => {
@@ -114,7 +114,7 @@ export default function RepertoireAddPage() {
       {
         cinemaId: cinema!,
         movieId: movie!,
-        uid: uuidv4(),
+        projectionId: uuidv4(),
       },
     ]);
     setCinema(-1);
@@ -284,8 +284,8 @@ export default function RepertoireAddPage() {
 
                               return (
                                 <RepertoireProjectionItem
-                                  key={x.uid}
-                                  uid={x.uid}
+                                  key={x.projectionId}
+                                  uid={x.projectionId}
                                   movieName={movieName}
                                   cinemaName={cinemaName}
                                   onRemove={handleProjectionRemoveItem}

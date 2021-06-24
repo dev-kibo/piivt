@@ -8,6 +8,7 @@ import IParams from "../../Common/IParams";
 export default function CinemaDeleteSelectedPage() {
   const [cinema, setCinema] = useState<CinemaModel>();
   const [status, setStatus] = useState<"success" | "failed" | "">("");
+  const [message, setMessage] = useState<string>("");
   const { id } = useParams<IParams>();
   const history = useHistory();
 
@@ -27,14 +28,15 @@ export default function CinemaDeleteSelectedPage() {
     e.preventDefault();
 
     try {
-      const status: number = await CinemaService.deleteCinema(+id);
+      const status: number = await CinemaService.delete(+id);
 
       console.log(status);
 
       if (status === 204) {
         setStatus("success");
       }
-    } catch (error) {
+    } catch (error: any) {
+      setMessage(error?.message?.description ?? "Something went wrong.");
       setStatus("failed");
     }
   };
@@ -74,7 +76,7 @@ export default function CinemaDeleteSelectedPage() {
         <Row className={`mt-5 ${status === "failed" ? "d-block" : "d-none"}`}>
           <Col>
             <Alert variant="danger" className="text-center">
-              <Alert.Heading>Something went wrong.</Alert.Heading>
+              <Alert.Heading>{message}</Alert.Heading>
               <Button
                 variant="link"
                 className="alert-link"

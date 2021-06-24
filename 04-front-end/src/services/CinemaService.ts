@@ -61,7 +61,7 @@ export default class CinemaService {
     });
   }
 
-  public static async deleteCinema(id: number): Promise<number> {
+  public static async delete(id: number): Promise<number> {
     return new Promise<number>(async (resolve, reject) => {
       try {
         const res = await api("delete", `/cinemas/${id}`);

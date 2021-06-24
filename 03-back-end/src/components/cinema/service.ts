@@ -111,17 +111,31 @@ export default class CinemaService extends BaseService<CinemaModel> {
     });
   }
 
-  public async deleteCinema(id: number): Promise<boolean> | null {
+  public async delete(id: number): Promise<boolean> | null {
     if (!(await this.getById(id))) {
       return null;
     }
 
     return new Promise(async (resolve, reject) => {
-      const query: string =
+      const updateQuery: string =
         "UPDATE cinema SET is_deleted = 1 WHERE cinema_id = ?;";
 
+      const searchQuery: string =
+        "SELECT * FROM projection WHERE cinema_id = ? AND DATEDIFF(starts_at, CURRENT_DATE) >= 0;";
+
       try {
-        await this.db.execute(query, [id]);
+        const [rows] = await this.db.execute(searchQuery, [id]);
+
+        if (Array.isArray(rows) && rows.length > 0) {
+          return reject(
+            new ApiError(
+              "CINEMA_IN_USE",
+              "Cinema is used in future projection."
+            )
+          );
+        }
+
+        await this.db.execute(updateQuery, [id]);
 
         resolve(true);
       } catch (error) {

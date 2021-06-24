@@ -98,8 +98,9 @@ export default class CinemaController extends BaseController {
     }
 
     try {
-      const result: boolean | null =
-        await this.services.cinemaService.deleteCinema(id);
+      const result: boolean | null = await this.services.cinemaService.delete(
+        id
+      );
 
       if (result === null) {
         return res.sendStatus(404);

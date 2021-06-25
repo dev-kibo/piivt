@@ -33,7 +33,7 @@ export default class ActorService extends BaseService<ActorModel> {
     return await this.getByIdFromTable("actor", id, options);
   }
 
-  public async getActorsBySearchTerm(
+  public async getAllBySearchTerm(
     searchTerm: string,
     options: IModelAdapterOptions = {}
   ): Promise<ActorModel[]> {

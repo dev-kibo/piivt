@@ -9,12 +9,13 @@ import MovieRoleItem from "./MovieRoleItem";
 import { v4 as uuidv4 } from "uuid";
 import { useParams } from "react-router-dom";
 import IParams from "../../Common/IParams";
+import IDeleteRole from "../../../../../03-back-end/src/components/movie/dto/IDeleteRole";
 
 interface IRole {
   actorId: number;
   movieId?: number;
   role: string;
-  uid: string;
+  roleId: string;
 }
 
 export default function MovieEditSelectedPage() {
@@ -28,6 +29,7 @@ export default function MovieEditSelectedPage() {
   const [actors, setActors] = useState<ActorModel[]>();
   const [actor, setActor] = useState<number>();
   const [movie, setMovie] = useState<MovieModel>();
+  const [toDeleteRoles, setToDeleteRoles] = useState<IDeleteRole[]>([]);
 
   const [isAddRoleButtonDisabled, setIsAddRoleButtonDisabled] =
     useState<boolean>(true);
@@ -47,7 +49,8 @@ export default function MovieEditSelectedPage() {
   useEffect(() => {
     async function fetch() {
       try {
-        const movie: MovieModel = await MovieService.getMovieById(+id, true);
+        const movie: MovieModel = await MovieService.getById(+id, true);
+        setActors(await ActorService.getAll());
         setMovie(movie);
         setTitle(movie.title);
         setDescription(movie.description);
@@ -60,7 +63,7 @@ export default function MovieEditSelectedPage() {
                 actorId: x.actor.actorId,
                 movieId: movie.movieId,
                 role: x.role,
-                uid: uuidv4(),
+                roleId: x.roleId.toString(),
               };
             })
           );
@@ -72,6 +75,14 @@ export default function MovieEditSelectedPage() {
     fetch();
   }, [id]);
 
+  useEffect(() => {
+    if (actor !== undefined && actor !== -1 && role.length > 0) {
+      setIsAddRoleButtonDisabled(false);
+    } else {
+      setIsAddRoleButtonDisabled(true);
+    }
+  }, [actor, role]);
+
   const isFormValid = useCallback((): boolean => {
     return (
       title.length > 1 &&
@@ -81,21 +92,6 @@ export default function MovieEditSelectedPage() {
       roles.length > 0
     );
   }, [description.length, title.length, releaseDate, duration, roles.length]);
-
-  useEffect(() => {
-    async function fetch() {
-      setActors(await ActorService.getAll());
-    }
-    fetch();
-  }, []);
-
-  useEffect(() => {
-    if (actor !== undefined && actor !== -1 && role.length > 0) {
-      setIsAddRoleButtonDisabled(false);
-    } else {
-      setIsAddRoleButtonDisabled(true);
-    }
-  }, [actor, role]);
 
   useEffect(() => {
     if (isFormValid()) {
@@ -123,16 +119,21 @@ export default function MovieEditSelectedPage() {
 
         const updatedMovie: MovieModel = await MovieService.update(+id, data);
 
-        const response = await MovieService.updateRolesForMovie(
+        if (toDeleteRoles?.length > 0) {
+          await MovieService.deleteRoles(+id, toDeleteRoles);
+        }
+
+        const response = await MovieService.addOrUpdateMovieRoles(
           updatedMovie.movieId,
           roles.map((x) => ({
             actorId: x.actorId,
             movieId: updatedMovie.movieId,
             role: x.role,
+            roleId: x.roleId,
           }))
         );
 
-        if (response.length === roles.length) {
+        if (response === 204) {
           setMessage("Movie updated successfully.");
           setAlertVariant("success");
           setIsAlertShown(true);
@@ -182,14 +183,20 @@ export default function MovieEditSelectedPage() {
       {
         actorId: actor!,
         role: role,
-        uid: uuidv4(),
+        roleId: uuidv4(),
       },
     ]);
     setRole("");
   };
 
   const handleRoleItemRemove = (uid: string) => {
-    setRoles(roles.filter((x) => x.uid !== uid));
+    setToDeleteRoles([
+      ...toDeleteRoles,
+      ...roles
+        .filter((x) => x.roleId === uid)
+        .map((x) => ({ roleId: Number.parseInt(x.roleId) })),
+    ]);
+    setRoles(roles.filter((x) => x.roleId !== uid));
   };
 
   const handleSearch = async (value: string) => {
@@ -351,8 +358,8 @@ export default function MovieEditSelectedPage() {
 
                               return (
                                 <MovieRoleItem
-                                  key={x.uid}
-                                  uid={x.uid}
+                                  key={x.roleId}
+                                  uid={x.roleId}
                                   actor={actor!}
                                   role={x.role}
                                   onRemove={handleRoleItemRemove}

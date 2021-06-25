@@ -39,7 +39,7 @@ export default class CinemaService extends BaseService<CinemaModel> {
     );
   }
 
-  public async getCinemasThatMatchSearchTerm(
+  public async getAllBySearchTerm(
     searchTerm: string,
     options: IModelAdapterOptions = {}
   ): Promise<CinemaModel[]> {

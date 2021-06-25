@@ -3,6 +3,10 @@ import { NextFunction, Request, Response } from "express";
 import MovieModel from "./model";
 import { IAddMovie, IAddMovieValidator } from "./dto/IAddMovie";
 import { IUpdateMovie, IUpdateMovieValidator } from "./dto/IUpdateMovie";
+import IDeleteRoleValidator from "./dto/IDeleteRoleValidator";
+import IDeleteRole from "./dto/IDeleteRole";
+import IAddOrUpdateRoleValidator from "./dto/IAddOrUpdateRoleValidator";
+import IAddOrUpdateRole from "./dto/IAddOrUpdateRole";
 
 export default class MovieController extends BaseController {
   async getAll(req: Request, res: Response, next: NextFunction) {
@@ -35,7 +39,7 @@ export default class MovieController extends BaseController {
     }
   }
 
-  async getAllMoviesWithRoles(req: Request, res: Response, next: NextFunction) {
+  async getAllWithRoles(req: Request, res: Response, next: NextFunction) {
     const id: number = +req.params.id;
 
     if (id <= 0) {
@@ -58,11 +62,11 @@ export default class MovieController extends BaseController {
     }
   }
 
-  async searchByTitle(req: Request, res: Response, next: NextFunction) {
+  async getAllBySearchTerm(req: Request, res: Response, next: NextFunction) {
     const searchTerm = "" + req.params["search"] ?? "";
 
     try {
-      res.send(await this.services.movieService.getByTitle(searchTerm));
+      res.send(await this.services.movieService.getBySearchTerm(searchTerm));
     } catch (error) {
       next(error);
     }
@@ -120,15 +124,23 @@ export default class MovieController extends BaseController {
     }
   }
 
-  async deleteMovieRoles(req: Request, res: Response, next: NextFunction) {
+  async updateRoles(req: Request, res: Response, next: NextFunction) {
     const movieId = +req.params.id;
+    const data = req.body;
 
     if (movieId <= 0) {
       return res.status(400).send("Invalid ID number");
     }
 
+    if (!IAddOrUpdateRoleValidator(data)) {
+      return res.status(400).send(IAddOrUpdateRoleValidator.errors);
+    }
+
     try {
-      const result = await this.services.movieService.deleteMovieRoles(movieId);
+      const result = await this.services.movieService.updateRoles(
+        movieId,
+        data as IAddOrUpdateRole[]
+      );
 
       if (result === null) {
         return res.sendStatus(404);
@@ -140,7 +152,35 @@ export default class MovieController extends BaseController {
     }
   }
 
-  async deleteMovie(req: Request, res: Response, next: NextFunction) {
+  async deleteRoles(req: Request, res: Response, next: NextFunction) {
+    const movieId = +req.params.id;
+    const data = req.body;
+
+    if (movieId <= 0) {
+      return res.status(400).send("Invalid ID number");
+    }
+
+    if (!IDeleteRoleValidator(data)) {
+      return res.status(400).send(IDeleteRoleValidator.errors);
+    }
+
+    try {
+      const result = await this.services.movieService.deleteRoles(
+        movieId,
+        data as IDeleteRole[]
+      );
+
+      if (result === null) {
+        return res.sendStatus(404);
+      }
+
+      res.sendStatus(204);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
     const movieId = +req.params.id;
 
     if (movieId <= 0) {

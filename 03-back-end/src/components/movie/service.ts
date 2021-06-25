@@ -8,6 +8,9 @@ import * as path from "path";
 import sharp = require("sharp");
 import { IUpdateMovie } from "./dto/IUpdateMovie";
 import ApiError from "../error/ApiError";
+import IDeleteRole from "./dto/IDeleteRole";
+import { IUpdateRole } from "../role/dto/IUpdateRole";
+import IAddOrUpdateRole from "./dto/IAddOrUpdateRole";
 
 class MovieModelAdapterOptions implements IModelAdapterOptionsInterface {
   loadRoles: boolean;
@@ -49,7 +52,7 @@ export default class MovieService extends BaseService<MovieModel> {
     return await this.getByIdFromTable("movie", id, options);
   }
 
-  public async getByTitle(
+  public async getBySearchTerm(
     searchTerm: string,
     options: MovieModelAdapterOptions = { loadRoles: false }
   ): Promise<MovieModel[]> {
@@ -200,16 +203,51 @@ export default class MovieService extends BaseService<MovieModel> {
     });
   }
 
-  public async deleteMovieRoles(id: number): Promise<boolean> | null {
+  public async updateRoles(
+    movieId: number,
+    data: IAddOrUpdateRole[]
+  ): Promise<MovieModel> | null {
+    if (!(await this.getById(movieId))) {
+      return null;
+    }
+
+    return new Promise<MovieModel>(async (resolve, reject) => {
+      try {
+        for (const role of data) {
+          console.log(role);
+          if (Number.isNaN(Number(role.roleId))) {
+            console.log("nan");
+            await this.services.roleService.add(role);
+          } else {
+            console.log("num");
+            await this.services.roleService.update(Number(role.roleId), {
+              role: role.role,
+            });
+          }
+        }
+
+        resolve(await this.getById(movieId, { loadRoles: true }));
+      } catch (error) {
+        reject(
+          new ApiError("ADD_UPDATE_FAILED", "Failed adding/updating roles.")
+        );
+      }
+    });
+  }
+
+  public async deleteRoles(
+    id: number,
+    data: IDeleteRole[]
+  ): Promise<boolean> | null {
     if (!(await this.getById(id))) {
       return null;
     }
 
     return new Promise(async (resolve, reject) => {
       try {
-        const query: string =
-          "UPDATE movie_actor SET is_deleted = 1 WHERE movie_id = ?;";
-        await this.db.execute(query, [id]);
+        for (const role of data) {
+          await this.services.roleService.delete(role.roleId);
+        }
 
         resolve(true);
       } catch (error) {

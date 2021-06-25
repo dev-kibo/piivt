@@ -40,9 +40,7 @@ export default class ActorController extends BaseController {
     const searchTerm = "" + req.params["search"] ?? "";
 
     try {
-      res.send(
-        await this.services.actorService.getActorsBySearchTerm(searchTerm)
-      );
+      res.send(await this.services.actorService.getAllBySearchTerm(searchTerm));
     } catch (error) {
       next(error);
     }

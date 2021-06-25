@@ -14,7 +14,7 @@ export default function MovieDeleteSelectedPage() {
   useEffect(() => {
     async function fetch() {
       try {
-        const movie: MovieModel = await MovieService.getMovieById(+id);
+        const movie: MovieModel = await MovieService.getById(+id);
         setMovie(movie);
       } catch (error) {
         console.log(error);

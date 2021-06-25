@@ -19,9 +19,7 @@ export default class CinemaController extends BaseController {
 
     try {
       res.send(
-        await this.services.cinemaService.getCinemasThatMatchSearchTerm(
-          searchTerm
-        )
+        await this.services.cinemaService.getAllBySearchTerm(searchTerm)
       );
     } catch (error) {
       next(error);

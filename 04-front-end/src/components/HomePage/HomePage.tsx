@@ -31,7 +31,7 @@ export default function HomePage() {
         const test = await res.projections.reduce(async (all: any, proj) => {
           if (!all[proj.movieId]) {
             all[proj.movieId] = {
-              movie: await MovieService.getMovieById(proj.movieId),
+              movie: await MovieService.getById(proj.movieId),
               projections: await Promise.all(
                 res
                   .projections!.filter((x) => x.movieId === proj.movieId)

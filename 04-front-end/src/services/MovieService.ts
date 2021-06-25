@@ -2,6 +2,7 @@ import MovieModel from "../../../03-back-end/src/components/movie/model";
 import RoleModel from "../../../03-back-end/src/components/role/model";
 import api, { ApiResponse } from "../api/api";
 import { apiAsForm } from "../api/api";
+import IDeleteRole from "../../../03-back-end/src/components/movie/dto/IDeleteRole";
 
 interface IAddMovie {
   title: string;
@@ -37,7 +38,7 @@ export default class MovieService {
     });
   }
 
-  public static async getMovieById(
+  public static async getById(
     id: number,
     loadRoles?: boolean
   ): Promise<MovieModel> {
@@ -140,15 +141,30 @@ export default class MovieService {
     });
   }
 
-  public static async updateRolesForMovie(
+  public static async deleteRoles(
+    movieId: number,
+    data: IDeleteRole[]
+  ): Promise<number> {
+    return new Promise<number>(async (resolve, reject) => {
+      try {
+        const res = await api("delete", `/movies/${movieId}/roles`, data);
+
+        resolve(res.status);
+      } catch (error) {
+        reject(error as ApiResponse);
+      }
+    });
+  }
+
+  public static async addOrUpdateMovieRoles(
     movieId: number,
     data: IAddRole[]
-  ): Promise<RoleModel[]> {
-    return new Promise(async (resolve, reject) => {
+  ): Promise<number> {
+    return new Promise<number>(async (resolve, reject) => {
       try {
-        await api("delete", `/movies/${movieId}/roles`);
+        const res = await api("put", `/movies/${movieId}/roles`, data);
 
-        resolve(this.addRolesToMovie(data));
+        resolve(res.status);
       } catch (error) {
         reject(error as ApiResponse);
       }

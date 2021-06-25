@@ -17,24 +17,28 @@ export default class MovieRouter implements IRouter {
     );
     application.get(
       "/movies/:id/roles",
-      movieController.getAllMoviesWithRoles.bind(movieController)
+      movieController.getAllWithRoles.bind(movieController)
     );
     application.get(
       "/movies/search/:search",
-      movieController.searchByTitle.bind(movieController)
+      movieController.getAllBySearchTerm.bind(movieController)
     );
     application.post("/movies", movieController.add.bind(movieController));
     application.put(
       "/movies/:id",
       movieController.update.bind(movieController)
     );
+    application.put(
+      "/movies/:id/roles",
+      movieController.updateRoles.bind(movieController)
+    );
     application.delete(
       "/movies/:id/roles",
-      movieController.deleteMovieRoles.bind(movieController)
+      movieController.deleteRoles.bind(movieController)
     );
     application.delete(
       "/movies/:id",
-      movieController.deleteMovie.bind(movieController)
+      movieController.delete.bind(movieController)
     );
   }
 }

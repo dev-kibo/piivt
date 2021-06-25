@@ -25,7 +25,7 @@ export default function MoviePage({ component: Component }: IMoviePageProps) {
   const { id } = useParams<IParams>();
 
   useEffect(() => {
-    MovieService.getMovieById(+id).then((x) => {
+    MovieService.getById(+id).then((x) => {
       setMovie(x);
       setIsLoading(false);
     });

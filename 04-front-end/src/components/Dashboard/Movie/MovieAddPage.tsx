@@ -50,9 +50,7 @@ export default function MovieAddPage() {
   }, [description.length, title.length, releaseDate, duration, roles.length]);
 
   useEffect(() => {
-    async function fetch() {
-      setActors(await ActorService.getAll());
-    }
+    async function fetch() {}
     fetch();
   }, []);
 

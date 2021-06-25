@@ -12,10 +12,6 @@ export default class CinemaRouter implements IRouter {
 
     application.get("/cinemas", cinemaController.getAll.bind(cinemaController));
     application.get(
-      "/cinemas/search/:search",
-      cinemaController.getAllBySearchTerm.bind(cinemaController)
-    );
-    application.get(
       "/cinemas/:id",
       cinemaController.getById.bind(cinemaController)
     );

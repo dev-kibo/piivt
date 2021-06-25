@@ -20,12 +20,17 @@ export default class CinemaService extends BaseService<CinemaModel> {
   }
 
   public async getAll(
+    searchTerm?: string,
     options: Partial<IModelAdapterOptionsInterface> = {}
   ): Promise<CinemaModel[]> {
-    return await this.getAllFromTable<IModelAdapterOptionsInterface>(
-      "cinema",
-      options
-    );
+    if (!searchTerm || searchTerm.length === 0) {
+      return await this.getAllFromTable<IModelAdapterOptionsInterface>(
+        "cinema",
+        options
+      );
+    } else {
+      return await this.getAllBySearchTerm(searchTerm);
+    }
   }
 
   public async getById(

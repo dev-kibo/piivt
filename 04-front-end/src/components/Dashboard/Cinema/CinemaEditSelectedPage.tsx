@@ -1,48 +1,35 @@
 import React, { useState } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import CinemaModel from "../../../../../03-back-end/src/components/cinema/model";
 import IParams from "../../Common/IParams";
-import { useEffect } from "react";
 import CinemaService from "../../../services/CinemaService";
 import CustomAlert from "../../Alert/CustomAlert";
+import useFetchCinema from "../../../hooks/useFetchCinema";
 
 export default function CinemaEditSelectedPage() {
-  const [cinema, setCinema] = useState<CinemaModel>();
   const [name, setName] = useState<string>("");
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
   const [isAlertShown, setIsAlertShown] = useState<boolean>(false);
-  const [alertVariant, setAlertVariant] =
-    useState<"success" | "danger">("success");
+  const [alertVariant, setAlertVariant] = useState<"success" | "danger">(
+    "success"
+  );
 
   const { id } = useParams<IParams>();
-
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const res = await CinemaService.getCinemaById(+id);
-        setCinema(res);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetch();
-  }, [id]);
+  const [cinema] = useFetchCinema(+id);
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     if (name.length > 0) {
       try {
-        const cinema: CinemaModel = await CinemaService.editCinema(+id, {
+        await CinemaService.editCinema(+id, {
           name,
         });
         setMessage("Updated cinema successfully.");
         setAlertVariant("success");
         setIsAlertShown(true);
         setName("");
-        setCinema(cinema);
       } catch (error: any) {
         console.log(error);
         if (error?.status === 409) {

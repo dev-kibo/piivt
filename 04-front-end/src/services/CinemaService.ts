@@ -12,23 +12,12 @@ export default class CinemaService {
     });
   }
 
-  public static async getAllCinemas(): Promise<CinemaModel[]> {
-    return new Promise<CinemaModel[]>(async (resolve, reject) => {
-      try {
-        const res = await api("get", "/cinemas");
-        resolve(res.data as CinemaModel[]);
-      } catch (error) {
-        reject(error as ApiResponse);
-      }
-    });
-  }
-
-  public static async searchCinemas(
-    searchTerm: string
+  public static async getAllCinemas(
+    searchTerm?: string
   ): Promise<CinemaModel[]> {
     return new Promise<CinemaModel[]>(async (resolve, reject) => {
       try {
-        const res = await api("get", `/cinemas/search/${searchTerm}`);
+        const res = await api("get", `/cinemas?q=${searchTerm}`);
         resolve(res.data as CinemaModel[]);
       } catch (error) {
         reject(error as ApiResponse);

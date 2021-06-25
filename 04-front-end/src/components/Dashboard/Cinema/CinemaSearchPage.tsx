@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
-import CinemaModel from "../../../../../03-back-end/src/components/cinema/model";
-import CinemaService from "../../../services/CinemaService";
 import BaseLink from "../BaseLink";
+import useFetchCinemas from "../../../hooks/useFetchCinemas";
 
 interface ICinemaSearchProps {
   title: string;
@@ -17,37 +16,8 @@ export default function CinemaSearchPage({
   searchLabel,
   item: Item,
 }: ICinemaSearchProps) {
-  const [data, setData] = useState<CinemaModel[]>([]);
   const [search, setSearch] = useState<string>("");
-
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const res = await CinemaService.getAllCinemas();
-
-        setData(res);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetch();
-  }, []);
-
-  const handleSearch = async (e: string) => {
-    setSearch(e);
-
-    if (e.length > 0) {
-      try {
-        const res = await CinemaService.searchCinemas(e);
-        setData(res);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      const res = await CinemaService.getAllCinemas();
-      setData(res);
-    }
-  };
+  const [data] = useFetchCinemas(search);
 
   return (
     <Row>
@@ -63,7 +33,7 @@ export default function CinemaSearchPage({
             <Form.Control
               type="text"
               value={search}
-              onChange={(e) => handleSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </Form.Group>
         </Row>

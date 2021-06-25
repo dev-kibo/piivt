@@ -1,28 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col, Button, Alert } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
-import CinemaModel from "../../../../../03-back-end/src/components/cinema/model";
 import CinemaService from "../../../services/CinemaService";
 import IParams from "../../Common/IParams";
+import useFetchCinema from "../../../hooks/useFetchCinema";
 
 export default function CinemaDeleteSelectedPage() {
-  const [cinema, setCinema] = useState<CinemaModel>();
+  // const [cinema, setCinema] = useState<CinemaModel>();
   const [status, setStatus] = useState<"success" | "failed" | "">("");
   const [message, setMessage] = useState<string>("");
   const { id } = useParams<IParams>();
   const history = useHistory();
 
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const cinema: CinemaModel = await CinemaService.getCinemaById(+id);
-        setCinema(cinema);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetch();
-  }, [id]);
+  const [cinema] = useFetchCinema(+id);
 
   const handleYes = async (e: React.SyntheticEvent) => {
     e.preventDefault();

@@ -8,8 +8,9 @@ export default function CinemaAddPage() {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
   const [isAlertShown, setIsAlertShown] = useState<boolean>(false);
-  const [alertVariant, setAlertVariant] =
-    useState<"success" | "danger">("success");
+  const [alertVariant, setAlertVariant] = useState<"success" | "danger">(
+    "success"
+  );
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -41,21 +42,6 @@ export default function CinemaAddPage() {
       setName("");
     }
   };
-  // Template
-  /* <Row className="justify-content-center">
-          <Col>
-            <Row>
-              <Col className="text-center">
-                <p className="display-4">{title}</p>
-              </Col>
-            </Row>
-            <Row className="mt-5 justify-content-center">
-              <Col>
-                <FormComponent />
-              </Col>
-            </Row>
-          </Col>
-        </Row> */
 
   return (
     <Row className="justify-content-center h-100 align-items-center">

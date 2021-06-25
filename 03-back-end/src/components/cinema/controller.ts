@@ -8,19 +8,8 @@ import CinemaModel from "./model";
 export default class CinemaController extends BaseController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      res.send(await this.services.cinemaService.getAll());
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async getAllBySearchTerm(req: Request, res: Response, next: NextFunction) {
-    const searchTerm = "" + req.params["search"] ?? "";
-
-    try {
-      res.send(
-        await this.services.cinemaService.getAllBySearchTerm(searchTerm)
-      );
+      const searchTerm = "" + req?.query?.q;
+      res.send(await this.services.cinemaService.getAll(searchTerm));
     } catch (error) {
       next(error);
     }

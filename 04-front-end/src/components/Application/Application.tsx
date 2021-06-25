@@ -17,7 +17,6 @@ import MovieEditSelectedPage from "../Dashboard/Movie/MovieEditSelectedPage";
 import MovieDeleteSelectedPage from "../Dashboard/Movie/MovieDeleteSelectedPage";
 import ActorPage from "../Dashboard/Actor/ActorPage";
 import ActorAddPage from "../Dashboard/Actor/ActorAddPage";
-import BaseFormPage from "../Dashboard/BaseFormPage";
 import DashboardLink from "../Dashboard/DashboardLink";
 import MovieListItem from "../Dashboard/Movie/MovieListItem";
 import ActorEditSelectedPage from "../Dashboard/Actor/ActorEditSelectedPage";
@@ -139,12 +138,7 @@ export default function Application() {
           />
           <Route
             path="/dashboard/actors/edit/:id"
-            render={() => (
-              <BaseFormPage
-                form={ActorEditSelectedPage}
-                title="Edit John Smith"
-              />
-            )}
+            component={ActorEditSelectedPage}
           />
           <Route
             exact

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import ActorModel from "../../../../../03-back-end/src/components/actor/model";
 import BaseLink from "../BaseLink";
-import ActorService from "../../../services/ActorService";
+import useFetchActors from "../../../hooks/useFetchActors";
 
 interface IActorSearchProps {
   title: string;
@@ -17,37 +17,8 @@ export default function ActorSearch({
   searchLabel,
   item: Item,
 }: IActorSearchProps) {
-  const [data, setData] = useState<ActorModel[]>([]);
-  const [search, setSearch] = useState<string>("");
-
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const res = await ActorService.getAll();
-
-        setData(res);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetch();
-  }, []);
-
-  const handleSearch = async (e: string) => {
-    setSearch(e);
-
-    if (e.length > 0) {
-      try {
-        const res = await ActorService.search(e);
-        setData(res);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      const res = await ActorService.getAll();
-      setData(res);
-    }
-  };
+  const [searchActorQuery, setSearchActorQuery] = useState<string>("");
+  const [data] = useFetchActors(searchActorQuery);
 
   return (
     <Row>
@@ -62,8 +33,8 @@ export default function ActorSearch({
             <Form.Label>{searchLabel}:</Form.Label>
             <Form.Control
               type="text"
-              value={search}
-              onChange={(e) => handleSearch(e.target.value)}
+              value={searchActorQuery}
+              onChange={(e) => setSearchActorQuery(e.target.value)}
             />
           </Form.Group>
         </Row>

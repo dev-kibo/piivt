@@ -1,36 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import ActorModel from "../../../../../03-back-end/src/components/actor/model";
 import ActorService from "../../../services/ActorService";
 import CustomAlert from "../../Alert/CustomAlert";
 import IParams from "../../Common/IParams";
+import useFetchActor from "../../../hooks/useFetchActor";
 
 export default function ActorEditSelectedPage() {
-  const [actor, setActor] = useState<ActorModel>();
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [middleName, setMiddleName] = useState<string>("");
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
   const [isAlertShown, setIsAlertShown] = useState<boolean>(false);
-  const [alertVariant, setAlertVariant] =
-    useState<"success" | "danger">("success");
+  const [alertVariant, setAlertVariant] = useState<"success" | "danger">(
+    "success"
+  );
 
   const { id } = useParams<IParams>();
-
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const res: ActorModel = await ActorService.getById(+id);
-
-        setActor(res);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetch();
-  }, [id]);
+  const [actor] = useFetchActor(+id);
 
   useEffect(() => {
     if (firstName.length > 0 && lastName.length > 0) {
@@ -45,7 +33,7 @@ export default function ActorEditSelectedPage() {
 
     if (firstName.length > 1 && lastName.length > 1) {
       try {
-        const actor: ActorModel = await ActorService.editActor(+id, {
+        await ActorService.editActor(+id, {
           firstName,
           lastName,
           middleName,
@@ -56,7 +44,6 @@ export default function ActorEditSelectedPage() {
         setFirstName("");
         setMiddleName("");
         setLastName("");
-        setActor(actor);
       } catch (error: any) {
         console.log(error);
         if (error?.status === 409) {

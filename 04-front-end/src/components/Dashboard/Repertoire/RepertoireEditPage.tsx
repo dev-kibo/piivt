@@ -4,21 +4,21 @@ import CustomAlert from "../../Alert/CustomAlert";
 import { useParams } from "react-router-dom";
 import IParams from "../../Common/IParams";
 import RepertoireService from "../../../services/RepertoireService";
-import RepertoireModel from "../../../../../03-back-end/src/components/repertoire/model";
-import MovieModel from "../../../../../03-back-end/src/components/movie/model";
-import CinemaModel from "../../../../../03-back-end/src/components/cinema/model";
-import MovieService from "../../../services/MovieService";
-import CinemaService from "../../../services/CinemaService";
 import { v4 as uuidv4 } from "uuid";
 import IAddProjection from "./IAddProjection";
 import RepertoireProjectionItem from "./RepertoireProjectionItem";
 import IDeleteProjection from "../../../../../03-back-end/src/components/projection/dto/IDeleteProjection";
+import useFetchMovies from "../../../hooks/useFetchMovies";
+import useFetchCinemas from "../../../hooks/useFetchCinemas";
+import useFetchRepertoire from "../../../hooks/useFetchRepertoire";
 
 export default function RepertoireEditPage() {
+  const { id } = useParams<IParams>();
+  const [searchMovieQuery, setSearchMovieQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [repertoire, setRepertoire] = useState<RepertoireModel>();
-  const [movies, setMovies] = useState<MovieModel[]>([]);
-  const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
+  const [repertoire] = useFetchRepertoire(+id);
+  const [movies] = useFetchMovies(searchMovieQuery);
+  const [cinemas] = useFetchCinemas();
   const [date, setDate] = useState<string>("");
   const [startsAt, setStartsAt] = useState<string>("");
   const [cinema, setCinema] = useState<number>();
@@ -42,41 +42,32 @@ export default function RepertoireEditPage() {
     "success"
   );
 
-  const { id } = useParams<IParams>();
-
   useEffect(() => {
-    async function fetch() {
-      try {
-        const movies: MovieModel[] = await MovieService.getAll();
-        const cinemas: CinemaModel[] = await CinemaService.getAllCinemas();
+    if (repertoire) {
+      const startDate: Date = new Date(
+        `${repertoire.projections![0].startsAt} UTC`
+      );
 
-        const repertoire: RepertoireModel = await RepertoireService.getById(
-          +id
-        );
+      const minutes = startDate.getMinutes().toString();
 
-        const startDate: Date = new Date(repertoire.projections![0].startsAt);
-
-        setStartsAt(`${startDate.getHours()}:${startDate.getMinutes()}`);
-        setProjections(
-          repertoire.projections!.map((x) => ({
-            cinemaId: x.cinemaId,
-            movieId: x.movieId,
-            projectionId: x.projectionId.toString(),
-          }))
-        );
-        setRepertoire(repertoire);
-        setDate(repertoire.date);
-        setMovies(movies);
-        setCinemas(cinemas);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
+      setStartsAt(
+        `${startDate.getHours()}:${
+          minutes.length > 1 ? minutes : minutes.padEnd(2, "0")
+        }`
+      );
+      setProjections(
+        repertoire.projections!.map((x) => ({
+          cinemaId: x.cinemaId,
+          movieId: x.movieId,
+          projectionId: x.projectionId.toString(),
+        }))
+      );
+      setDate(repertoire.date);
+      setIsLoading(false);
     }
-    fetch();
 
     return () => setIsLoading(true);
-  }, [id]);
+  }, [repertoire]);
 
   const isFormValid = useCallback((): boolean => {
     return (
@@ -123,28 +114,22 @@ export default function RepertoireEditPage() {
     }
   };
 
-  const handleMovieSearch = async (value: string) => {
-    if (value.length > 0) {
-      try {
-        setMovies(await MovieService.getBySearchTerm(value));
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      setMovies(await MovieService.getAll());
-    }
-  };
-
   const handleProjectionRemoveItem = (uid: string) => {
-    setToDeleteProjections(
-      projections
+    setToDeleteProjections([
+      ...toDeleteProjections,
+      ...projections
         .filter((x) => x.projectionId === uid)
-        .map((x) => ({ projectionId: Number.parseInt(x.projectionId) }))
-    );
+        .map((x) => ({ projectionId: Number.parseInt(x.projectionId) })),
+    ]);
     setProjections(projections.filter((x) => x.projectionId !== uid));
   };
 
   const handleAddProjection = () => {
+    if (projections.length === 8) {
+      setIsAlertShown(true);
+      setAlertVariant("danger");
+      setMessage("Max projections added.");
+    }
     setProjections([
       ...projections,
       {
@@ -186,12 +171,8 @@ export default function RepertoireEditPage() {
         setMessage("Repertoire updated successfully.");
         setAlertVariant("success");
         setIsAlertShown(true);
-
-        setDate("");
-        setStartsAt("");
         setCinema(-1);
         setMovie(-1);
-        setProjections([]);
       } catch (error: any) {
         console.log(error);
         if (error?.status === 409) {
@@ -289,7 +270,7 @@ export default function RepertoireEditPage() {
                             <Form.Control
                               type="text"
                               onChange={(e) =>
-                                handleMovieSearch(e.target.value)
+                                setSearchMovieQuery(e.target.value)
                               }
                             />
                           </Form.Group>

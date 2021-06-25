@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import CinemaModel from "../../../../../03-back-end/src/components/cinema/model";
-import MovieModel from "../../../../../03-back-end/src/components/movie/model";
 import CustomAlert from "../../Alert/CustomAlert";
-import MovieService from "../../../services/MovieService";
-import CinemaService from "../../../services/CinemaService";
 import RepertoireProjectionItem from "./RepertoireProjectionItem";
 import { v4 as uuidv4 } from "uuid";
 import RepertoireService from "../../../services/RepertoireService";
 import IAddProjection from "./IAddProjection";
+import useFetchCinemas from "../../../hooks/useFetchCinemas";
+import useFetchMovies from "../../../hooks/useFetchMovies";
 
 export default function RepertoireAddPage() {
-  const [movies, setMovies] = useState<MovieModel[]>([]);
-  const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
+  const [searchMovieQuery, setSearchMovieQuery] = useState<string>("");
+  const [movies] = useFetchMovies(searchMovieQuery);
+  const [cinemas] = useFetchCinemas();
   const [date, setDate] = useState<string>("");
   const [startsAt, setStartsAt] = useState<string>("");
   const [cinema, setCinema] = useState<number>();
@@ -21,7 +20,6 @@ export default function RepertoireAddPage() {
   const [isStartsAtValid, setIsStartsAtValid] = useState<boolean | undefined>(
     undefined
   );
-
   const [isAddProjectionButtonDisabled, setIsAddProjectionButtonDisabled] =
     useState<boolean>(true);
   const [isAddRepertoireButtonDisabled, setIsAddRepertoireButtonDisabled] =
@@ -63,21 +61,6 @@ export default function RepertoireAddPage() {
     }
   }, [isSubmitValid]);
 
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const movies: MovieModel[] = await MovieService.getAll();
-        const cinemas: CinemaModel[] = await CinemaService.getAllCinemas();
-
-        setMovies(movies);
-        setCinemas(cinemas);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetch();
-  }, []);
-
   const handleStartsAt = (value: string) => {
     setStartsAt(value);
 
@@ -92,33 +75,27 @@ export default function RepertoireAddPage() {
     }
   };
 
-  const handleMovieSearch = async (value: string) => {
-    if (value.length > 0) {
-      try {
-        setMovies(await MovieService.getBySearchTerm(value));
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      setMovies(await MovieService.getAll());
-    }
-  };
-
   const handleProjectionRemoveItem = (uid: string) => {
     setProjections(projections.filter((x) => x.projectionId !== uid));
   };
 
   const handleAddProjection = () => {
-    setProjections([
-      ...projections,
-      {
-        cinemaId: cinema!,
-        movieId: movie!,
-        projectionId: uuidv4(),
-      },
-    ]);
-    setCinema(-1);
-    setMovie(-1);
+    if (projections.length === 8) {
+      setIsAlertShown(true);
+      setAlertVariant("danger");
+      setMessage("Max projections added.");
+    } else {
+      setProjections([
+        ...projections,
+        {
+          cinemaId: cinema!,
+          movieId: movie!,
+          projectionId: uuidv4(),
+        },
+      ]);
+      setCinema(-1);
+      setMovie(-1);
+    }
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
@@ -239,7 +216,7 @@ export default function RepertoireAddPage() {
                             <Form.Control
                               type="text"
                               onChange={(e) =>
-                                handleMovieSearch(e.target.value)
+                                setSearchMovieQuery(e.target.value)
                               }
                             />
                           </Form.Group>

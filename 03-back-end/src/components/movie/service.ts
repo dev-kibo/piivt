@@ -219,12 +219,9 @@ export default class MovieService extends BaseService<MovieModel> {
     return new Promise<MovieModel>(async (resolve, reject) => {
       try {
         for (const role of data) {
-          console.log(role);
           if (Number.isNaN(Number(role.roleId))) {
-            console.log("nan");
             await this.services.roleService.add(role);
           } else {
-            console.log("num");
             await this.services.roleService.update(Number(role.roleId), {
               role: role.role,
             });

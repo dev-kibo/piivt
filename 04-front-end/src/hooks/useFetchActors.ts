@@ -4,7 +4,7 @@ import { ApiResponse } from "../api/api";
 import ActorService from "../services/ActorService";
 
 export default function useFetchActors(
-  searchTerm?: string
+  searchTerm: string = ""
 ): [ActorModel[], ApiResponse | null] {
   const [data, setData] = useState<ActorModel[]>([]);
   const [error, setError] = useState<ApiResponse | null>(null);

@@ -4,7 +4,7 @@ import { ApiResponse } from "../api/api";
 import CinemaService from "../services/CinemaService";
 
 export default function useFetchCinemas(
-  searchTerm?: string
+  searchTerm: string = ""
 ): [CinemaModel[], ApiResponse | null] {
   const [data, setData] = useState<CinemaModel[]>([]);
   const [error, setError] = useState<ApiResponse | null>(null);

@@ -309,8 +309,6 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
 
           const endsAt: Date = date;
 
-          console.log(projection.projectionId);
-
           if (!isNaN(Number(projection.projectionId))) {
             await this.db.execute(updateQuery, [
               startsAt,

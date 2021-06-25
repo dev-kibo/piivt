@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
 import RepertoireModel from "../../../../../03-back-end/src/components/repertoire/model";
-import RepertoireService from "../../../services/RepertoireService";
+import useFetchRepertoires from "../../../hooks/useFetchRepertoires";
 import BaseLink from "../BaseLink";
 
 interface IRepertoireSearchPageProps {
@@ -15,20 +15,7 @@ export default function RepertoireSearchPage({
   relativePath,
   item: Item,
 }: IRepertoireSearchPageProps) {
-  const [data, setData] = useState<RepertoireModel[]>([]);
-
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const res = await RepertoireService.getAll();
-
-        setData(res);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetch();
-  }, []);
+  const [data] = useFetchRepertoires();
 
   const formatDate = (date: string): string => {
     return new Date(date).toLocaleString("sr-RS", {

@@ -27,10 +27,10 @@ interface IAddRole {
 }
 
 export default class MovieService {
-  public static async getAll(): Promise<MovieModel[]> {
+  public static async getAll(searchTerm?: string): Promise<MovieModel[]> {
     return new Promise<MovieModel[]>(async (resolve, reject) => {
       try {
-        const res = await api("get", "/movies");
+        const res = await api("get", `/movies?q=${searchTerm}`);
         resolve(res.data as MovieModel[]);
       } catch (error) {
         reject(error as ApiResponse);
@@ -54,6 +54,7 @@ export default class MovieService {
     });
   }
 
+  // to do remove
   public static async getBySearchTerm(
     searchTerm: string
   ): Promise<MovieModel[]> {

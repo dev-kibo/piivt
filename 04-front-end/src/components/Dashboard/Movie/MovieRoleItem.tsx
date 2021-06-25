@@ -1,23 +1,25 @@
 import React from "react";
-import ActorModel from "../../../../../03-back-end/src/components/actor/model";
+import useFetchActor from "../../../hooks/useFetchActor";
 
 interface IMovieRoleItemProps {
-  actor: ActorModel;
+  actorId: number;
   role: string;
   uid: string;
   onRemove: (uid: string) => void;
 }
 
 export default function MovieRoleItem({
-  actor,
+  actorId,
   role,
   uid,
   onRemove,
 }: IMovieRoleItemProps) {
+  const [actor] = useFetchActor(actorId);
+
   return (
     <div className="d-flex justify-content-between border p-2 my-3 mt-md-0">
       <p className="m-0">
-        {actor.firstName} {actor?.middleName} {actor.lastName} ... {role}
+        {actor?.firstName} {actor?.middleName} {actor?.lastName} ... {role}
       </p>
       <button
         type="button"

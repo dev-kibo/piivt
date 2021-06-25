@@ -8,7 +8,8 @@ import { IUpdateActor, IUpdateActorValidator } from "./dto/IUpdateActor";
 export default class ActorController extends BaseController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      res.send(await this.services.actorService.getAll());
+      const searchTerm = "" + req?.query?.q;
+      res.send(await this.services.actorService.getAll(searchTerm));
     } catch (error) {
       next(error);
     }
@@ -31,16 +32,6 @@ export default class ActorController extends BaseController {
       }
 
       res.send(actor);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async getAllBySearchTerm(req: Request, res: Response, next: NextFunction) {
-    const searchTerm = "" + req.params["search"] ?? "";
-
-    try {
-      res.send(await this.services.actorService.getAllBySearchTerm(searchTerm));
     } catch (error) {
       next(error);
     }

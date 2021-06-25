@@ -12,10 +12,6 @@ export default class ActorRouter implements IRouter {
       "/actors/:id",
       actorController.getById.bind(actorController)
     );
-    application.get(
-      "/actors/search/:search",
-      actorController.getAllBySearchTerm.bind(actorController)
-    );
     application.post("/actors", actorController.add.bind(actorController));
     application.put(
       "/actors/:id",

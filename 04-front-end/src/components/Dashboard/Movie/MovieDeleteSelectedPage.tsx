@@ -1,27 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col, Button, Alert } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
-import MovieModel from "../../../../../03-back-end/src/components/movie/model";
 import IParams from "../../Common/IParams";
 import MovieService from "../../../services/MovieService";
+import useFetchMovie from "../../../hooks/useFetchMovie";
 
 export default function MovieDeleteSelectedPage() {
-  const [movie, setMovie] = useState<MovieModel>();
   const [status, setStatus] = useState<"success" | "failed" | "">("");
   const { id } = useParams<IParams>();
   const history = useHistory();
-
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const movie: MovieModel = await MovieService.getById(+id);
-        setMovie(movie);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetch();
-  }, [id]);
+  const [movie] = useFetchMovie(+id);
 
   const handleYes = async (e: React.SyntheticEvent) => {
     e.preventDefault();

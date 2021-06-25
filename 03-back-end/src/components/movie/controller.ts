@@ -11,7 +11,8 @@ import IAddOrUpdateRole from "./dto/IAddOrUpdateRole";
 export default class MovieController extends BaseController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      res.send(await this.services.movieService.getAll());
+      const searchTerm = "" + req?.query?.q;
+      res.send(await this.services.movieService.getAll(searchTerm));
     } catch (error) {
       next(error);
     }
@@ -57,16 +58,6 @@ export default class MovieController extends BaseController {
       }
 
       res.send(movie);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async getAllBySearchTerm(req: Request, res: Response, next: NextFunction) {
-    const searchTerm = "" + req.params["search"] ?? "";
-
-    try {
-      res.send(await this.services.movieService.getBySearchTerm(searchTerm));
     } catch (error) {
       next(error);
     }

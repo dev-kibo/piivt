@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import ActorModel from "../../../../../03-back-end/src/components/actor/model";
-import ActorService from "../../../services/ActorService";
 import CustomAlert from "../../Alert/CustomAlert";
 import MovieService from "../../../services/MovieService";
 import MovieModel from "../../../../../03-back-end/src/components/movie/model";
@@ -10,6 +8,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useParams } from "react-router-dom";
 import IParams from "../../Common/IParams";
 import IDeleteRole from "../../../../../03-back-end/src/components/movie/dto/IDeleteRole";
+import useFetchActors from "../../../hooks/useFetchActors";
+import useFetchMovie from "../../../hooks/useFetchMovie";
 
 interface IRole {
   actorId: number;
@@ -26,9 +26,8 @@ export default function MovieEditSelectedPage() {
   const [poster, setPoster] = useState<Blob>();
   const [roles, setRoles] = useState<IRole[]>([]);
   const [role, setRole] = useState<string>("");
-  const [actors, setActors] = useState<ActorModel[]>();
   const [actor, setActor] = useState<number>();
-  const [movie, setMovie] = useState<MovieModel>();
+  const [searchActorQuery, setSearchActorQuery] = useState<string>("");
   const [toDeleteRoles, setToDeleteRoles] = useState<IDeleteRole[]>([]);
 
   const [isAddRoleButtonDisabled, setIsAddRoleButtonDisabled] =
@@ -45,35 +44,29 @@ export default function MovieEditSelectedPage() {
   >(undefined);
 
   const { id } = useParams<IParams>();
+  const [actors] = useFetchActors(searchActorQuery);
+  const [movie] = useFetchMovie(+id, true);
 
   useEffect(() => {
-    async function fetch() {
-      try {
-        const movie: MovieModel = await MovieService.getById(+id, true);
-        setActors(await ActorService.getAll());
-        setMovie(movie);
-        setTitle(movie.title);
-        setDescription(movie.description);
-        setReleaseDate(movie.releasedAt);
-        setDuration(+movie.duration);
-        if (movie.roles !== undefined) {
-          setRoles(
-            movie.roles.map((x) => {
-              return {
-                actorId: x.actor.actorId,
-                movieId: movie.movieId,
-                role: x.role,
-                roleId: x.roleId.toString(),
-              };
-            })
-          );
-        }
-      } catch (error) {
-        console.log(error);
+    if (movie) {
+      setTitle(movie.title);
+      setDescription(movie.description);
+      setReleaseDate(movie.releasedAt);
+      setDuration(+movie.duration);
+      if (movie.roles !== undefined) {
+        setRoles(
+          movie.roles.map((x) => {
+            return {
+              actorId: x.actor.actorId,
+              movieId: movie.movieId,
+              role: x.role,
+              roleId: x.roleId.toString(),
+            };
+          })
+        );
       }
     }
-    fetch();
-  }, [id]);
+  }, [movie]);
 
   useEffect(() => {
     if (actor !== undefined && actor !== -1 && role.length > 0) {
@@ -199,18 +192,6 @@ export default function MovieEditSelectedPage() {
     setRoles(roles.filter((x) => x.roleId !== uid));
   };
 
-  const handleSearch = async (value: string) => {
-    if (value.length > 0) {
-      try {
-        setActors(await ActorService.search(value));
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      setActors(await await ActorService.getAll());
-    }
-  };
-
   if (!movie) {
     return <h4>Loading...</h4>;
   }
@@ -309,7 +290,9 @@ export default function MovieEditSelectedPage() {
                             <Form.Control
                               type="text"
                               placeholder="John Smith"
-                              onChange={(e) => handleSearch(e.target.value)}
+                              onChange={(e) =>
+                                setSearchActorQuery(e.target.value)
+                              }
                             />
                           </Form.Group>
                           <Form.Group className="pb-3">
@@ -347,20 +330,13 @@ export default function MovieEditSelectedPage() {
                           <div>
                             <p className="m-0">Roles:</p>
                           </div>
-                          {/* <div className="border p-2 mt-2">
-                            <p className="m-0">John Smith Jr ... Indy</p>
-                          </div> */}
                           <div className="mt-3">
                             {roles.map((x) => {
-                              const actor = actors?.find(
-                                (a) => a.actorId === x.actorId
-                              );
-
                               return (
                                 <MovieRoleItem
                                   key={x.roleId}
                                   uid={x.roleId}
-                                  actor={actor!}
+                                  actorId={x.actorId}
                                   role={x.role}
                                   onRemove={handleRoleItemRemove}
                                 />

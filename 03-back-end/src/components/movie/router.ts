@@ -19,10 +19,6 @@ export default class MovieRouter implements IRouter {
       "/movies/:id/roles",
       movieController.getAllWithRoles.bind(movieController)
     );
-    application.get(
-      "/movies/search/:search",
-      movieController.getAllBySearchTerm.bind(movieController)
-    );
     application.post("/movies", movieController.add.bind(movieController));
     application.put(
       "/movies/:id",

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import MovieModel from "../../../../../03-back-end/src/components/movie/model";
-import MovieService from "../../../services/MovieService";
+import useFetchMovies from "../../../hooks/useFetchMovies";
 import BaseLink from "../BaseLink";
 
 interface IMovieSearchPageProps {
@@ -17,37 +17,8 @@ export default function MovieSearchPage({
   searchLabel,
   item: Item,
 }: IMovieSearchPageProps) {
-  const [data, setData] = useState<MovieModel[]>([]);
-  const [search, setSearch] = useState<string>("");
-
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const res = await MovieService.getAll();
-
-        setData(res);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetch();
-  }, []);
-
-  const handleSearch = async (value: string) => {
-    setSearch(value);
-
-    if (value.length > 0) {
-      try {
-        const res = await MovieService.getBySearchTerm(value);
-        setData(res);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      const res = await MovieService.getAll();
-      setData(res);
-    }
-  };
+  const [searchMovieQuery, setSearchMovieQuery] = useState<string>("");
+  const [data] = useFetchMovies(searchMovieQuery);
 
   return (
     <Row>
@@ -62,8 +33,8 @@ export default function MovieSearchPage({
             <Form.Label>{searchLabel}:</Form.Label>
             <Form.Control
               type="text"
-              value={search}
-              onChange={(e) => handleSearch(e.target.value)}
+              value={searchMovieQuery}
+              onChange={(e) => setSearchMovieQuery(e.target.value)}
             />
           </Form.Group>
         </Row>

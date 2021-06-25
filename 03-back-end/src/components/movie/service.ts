@@ -40,9 +40,14 @@ export default class MovieService extends BaseService<MovieModel> {
   }
 
   public async getAll(
+    searchTerm?: string,
     options: Partial<MovieModelAdapterOptions> = {}
   ): Promise<MovieModel[]> {
-    return await this.getAllFromTable("movie", options);
+    if (!searchTerm || searchTerm.length === 0) {
+      return await this.getAllFromTable("movie", options);
+    } else {
+      return await this.getBySearchTerm(searchTerm);
+    }
   }
 
   public async getById(
@@ -59,7 +64,7 @@ export default class MovieService extends BaseService<MovieModel> {
     return new Promise(async (resolve, reject) => {
       try {
         const query: string =
-          "SELECT * FROM movie WHERE title LIKE CONCAT('%', ?, '%') AND is_deleted = 0;";
+          "SELECT * FROM movie WHERE REPLACE(title, ' ', '') LIKE CONCAT('%', REPLACE(?, ' ', ''), '%') AND is_deleted = 0;";
 
         const [rows] = await this.db.execute(query, [searchTerm]);
 

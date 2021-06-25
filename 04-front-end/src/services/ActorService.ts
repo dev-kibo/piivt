@@ -12,10 +12,10 @@ export default class ActorService {
     });
   }
 
-  public static async getAll(): Promise<ActorModel[]> {
+  public static async getAll(searchTerm?: string): Promise<ActorModel[]> {
     return new Promise<ActorModel[]>(async (resolve, reject) => {
       try {
-        const res = await api("get", "/actors");
+        const res = await api("get", `/actors?q=${searchTerm}`);
         resolve(res.data as ActorModel[]);
       } catch (error) {
         reject(error as ApiResponse);
@@ -23,6 +23,7 @@ export default class ActorService {
     });
   }
 
+  // to do remove
   public static async search(query: string): Promise<ActorModel[]> {
     return new Promise<ActorModel[]>(async (resolve, reject) => {
       try {

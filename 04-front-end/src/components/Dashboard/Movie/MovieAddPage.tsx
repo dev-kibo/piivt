@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import ActorModel from "../../../../../03-back-end/src/components/actor/model";
-import ActorService from "../../../services/ActorService";
 import CustomAlert from "../../Alert/CustomAlert";
 import MovieService from "../../../services/MovieService";
 import MovieModel from "../../../../../03-back-end/src/components/movie/model";
 import MovieRoleItem from "./MovieRoleItem";
 import { v4 as uuidv4 } from "uuid";
+import useFetchActors from "../../../hooks/useFetchActors";
 
 interface IRole {
   actorId: number;
@@ -23,8 +22,8 @@ export default function MovieAddPage() {
   const [poster, setPoster] = useState<Blob>();
   const [roles, setRoles] = useState<IRole[]>([]);
   const [role, setRole] = useState<string>("");
-  const [actors, setActors] = useState<ActorModel[]>();
   const [actor, setActor] = useState<number>();
+  const [searchActorQuery, setSearchActorQuery] = useState<string>("");
 
   const [isAddRoleButtonDisabled, setIsAddRoleButtonDisabled] =
     useState<boolean>(true);
@@ -39,6 +38,8 @@ export default function MovieAddPage() {
     boolean | undefined
   >(undefined);
 
+  const [actors] = useFetchActors(searchActorQuery);
+
   const isFormValid = useCallback((): boolean => {
     return (
       title.length > 1 &&
@@ -48,11 +49,6 @@ export default function MovieAddPage() {
       roles.length > 0
     );
   }, [description.length, title.length, releaseDate, duration, roles.length]);
-
-  useEffect(() => {
-    async function fetch() {}
-    fetch();
-  }, []);
 
   useEffect(() => {
     if (actor !== undefined && actor !== -1 && role.length > 0) {
@@ -151,18 +147,6 @@ export default function MovieAddPage() {
     setRoles(roles.filter((x) => x.uid !== uid));
   };
 
-  const handleSearch = async (value: string) => {
-    if (value.length > 0) {
-      try {
-        setActors(await ActorService.search(value));
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      setActors(await await ActorService.getAll());
-    }
-  };
-
   return (
     <Row className="justify-content-center h-100 align-items-center">
       <Col>
@@ -253,7 +237,9 @@ export default function MovieAddPage() {
                             <Form.Control
                               type="text"
                               placeholder="John Smith"
-                              onChange={(e) => handleSearch(e.target.value)}
+                              onChange={(e) =>
+                                setSearchActorQuery(e.target.value)
+                              }
                             />
                           </Form.Group>
                           <Form.Group className="pb-3">
@@ -293,15 +279,11 @@ export default function MovieAddPage() {
                           </div>
                           <div className="mt-3">
                             {roles.map((x) => {
-                              const actor = actors?.find(
-                                (a) => a.actorId === x.actorId
-                              );
-
                               return (
                                 <MovieRoleItem
                                   key={x.uid}
                                   uid={x.uid}
-                                  actor={actor!}
+                                  actorId={x.actorId}
                                   role={x.role}
                                   onRemove={handleRoleItemRemove}
                                 />

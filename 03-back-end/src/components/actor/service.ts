@@ -21,9 +21,14 @@ export default class ActorService extends BaseService<ActorModel> {
   }
 
   public async getAll(
+    searchTerm?: string,
     options: Partial<IModelAdapterOptions> = {}
   ): Promise<ActorModel[]> {
-    return await this.getAllFromTable("actor", options);
+    if (!searchTerm || searchTerm.length === 0) {
+      return await this.getAllFromTable("actor", options);
+    } else {
+      return await this.getAllBySearchTerm(searchTerm);
+    }
   }
 
   public async getById(
@@ -44,7 +49,7 @@ export default class ActorService extends BaseService<ActorModel> {
           FROM 
               actor 
           WHERE 
-              LOWER(first_name) LIKE CONCAT('%', ?, '%') AND
+              LOWER(CONCAT(first_name, middle_name, last_name)) LIKE CONCAT('%', REPLACE(?, ' ', ''), '%') AND
               is_deleted = 0;`;
 
       try {

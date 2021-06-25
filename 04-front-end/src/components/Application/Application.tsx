@@ -11,7 +11,7 @@ import CinemaPage from "../Dashboard/Cinema/CinemaPage";
 import CinemaAddPage from "../Dashboard/Cinema/CinemaAddPage";
 import CinemaEditSelectedPage from "../Dashboard/Cinema/CinemaEditSelectedPage";
 import DashboardCinemasDeleteSelected from "../Dashboard/Cinema/CinemaDeleteSelectedPage";
-import MovieOperationsPage from "../Dashboard/Movie/MovieOperationsPage";
+import DashboardMoviePage from "../Dashboard/Movie/DashboardMoviePage";
 import MovieAddPage from "../Dashboard/Movie/MovieAddPage";
 import MovieEditSelectedPage from "../Dashboard/Movie/MovieEditSelectedPage";
 import MovieDeleteSelectedPage from "../Dashboard/Movie/MovieDeleteSelectedPage";
@@ -87,7 +87,7 @@ export default function Application() {
           <Route
             exact
             path="/dashboard/movies"
-            component={MovieOperationsPage}
+            component={DashboardMoviePage}
           />
           <Route path="/dashboard/movies/add" component={MovieAddPage} />
           <Route

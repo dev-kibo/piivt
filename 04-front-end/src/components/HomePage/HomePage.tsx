@@ -3,6 +3,7 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 import MovieCard from "../MovieCard/MovieCard";
 import IHomePageStateMovies from "./IHomePageStateMovies";
 import useFetchRepertoire from "../../hooks/useFetchRepertoire";
+import CustomAlert from "../Alert/CustomAlert";
 
 interface IHomePageState {
   movies: IHomePageStateMovies[];
@@ -99,8 +100,27 @@ export default function HomePage() {
   }
 
   const renderBody = () => {
+    if (isLoading) {
+      return (
+        <CustomAlert
+          setIsAlertShown={() => true}
+          message="Loading"
+          variant="primary"
+          isDismissible={false}
+          isVisible={isLoading}
+        />
+      );
+    }
     if (error?.status === 404) {
-      return <h2>No results</h2>;
+      return (
+        <CustomAlert
+          setIsAlertShown={() => true}
+          message="No results"
+          variant="secondary"
+          isDismissible={false}
+          isVisible={true}
+        />
+      );
     } else {
       return (
         <Row lg={2} xl={3} xs={1}>
@@ -112,24 +132,20 @@ export default function HomePage() {
     }
   };
 
-  if (isLoading) {
-    return <h2>Loading....</h2>;
-  } else {
-    return (
-      <Container>
-        <Row className="justify-content-end mb-5">
-          <Col xs={4} lg={2}>
-            <Form.Control
-              as="select"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            >
-              {generateOptions()}
-            </Form.Control>
-          </Col>
-        </Row>
-        {renderBody()}
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      <Row className="justify-content-end mb-5">
+        <Col xs={4} lg={2}>
+          <Form.Control
+            as="select"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          >
+            {generateOptions()}
+          </Form.Control>
+        </Col>
+      </Row>
+      {renderBody()}
+    </Container>
+  );
 }

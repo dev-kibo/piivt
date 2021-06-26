@@ -1,75 +1,62 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import MovieCard from "../MovieCard/MovieCard";
-import RepertoireService from "../../services/RepertoireService";
-import MovieService from "../../services/MovieService";
-import CinemaService from "../../services/CinemaService";
 import IHomePageStateMovies from "./IHomePageStateMovies";
+import useFetchRepertoire from "../../hooks/useFetchRepertoire";
 
 interface IHomePageState {
-  date: string;
-  repertoireId: number;
-  movies: {
-    [key: string]: IHomePageStateMovies;
-  };
+  movies: IHomePageStateMovies[];
 }
 
 export default function HomePage() {
-  const [date, setDate] = useState<string>(new Date(Date.now()).toISOString());
-  const [repertoire, setRepertoire] = useState<IHomePageState>({
-    date: "",
-    repertoireId: 0,
-    movies: {},
-  });
+  const today = new Date(Date.now()).toISOString().slice(0, 10);
+
+  const [date, setDate] = useState<string>(today);
+  const [data, setData] = useState<IHomePageState | null>(null);
+  const [repertoire, error, isLoading] = useFetchRepertoire({ date });
 
   useEffect(() => {
-    async function fetch() {
-      const res = await RepertoireService.getRepertoire(date);
+    if (repertoire?.projections) {
+      const movies: IHomePageStateMovies[] = [];
 
-      if (res !== null && res.projections) {
-        console.log(res.projections);
-        const test = await res.projections.reduce(async (all: any, proj) => {
-          if (!all[proj.movieId]) {
-            all[proj.movieId] = {
-              movie: await MovieService.getById(proj.movieId),
-              projections: await Promise.all(
-                res
-                  .projections!.filter((x) => x.movieId === proj.movieId)
-                  .map(async (x) => ({
-                    id: x.projectionId,
-                    cinema: await CinemaService.getCinemaById(x.cinemaId),
-                    startsAt: x.startsAt,
-                    endsAt: x.endsAt,
-                  }))
-              ),
-            };
-          } else {
-            all[proj.movieId].projections.push(
-              await Promise.all(
-                res
-                  .projections!.filter((x) => x.movieId === proj.movieId)
-                  .map(async (x) => ({
-                    id: x.projectionId,
-                    cinema: await CinemaService.getCinemaById(x.cinemaId),
-                    startsAt: x.startsAt,
-                    endsAt: x.endsAt,
-                  }))
-              )
-            );
-          }
-
-          return all;
-        }, {});
-
-        setRepertoire({
-          date: res?.date ?? new Date(Date.now()).toISOString(),
-          repertoireId: res?.repertoireId ?? 0,
-          movies: test,
-        });
+      for (const projection of repertoire.projections) {
+        const movieIndex: number = movies.findIndex(
+          (x) => x.movie.movieId === projection.movie?.movieId
+        );
+        if (movieIndex >= 0) {
+          movies[movieIndex].projections.push({
+            id: projection.projectionId,
+            cinema: projection.cinema!,
+            endsAt: projection.endsAt,
+            startsAt: projection.startsAt,
+          });
+        } else {
+          movies.push({
+            movie: projection.movie!,
+            projections: [
+              {
+                id: projection.projectionId,
+                cinema: projection.cinema!,
+                endsAt: projection.endsAt,
+                startsAt: projection.startsAt,
+              },
+            ],
+          });
+        }
       }
+
+      movies.forEach((movie) =>
+        movie.projections.sort(
+          (a, b) =>
+            new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()
+        )
+      );
+
+      setData({
+        movies,
+      });
     }
-    fetch();
-  }, [date]);
+  }, [repertoire]);
 
   function generateOptions() {
     const dates: string[] = [];
@@ -111,24 +98,38 @@ export default function HomePage() {
     });
   }
 
-  return (
-    <Container>
-      <Row className="justify-content-end mb-5">
-        <Col xs={4} lg={2}>
-          <Form.Control as="select" onChange={(e) => setDate(e.target.value)}>
-            {generateOptions()}
-          </Form.Control>
-        </Col>
-      </Row>
-      <Row lg={3} md={2} xs={1}>
-        {Object.keys(repertoire.movies).length > 0 ? (
-          Object.values(repertoire.movies).map((x) => (
+  const renderBody = () => {
+    if (error?.status === 404) {
+      return <h2>No results</h2>;
+    } else {
+      return (
+        <Row lg={3} md={2} xs={1}>
+          {data?.movies.map((x) => (
             <MovieCard key={x.movie.movieId} repertoire={x} />
-          ))
-        ) : (
-          <h2>Loading...</h2>
-        )}
-      </Row>
-    </Container>
-  );
+          ))}
+        </Row>
+      );
+    }
+  };
+
+  if (isLoading) {
+    return <h2>Loading....</h2>;
+  } else {
+    return (
+      <Container>
+        <Row className="justify-content-end mb-5">
+          <Col xs={4} lg={2}>
+            <Form.Control
+              as="select"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            >
+              {generateOptions()}
+            </Form.Control>
+          </Col>
+        </Row>
+        {renderBody()}
+      </Container>
+    );
+  }
 }

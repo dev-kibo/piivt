@@ -8,55 +8,58 @@ interface IMovieCardProps {
 }
 
 export default function MovieCard({ repertoire }: IMovieCardProps) {
-  console.log(repertoire);
-
   const movie = repertoire.movie;
   const projections = repertoire.projections;
   const releasedAt = new Date(movie.releasedAt).getFullYear();
 
-  function getTime(date: string): string {
-    return new Date(date).toLocaleTimeString("sr-RS", {
-      hour: "numeric",
-      minute: "numeric",
-    });
+  function getTime(value: string): string {
+    const date: Date = new Date(value);
+    const minutes: string = date.getMinutes().toString();
+
+    return `${date.getHours()}:${
+      minutes.length > 1 ? minutes : minutes.padEnd(2, "0")
+    }`;
+  }
+
+  function formatDescription(value: string): string {
+    const allowedLetters = 110;
+    return value.length > allowedLetters
+      ? value.slice(0, allowedLetters) + "..."
+      : value;
   }
 
   return (
     <Col className="gy-4">
-      <Col className="gy-4">
-        <Link
-          to={`/movies/${movie.movieId}`}
-          className="btn btn-outline-secondary"
-        >
-          <Row className="text-start">
-            <Col className="align-items-center d-flex">
-              <Image
-                fluid
-                src={`${movie.posterUrl.slice(
-                  0,
-                  movie.posterUrl.length - 4
-                )}-small.jpg`}
-                className="img-thumb rounded"
-              />
-            </Col>
-            <Col sm={8} xs={9} className="d-flex flex-column">
+      <Link
+        to={`/movies/${movie.movieId}`}
+        className="btn btn-outline-light text-muted h-100 shadow-sm"
+      >
+        <Row className="text-start h-100">
+          <Col className="align-items-center d-flex">
+            <Image
+              fluid
+              src={`${movie.posterUrl.slice(
+                0,
+                movie.posterUrl.length - 4
+              )}-small.jpg`}
+              className="img-thumb rounded"
+            />
+          </Col>
+          <Col sm={8} xs={9} className="d-flex flex-column">
+            <div>
+              <h5>
+                {movie.title} ({releasedAt})
+              </h5>
               <div>
-                <h5>
-                  {movie.title} ({releasedAt})
-                </h5>
-                <p>{movie.description}</p>
+                <p>{formatDescription(movie.description)}</p>
               </div>
-              {projections.map((x) => {
-                return (
-                  <p className="mt-auto" key={x.id}>
-                    {getTime(x.startsAt)}h - {x.cinema.name}
-                  </p>
-                );
-              })}
-            </Col>
-          </Row>
-        </Link>
-      </Col>
+            </div>
+            <p className="mt-auto">
+              First projection at {getTime(projections[0].startsAt)}h
+            </p>
+          </Col>
+        </Row>
+      </Link>
     </Col>
   );
 }

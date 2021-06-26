@@ -3,25 +3,47 @@ import RepertoireModel from "../../../03-back-end/src/components/repertoire/mode
 import { ApiResponse } from "../api/api";
 import RepertoireService from "../services/RepertoireService";
 
-export default function useFetchRepertoire(
-  repertoireId: number
-): [RepertoireModel | null, ApiResponse | null] {
+interface IUseFetchRepertoireProps {
+  repertoireId?: number;
+  date?: string;
+}
+
+export default function useFetchRepertoire({
+  repertoireId,
+  date,
+}: IUseFetchRepertoireProps): [
+  RepertoireModel | null,
+  ApiResponse | null,
+  boolean
+] {
   const [data, setData] = useState<RepertoireModel | null>(null);
   const [error, setError] = useState<ApiResponse | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetch() {
       try {
-        const rep: RepertoireModel = await RepertoireService.getById(
-          repertoireId
-        );
+        setData(null);
+        setError(null);
+        setIsLoading(true);
+
+        let rep: RepertoireModel | null = null;
+
+        if (repertoireId) {
+          rep = await RepertoireService.getById(repertoireId);
+        } else if (date) {
+          rep = await RepertoireService.getRepertoireByDate(date);
+        }
+
         setData(rep);
       } catch (error) {
         setError(error as ApiResponse);
+      } finally {
+        setIsLoading(false);
       }
     }
     fetch();
-  }, [repertoireId]);
+  }, [repertoireId, date]);
 
-  return [data, error];
+  return [data, error, isLoading];
 }

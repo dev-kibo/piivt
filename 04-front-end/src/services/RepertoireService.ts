@@ -28,16 +28,15 @@ export default class RepertoireService {
     });
   }
 
-  public static async getRepertoire(
+  public static async getRepertoireByDate(
     date: string
   ): Promise<RepertioreModel | null> {
     return new Promise<RepertioreModel | null>(async (resolve, reject) => {
-      const dateFilter = new Date(date).toISOString();
       try {
-        const res = await api("get", `/repertoires?date=${dateFilter}`);
+        const res = await api("get", `/repertoires/date/${date}`);
         resolve(res.data as RepertioreModel);
       } catch (error) {
-        console.log(error);
+        reject(error as ApiResponse);
       }
     });
   }

@@ -6,18 +6,31 @@ import ApiError from "../error/ApiError";
 import IModelAdapterOptions from "../../common/IModelAdapterOptions.interface";
 import IDeleteProjection from "./dto/IDeleteProjection";
 
+interface IProjectionModelAdapterOptions extends IModelAdapterOptionsInterface {
+  loadMovie: boolean;
+  loadCinema: boolean;
+}
+
 export default class ProjectionService extends BaseService<ProjectionModel> {
   protected async adaptModel(
     data: any,
-    options: Partial<IModelAdapterOptionsInterface> = {}
+    options: Partial<IProjectionModelAdapterOptions> = {}
   ): Promise<ProjectionModel> {
     const model = new ProjectionModel();
 
     model.projectionId = +data?.projection_id;
-    model.cinemaId = +data?.cinema_id;
-    model.movieId = +data?.movie_id;
     model.startsAt = data?.starts_at;
     model.endsAt = data?.ends_at;
+
+    if (options.loadMovie) {
+      model.movie = await this.services.movieService.getById(+data?.movie_id);
+    }
+
+    if (options.loadCinema) {
+      model.cinema = await this.services.cinemaService.getById(
+        +data?.cinema_id
+      );
+    }
 
     return model;
   }
@@ -48,7 +61,9 @@ export default class ProjectionService extends BaseService<ProjectionModel> {
 
         if (Array.isArray(rows)) {
           for (const row of rows) {
-            results.push(await this.adaptModel(row));
+            results.push(
+              await this.adaptModel(row, { loadMovie: true, loadCinema: true })
+            );
           }
         }
 

@@ -16,7 +16,7 @@ export default function RepertoireEditPage() {
   const { id } = useParams<IParams>();
   const [searchMovieQuery, setSearchMovieQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [repertoire] = useFetchRepertoire(+id);
+  const [repertoire] = useFetchRepertoire({ repertoireId: +id });
   const [movies] = useFetchMovies(searchMovieQuery);
   const [cinemas] = useFetchCinemas();
   const [date, setDate] = useState<string>("");
@@ -57,8 +57,8 @@ export default function RepertoireEditPage() {
       );
       setProjections(
         repertoire.projections!.map((x) => ({
-          cinemaId: x.cinemaId,
-          movieId: x.movieId,
+          cinemaId: x.cinema!.cinemaId,
+          movieId: x.movie!.movieId,
           projectionId: x.projectionId.toString(),
         }))
       );

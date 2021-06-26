@@ -20,7 +20,7 @@ export default function MoviePageProjections({
         res.map(async (x) => {
           return {
             ...x,
-            cinema: await CinemaService.getCinemaById(x.cinemaId),
+            cinema: await CinemaService.getCinemaById(x.cinema!.cinemaId),
           };
         })
       );

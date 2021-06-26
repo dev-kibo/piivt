@@ -42,8 +42,7 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
     options: Partial<RepertoireModelAdapterOptions> = { loadProjections: true }
   ): Promise<RepertoireModel | null> {
     return new Promise<RepertoireModel | null>(async (resolve, reject) => {
-      console.log(date);
-      if (!Date.parse(date)) {
+      if (!Date.parse(date) || !/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(date)) {
         return reject(
           new ApiError(
             "DATE_INVALID",
@@ -52,19 +51,9 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
         );
       }
 
-      const dateFilter: Date = new Date(date);
-      const mariaDbDate: string = date.slice(0, 10);
-      // next 7 days
-      dateFilter.setDate(dateFilter.getDate() + 7);
-      const mariaDbDateFilter: string = dateFilter.toISOString().slice(0, 10);
+      const query: string = "SELECT * FROM repertoire WHERE show_at = ?;";
 
-      const query: string =
-        "SELECT * FROM repertoire WHERE show_at BETWEEN ? AND ?;";
-
-      const [rows] = await this.db.execute(query, [
-        mariaDbDate,
-        mariaDbDateFilter,
-      ]);
+      const [rows] = await this.db.execute(query, [date]);
 
       if (!Array.isArray(rows)) {
         return resolve(null);
@@ -74,7 +63,7 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
         return resolve(null);
       }
 
-      resolve(await this.adaptModel(rows[0], options));
+      resolve(await this.adaptModel(rows[0], { loadProjections: true }));
     });
   }
 
@@ -308,6 +297,10 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
           date = this.addMinutes(date, min);
 
           const endsAt: Date = date;
+
+          console.log(projection.projectionId);
+          console.log(typeof projection.projectionId);
+          console.log(!isNaN(Number(projection.projectionId)));
 
           if (!isNaN(Number(projection.projectionId))) {
             await this.db.execute(updateQuery, [

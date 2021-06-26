@@ -7,6 +7,7 @@ import IDeleteRoleValidator from "./dto/IDeleteRoleValidator";
 import IDeleteRole from "./dto/IDeleteRole";
 import IAddOrUpdateRoleValidator from "./dto/IAddOrUpdateRoleValidator";
 import IAddOrUpdateRole from "./dto/IAddOrUpdateRole";
+import RoleModel from "../role/model";
 
 export default class MovieController extends BaseController {
   async getAll(req: Request, res: Response, next: NextFunction) {
@@ -20,6 +21,7 @@ export default class MovieController extends BaseController {
 
   async getById(req: Request, res: Response, next: NextFunction) {
     const id: number = +req.params.id;
+    const include: string = "" + req?.query?.include;
 
     if (id <= 0) {
       return res.status(400).send("Invalid ID number");
@@ -27,7 +29,8 @@ export default class MovieController extends BaseController {
 
     try {
       const movie: MovieModel | null = await this.services.movieService.getById(
-        id
+        id,
+        { loadRoles: include ? true : false }
       );
 
       if (movie === null) {
@@ -40,7 +43,7 @@ export default class MovieController extends BaseController {
     }
   }
 
-  async getAllWithRoles(req: Request, res: Response, next: NextFunction) {
+  async getMovieRoles(req: Request, res: Response, next: NextFunction) {
     const id: number = +req.params.id;
 
     if (id <= 0) {
@@ -48,16 +51,10 @@ export default class MovieController extends BaseController {
     }
 
     try {
-      const movie: MovieModel | null = await this.services.movieService.getById(
-        id,
-        { loadRoles: true }
-      );
+      const roles: RoleModel[] | null =
+        await this.services.roleService.getAllRolesForMovie(id);
 
-      if (movie === null) {
-        return res.sendStatus(404);
-      }
-
-      res.send(movie);
+      res.send(roles);
     } catch (error) {
       next(error);
     }

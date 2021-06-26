@@ -59,7 +59,9 @@ export default class ProjectionController extends BaseController {
 
     try {
       const result: ProjectionModel[] | null =
-        await this.services.projectionService.getAllProjectionsForMovie(id);
+        await this.services.projectionService.getAllProjectionsForMovie(id, {
+          loadCinema: true,
+        });
 
       if (!result) {
         return res.sendStatus(404);

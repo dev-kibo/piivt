@@ -116,7 +116,7 @@ export default class ProjectionService extends BaseService<ProjectionModel> {
 
   public async getAllProjectionsForMovie(
     id: number,
-    options: Partial<IModelAdapterOptionsInterface> = {}
+    options: Partial<IProjectionModelAdapterOptions> = {}
   ): Promise<ProjectionModel[]> | null {
     if (!(await this.services.movieService.getById(id))) {
       return null;

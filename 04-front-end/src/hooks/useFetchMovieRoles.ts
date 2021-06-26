@@ -1,36 +1,32 @@
 import { useState, useEffect } from "react";
-import MovieModel from "../../../03-back-end/src/components/movie/model";
+import RoleModel from "../../../03-back-end/src/components/role/model";
 import { ApiResponse } from "../api/api";
 import MovieService from "../services/MovieService";
 
-export default function useFetchMovie(
-  movieId: number,
-  loadRoles: boolean = false
-): [MovieModel | null, ApiResponse | null, boolean] {
-  const [data, setData] = useState<MovieModel | null>(null);
+export default function useFetchMovieRoles(
+  movieId: number
+): [RoleModel[], ApiResponse | null, boolean] {
+  const [data, setData] = useState<RoleModel[]>([]);
   const [error, setError] = useState<ApiResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetch() {
       try {
-        setData(null);
+        setData([]);
         setError(null);
         setIsLoading(true);
 
-        const movie: MovieModel = await MovieService.getById(
-          +movieId,
-          loadRoles
-        );
-        setData(movie);
+        setData(await MovieService.getRolesForMovie(movieId));
       } catch (error) {
         setError(error as ApiResponse);
       } finally {
         setIsLoading(false);
       }
     }
+
     fetch();
-  }, [movieId, loadRoles]);
+  }, [movieId]);
 
   return [data, error, isLoading];
 }

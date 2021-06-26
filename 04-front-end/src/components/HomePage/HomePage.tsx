@@ -103,7 +103,7 @@ export default function HomePage() {
       return <h2>No results</h2>;
     } else {
       return (
-        <Row lg={3} md={2} xs={1}>
+        <Row lg={2} xl={3} xs={1}>
           {data?.movies.map((x) => (
             <MovieCard key={x.movie.movieId} repertoire={x} />
           ))}

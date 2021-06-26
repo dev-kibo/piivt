@@ -46,7 +46,7 @@ export default class MovieService {
       let endpoint: string = `/movies/${id}`;
 
       if (loadRoles) {
-        endpoint = `${endpoint}/roles`;
+        endpoint = `${endpoint}?include=roles`;
       }
 
       const res = await api("get", endpoint);
@@ -68,10 +68,10 @@ export default class MovieService {
     });
   }
 
-  public static async getRolesForMovie(id: number): Promise<MovieModel> {
-    return new Promise<MovieModel>(async (resolve, reject) => {
+  public static async getRolesForMovie(id: number): Promise<RoleModel[]> {
+    return new Promise<RoleModel[]>(async (resolve, reject) => {
       const res = await api("get", `/movies/${id}/roles`);
-      resolve(res.data as MovieModel);
+      resolve(res.data as RoleModel[]);
     });
   }
 

@@ -48,11 +48,12 @@ export default function RepertoireEditPage() {
         `${repertoire.projections![0].startsAt} UTC`
       );
 
+      const hours: string = startDate.getHours().toString();
       const minutes = startDate.getMinutes().toString();
 
       setStartsAt(
-        `${startDate.getHours()}:${
-          minutes.length > 1 ? minutes : minutes.padEnd(2, "0")
+        `${hours.length > 1 ? hours : hours.padStart(2, "0")}:${
+          minutes.length > 1 ? minutes : minutes.padStart(2, "0")
         }`
       );
       setProjections(

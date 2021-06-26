@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import MovieModel from "../../../../03-back-end/src/components/movie/model";
-import ProjectionService from "../../services/ProjectionService";
-import CinemaService from "../../services/CinemaService";
+import useFetchMovieProjections from "../../hooks/useFetchMovieProjections";
+import MoviePageProjectionsItem from "./MoviePageProjectionsItem";
+import IMoviePageProjectionsState from "./IMoviePageProjectionsState";
 
 interface IMoviePageProjectionsProps {
   movie: MovieModel;
@@ -11,59 +12,64 @@ interface IMoviePageProjectionsProps {
 export default function MoviePageProjections({
   movie,
 }: IMoviePageProjectionsProps) {
-  const [projections, setProjections] = useState<any[]>([]);
+  const [projections, isLoading] = useFetchMovieProjections(movie.movieId);
+  const [data, setData] = useState<IMoviePageProjectionsState[]>([]);
 
   useEffect(() => {
-    async function fetch() {
-      const res = await ProjectionService.getProjectionsForMovie(movie.movieId);
-      let mappedRes = await Promise.all(
-        res.map(async (x) => {
-          return {
-            ...x,
-            cinema: await CinemaService.getCinemaById(x.cinema!.cinemaId),
-          };
-        })
-      );
-      mappedRes = mappedRes.sort((a, b) => {
-        const date1 = new Date(a.startsAt);
-        const date2 = new Date(b.startsAt);
+    const results: IMoviePageProjectionsState[] = [];
 
-        if (date1 < date2) {
-          return -1;
-        } else if (date1 === date2) {
-          return 0;
+    if (projections.length > 0) {
+      for (const projection of projections) {
+        const cinemaIndex = results.findIndex(
+          (x) => x.cinemaId === projection.cinema?.cinemaId
+        );
+        if (cinemaIndex >= 0) {
+          results[cinemaIndex].projections.push({
+            projectionId: projection.projectionId,
+            startsAt: projection.startsAt,
+          });
         } else {
-          return 1;
+          results.push({
+            cinemaId: projection.cinema?.cinemaId!,
+            cinemaName: projection.cinema!.name,
+            projections: [
+              {
+                projectionId: projection.projectionId,
+                startsAt: projection.startsAt,
+              },
+            ],
+          });
         }
-      });
-      setProjections(mappedRes);
+      }
+
+      results.forEach((x) =>
+        x.projections.sort(
+          (a, b) =>
+            new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()
+        )
+      );
+
+      setData(results);
     }
-    fetch();
-  }, [movie.movieId]);
+  }, [projections]);
+
+  if (isLoading) {
+    return <h2>Loading....</h2>;
+  }
 
   return (
-    <Row xs={1} sm={2} className="border p-2">
+    <Row xs={1} className="p-2">
       <Col>
-        {projections.map((x) => {
-          const fullDate = new Date(x.startsAt);
-          const date = fullDate.toLocaleDateString("sr-RS");
-          const time = fullDate.toLocaleTimeString("sr-RS", {
-            hour: "numeric",
-            minute: "numeric",
-          });
-
-          return (
-            <Row key={x.projectionId}>
-              <Col className="">
-                <p className="m-0">
-                  {date} {time}h
-                </p>
-              </Col>
-              <Col>
-                <p className="m-0">{x.cinema.name}</p>
-              </Col>
-            </Row>
-          );
+        <Row>
+          <Col>
+            <h3>Cinema:</h3>
+          </Col>
+          <Col>
+            <h3>Date:</h3>
+          </Col>
+        </Row>
+        {data.map((x) => {
+          return <MoviePageProjectionsItem key={x.cinemaId} cinemas={x} />;
         })}
       </Col>
     </Row>

@@ -13,11 +13,12 @@ export default function MovieCard({ repertoire }: IMovieCardProps) {
   const releasedAt = new Date(movie.releasedAt).getFullYear();
 
   function getTime(value: string): string {
-    const date: Date = new Date(value);
+    const date: Date = new Date(value + " UTC");
+    const hours: string = date.getHours().toString();
     const minutes: string = date.getMinutes().toString();
 
-    return `${date.getHours()}:${
-      minutes.length > 1 ? minutes : minutes.padEnd(2, "0")
+    return `${hours.length > 1 ? hours : hours.padStart(2, "0")}:${
+      minutes.length > 1 ? minutes : minutes.padStart(2, "0")
     }`;
   }
 
@@ -32,7 +33,7 @@ export default function MovieCard({ repertoire }: IMovieCardProps) {
     <Col className="gy-4">
       <Link
         to={`/movies/${movie.movieId}`}
-        className="btn btn-outline-light text-muted h-100 shadow-sm"
+        className="btn btn-outline-light text-muted h-100 shadow-sm w-100"
       >
         <Row className="text-start h-100">
           <Col className="align-items-center d-flex">

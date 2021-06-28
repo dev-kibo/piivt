@@ -51,7 +51,8 @@ export default class RepertoireService extends BaseService<RepertoireModel> {
         );
       }
 
-      const query: string = "SELECT * FROM repertoire WHERE show_at = ?;";
+      const query: string =
+        "SELECT * FROM repertoire WHERE show_at = ? AND is_deleted = 0;";
 
       const [rows] = await this.db.execute(query, [date]);
 

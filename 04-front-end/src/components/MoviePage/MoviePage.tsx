@@ -22,7 +22,7 @@ export default function MoviePage({ component: Component }: IMoviePageProps) {
   }
 
   return (
-    <Row>
+    <Row className="mt-5">
       <Col>
         <MoviePageInfo movie={movie} />
         <Col className="p-4">

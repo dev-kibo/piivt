@@ -21,7 +21,6 @@ import RepertoireService from "./components/repertoire/service";
 import RepertoireRouter from "./components/repertoire/router";
 import AdminService from "./components/admin/service";
 import AdminRouter from "./components/admin/router";
-import AuthController from "./components/auth/controller";
 import AuthRouter from "./components/auth/router";
 import ProjectionRouter from "./components/projection/router";
 import ApiError from "./components/error/ApiError";

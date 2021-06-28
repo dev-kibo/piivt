@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import MovieCard from "../MovieCard/MovieCard";
 import IHomePageStateMovies from "./IHomePageStateMovies";
@@ -14,10 +14,16 @@ export default function HomePage() {
 
   const [date, setDate] = useState<string>(today);
   const [data, setData] = useState<IHomePageState | null>(null);
-  const [repertoire, error, isLoading] = useFetchRepertoire({ date });
+  const [fetchInterval, setFetchInterval] = useState<number>(0);
+  const [repertoire, error, isLoading] = useFetchRepertoire({
+    date,
+    fetchInterval,
+  });
 
-  useEffect(() => {
+  const mapData = useCallback(() => {
     if (repertoire?.projections) {
+      console.log("test");
+
       const movies: IHomePageStateMovies[] = [];
 
       for (const projection of repertoire.projections) {
@@ -56,8 +62,22 @@ export default function HomePage() {
       setData({
         movies,
       });
+    } else {
+      setData(null);
     }
-  }, [repertoire]);
+  }, [repertoire?.projections]);
+
+  useEffect(() => {
+    const check = setInterval(
+      () => setFetchInterval(fetchInterval + 10),
+      60 * 1000
+    );
+    return () => clearInterval(check);
+  }, [fetchInterval]);
+
+  useEffect(() => {
+    mapData();
+  }, [mapData]);
 
   function generateOptions() {
     const dates: string[] = [];

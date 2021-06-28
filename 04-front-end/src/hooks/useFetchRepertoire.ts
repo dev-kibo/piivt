@@ -6,11 +6,13 @@ import RepertoireService from "../services/RepertoireService";
 interface IUseFetchRepertoireProps {
   repertoireId?: number;
   date?: string;
+  fetchInterval?: number;
 }
 
 export default function useFetchRepertoire({
   repertoireId,
   date,
+  fetchInterval,
 }: IUseFetchRepertoireProps): [
   RepertoireModel | null,
   ApiResponse | null,
@@ -43,7 +45,7 @@ export default function useFetchRepertoire({
       }
     }
     fetch();
-  }, [repertoireId, date]);
+  }, [repertoireId, date, fetchInterval]);
 
   return [data, error, isLoading];
 }

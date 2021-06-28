@@ -2,8 +2,9 @@ import React from "react";
 import { Row } from "react-bootstrap";
 import BaseNavigation from "./BaseNavigation";
 import IBaseNavigationProps from "./IBaseNavigationProps";
+import { withAuth } from "../Hocs/withAuth";
 
-export default function DashboardPage() {
+function DashboardPage() {
   const props: IBaseNavigationProps = {
     options: [
       {
@@ -31,3 +32,5 @@ export default function DashboardPage() {
     </Row>
   );
 }
+
+export default withAuth(DashboardPage);

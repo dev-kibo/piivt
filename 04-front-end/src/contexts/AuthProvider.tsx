@@ -3,11 +3,14 @@ import { useState, useEffect } from "react";
 import EventRegister from "../api/EventRegister";
 import AuthService from "../services/AuthService";
 import AdminModel from "../../../03-back-end/src/components/admin/model";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 export const AuthProvider = ({ children }: any) => {
   const [currentUser, setCurrentUser] = useState<AdminModel | null>(null);
-  const history = useHistory();
+
+  useEffect(() => {
+    EventRegister.on("AUTH_EVENT", handleAuthEvent);
+  }, []);
 
   useEffect(() => {
     async function fetch() {
@@ -17,14 +20,13 @@ export const AuthProvider = ({ children }: any) => {
         try {
           setCurrentUser(await AuthService.getCurrentUser());
         } catch (error) {
-          history.push("/");
+          return <Redirect to="/" />;
         }
       }
     }
 
     fetch();
-    EventRegister.on("AUTH_EVENT", handleAuthEvent);
-  }, [history]);
+  }, []);
 
   function handleAuthEvent(status: string) {
     if (status === "user_login") {
@@ -32,9 +34,13 @@ export const AuthProvider = ({ children }: any) => {
 
       if (accessToken) {
         const user = JSON.parse(atob(accessToken.split(".")[1]));
-
         setCurrentUser(user);
       }
+    } else if (status === "user_logout") {
+      localStorage.removeItem("access-token");
+      localStorage.removeItem("refresh-token");
+
+      setCurrentUser(null);
     }
   }
 

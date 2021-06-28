@@ -3,6 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import RepertoireModel from "../../../../../03-back-end/src/components/repertoire/model";
 import useFetchRepertoires from "../../../hooks/useFetchRepertoires";
 import CustomAlert from "../../Alert/CustomAlert";
+import { withAuth } from "../../Hocs/withAuth";
 import BaseLink from "../BaseLink";
 
 interface IRepertoireSearchPageProps {
@@ -11,7 +12,7 @@ interface IRepertoireSearchPageProps {
   relativePath: string;
 }
 
-export default function RepertoireSearchPage({
+function RepertoireSearchPage({
   title,
   relativePath,
   item: Item,
@@ -67,3 +68,5 @@ export default function RepertoireSearchPage({
     </Row>
   );
 }
+
+export default withAuth(RepertoireSearchPage);

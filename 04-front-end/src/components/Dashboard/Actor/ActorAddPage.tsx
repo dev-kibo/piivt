@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import CustomAlert from "../../Alert/CustomAlert";
 import ActorService from "../../../services/ActorService";
+import { withAuth } from "../../Hocs/withAuth";
 
-export default function ActorAddPage() {
+function ActorAddPage() {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [middleName, setMiddleName] = useState<string>("");
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
   const [isAlertShown, setIsAlertShown] = useState<boolean>(false);
-  const [alertVariant, setAlertVariant] =
-    useState<"success" | "danger">("success");
+  const [alertVariant, setAlertVariant] = useState<"success" | "danger">(
+    "success"
+  );
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -113,3 +115,5 @@ export default function ActorAddPage() {
     </Row>
   );
 }
+
+export default withAuth(ActorAddPage);

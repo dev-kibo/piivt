@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import MovieModel from "../../../../../03-back-end/src/components/movie/model";
 import useFetchMovies from "../../../hooks/useFetchMovies";
+import { withAuth } from "../../Hocs/withAuth";
 import BaseLink from "../BaseLink";
 
 interface IMovieSearchPageProps {
@@ -11,7 +12,7 @@ interface IMovieSearchPageProps {
   relativePath: string;
 }
 
-export default function MovieSearchPage({
+function MovieSearchPage({
   title,
   relativePath,
   searchLabel,
@@ -56,3 +57,5 @@ export default function MovieSearchPage({
     </Row>
   );
 }
+
+export default withAuth(MovieSearchPage);

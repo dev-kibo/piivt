@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Button, Col, DropdownButton, Dropdown } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import AdminModel from "../../../../03-back-end/src/components/admin/model";
+import EventRegister from "../../api/EventRegister";
 
 interface INavigationProps {
   admin: AdminModel;
@@ -41,6 +42,10 @@ export default function Navigation({ admin }: INavigationProps) {
     );
   };
 
+  const handleSignOut = () => {
+    EventRegister.emit("AUTH_EVENT", "user_logout");
+  };
+
   return (
     <nav className="border-bottom navbar fixed-top">
       <Row className="w-100 align-items-center px-2">
@@ -48,7 +53,9 @@ export default function Navigation({ admin }: INavigationProps) {
         <Col xs={6} className="d-flex align-items-center justify-content-end">
           <p className="m-0 me-3">{admin.email}</p>
           <DropdownButton title="Options" variant="outline-dark">
-            <Dropdown.Item as="button">Sign out</Dropdown.Item>
+            <Dropdown.Item as="button" onClick={handleSignOut}>
+              Sign out
+            </Dropdown.Item>
           </DropdownButton>
         </Col>
       </Row>

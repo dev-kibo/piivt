@@ -3,14 +3,11 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import AuthService from "../../services/AuthService";
 import EventRegister from "../../api/EventRegister";
 import { withRouter } from "react-router";
-import { History } from "history";
 import CustomAlert from "../Alert/CustomAlert";
 import { AuthContext } from "../../contexts/AuthContext";
-interface ISignInPageProps {
-  history: History;
-}
+import { useHistory, useLocation } from "react-router-dom";
 
-function SignInPage({ history }: ISignInPageProps) {
+function SignInPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [message, setMessage] = useState<string>("");
@@ -22,6 +19,8 @@ function SignInPage({ history }: ISignInPageProps) {
     useState<boolean>(true);
 
   const user = useContext(AuthContext);
+  const history = useHistory();
+  const { state } = useLocation<any>();
 
   useEffect(() => {
     if (user !== null) {
@@ -48,7 +47,7 @@ function SignInPage({ history }: ISignInPageProps) {
 
       EventRegister.emit("AUTH_EVENT", "user_login");
 
-      history.push("/dashboard");
+      history.push(state.referrer);
     } catch (error: any) {
       setMessage("Invalid email or password.");
       setAlertVariant("danger");
@@ -70,7 +69,7 @@ function SignInPage({ history }: ISignInPageProps) {
             variant={alertVariant}
             setIsAlertShown={setIsAlertShown}
             isDismissible={true}
-            isVisible={message?.length > 0}
+            isVisible={isAlertShown}
           />
           <Col className="border p-3 p-sm-5">
             <Form>

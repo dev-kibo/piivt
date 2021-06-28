@@ -11,8 +11,9 @@ import IDeleteProjection from "../../../../../03-back-end/src/components/project
 import useFetchMovies from "../../../hooks/useFetchMovies";
 import useFetchCinemas from "../../../hooks/useFetchCinemas";
 import useFetchRepertoire from "../../../hooks/useFetchRepertoire";
+import { withAuth } from "../../Hocs/withAuth";
 
-export default function RepertoireEditPage() {
+function RepertoireEditPage() {
   const { id } = useParams<IParams>();
   const [searchMovieQuery, setSearchMovieQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -356,3 +357,5 @@ export default function RepertoireEditPage() {
     </Row>
   );
 }
+
+export default withAuth(RepertoireEditPage);

@@ -4,8 +4,9 @@ import { useHistory, useParams } from "react-router-dom";
 import IParams from "../../Common/IParams";
 import MovieService from "../../../services/MovieService";
 import useFetchMovie from "../../../hooks/useFetchMovie";
+import { withAuth } from "../../Hocs/withAuth";
 
-export default function MovieDeleteSelectedPage() {
+function MovieDeleteSelectedPage() {
   const [status, setStatus] = useState<"success" | "failed" | "">("");
   const { id } = useParams<IParams>();
   const history = useHistory();
@@ -114,3 +115,5 @@ export default function MovieDeleteSelectedPage() {
     </Row>
   );
 }
+
+export default withAuth(MovieDeleteSelectedPage);

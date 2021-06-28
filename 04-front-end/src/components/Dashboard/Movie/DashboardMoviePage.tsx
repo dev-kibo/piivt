@@ -1,9 +1,10 @@
 import React from "react";
 import { Row } from "react-bootstrap";
+import { withAuth } from "../../Hocs/withAuth";
 import BaseNavigation from "../BaseNavigation";
 import IBaseNavigationProps from "../IBaseNavigationProps";
 
-export default function DashboardMoviePage() {
+function DashboardMoviePage() {
   const props: IBaseNavigationProps = {
     options: [
       {
@@ -27,3 +28,5 @@ export default function DashboardMoviePage() {
     </Row>
   );
 }
+
+export default withAuth(DashboardMoviePage);

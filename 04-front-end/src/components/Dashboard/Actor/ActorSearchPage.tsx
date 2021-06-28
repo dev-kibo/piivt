@@ -3,6 +3,7 @@ import { Row, Col, Form } from "react-bootstrap";
 import ActorModel from "../../../../../03-back-end/src/components/actor/model";
 import BaseLink from "../BaseLink";
 import useFetchActors from "../../../hooks/useFetchActors";
+import { withAuth } from "../../Hocs/withAuth";
 
 interface IActorSearchProps {
   title: string;
@@ -11,7 +12,7 @@ interface IActorSearchProps {
   relativePath: string;
 }
 
-export default function ActorSearchPage({
+function ActorSearchPage({
   title,
   relativePath,
   searchLabel,
@@ -58,3 +59,5 @@ export default function ActorSearchPage({
     </Row>
   );
 }
+
+export default withAuth(ActorSearchPage);

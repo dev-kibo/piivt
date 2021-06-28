@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import BaseLink from "../BaseLink";
 import useFetchCinemas from "../../../hooks/useFetchCinemas";
+import { withAuth } from "../../Hocs/withAuth";
 
 interface ICinemaSearchProps {
   title: string;
@@ -10,7 +11,7 @@ interface ICinemaSearchProps {
   relativePath: string;
 }
 
-export default function CinemaSearchPage({
+function CinemaSearchPage({
   title,
   relativePath,
   searchLabel,
@@ -60,3 +61,5 @@ export default function CinemaSearchPage({
     </Row>
   );
 }
+
+export default withAuth(CinemaSearchPage);

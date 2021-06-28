@@ -10,6 +10,7 @@ import IParams from "../../Common/IParams";
 import IDeleteRole from "../../../../../03-back-end/src/components/movie/dto/IDeleteRole";
 import useFetchActors from "../../../hooks/useFetchActors";
 import useFetchMovie from "../../../hooks/useFetchMovie";
+import { withAuth } from "../../Hocs/withAuth";
 
 interface IRole {
   actorId: number;
@@ -18,7 +19,7 @@ interface IRole {
   roleId: string;
 }
 
-export default function MovieEditSelectedPage() {
+function MovieEditSelectedPage() {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [releaseDate, setReleaseDate] = useState<string>("");
@@ -369,3 +370,5 @@ export default function MovieEditSelectedPage() {
     </Row>
   );
 }
+
+export default withAuth(MovieEditSelectedPage);

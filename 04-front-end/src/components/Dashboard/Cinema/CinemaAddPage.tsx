@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import CinemaService from "../../../services/CinemaService";
 import CustomAlert from "../../Alert/CustomAlert";
+import { withAuth } from "../../Hocs/withAuth";
 
-export default function CinemaAddPage() {
+function CinemaAddPage() {
   const [name, setName] = useState<string>("");
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
@@ -96,3 +97,5 @@ export default function CinemaAddPage() {
     </Row>
   );
 }
+
+export default withAuth(CinemaAddPage);

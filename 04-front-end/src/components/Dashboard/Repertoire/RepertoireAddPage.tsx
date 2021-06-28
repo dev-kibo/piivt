@@ -7,8 +7,9 @@ import RepertoireService from "../../../services/RepertoireService";
 import IAddProjection from "./IAddProjection";
 import useFetchCinemas from "../../../hooks/useFetchCinemas";
 import useFetchMovies from "../../../hooks/useFetchMovies";
+import { withAuth } from "../../Hocs/withAuth";
 
-export default function RepertoireAddPage() {
+function RepertoireAddPage() {
   const [searchMovieQuery, setSearchMovieQuery] = useState<string>("");
   const [movies] = useFetchMovies(searchMovieQuery);
   const [cinemas] = useFetchCinemas();
@@ -301,3 +302,5 @@ export default function RepertoireAddPage() {
     </Row>
   );
 }
+
+export default withAuth(RepertoireAddPage);

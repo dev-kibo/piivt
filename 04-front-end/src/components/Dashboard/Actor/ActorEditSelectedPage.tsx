@@ -5,8 +5,9 @@ import ActorService from "../../../services/ActorService";
 import CustomAlert from "../../Alert/CustomAlert";
 import IParams from "../../Common/IParams";
 import useFetchActor from "../../../hooks/useFetchActor";
+import { withAuth } from "../../Hocs/withAuth";
 
-export default function ActorEditSelectedPage() {
+function ActorEditSelectedPage() {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [middleName, setMiddleName] = useState<string>("");
@@ -128,3 +129,5 @@ export default function ActorEditSelectedPage() {
     </Row>
   );
 }
+
+export default withAuth(ActorEditSelectedPage);

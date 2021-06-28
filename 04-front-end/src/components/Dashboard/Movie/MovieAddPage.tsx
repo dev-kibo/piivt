@@ -6,6 +6,7 @@ import MovieModel from "../../../../../03-back-end/src/components/movie/model";
 import MovieRoleItem from "./MovieRoleItem";
 import { v4 as uuidv4 } from "uuid";
 import useFetchActors from "../../../hooks/useFetchActors";
+import { withAuth } from "../../Hocs/withAuth";
 
 interface IRole {
   actorId: number;
@@ -14,7 +15,7 @@ interface IRole {
   uid: string;
 }
 
-export default function MovieAddPage() {
+function MovieAddPage() {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [releaseDate, setReleaseDate] = useState<string>("");
@@ -316,3 +317,5 @@ export default function MovieAddPage() {
     </Row>
   );
 }
+
+export default withAuth(MovieAddPage);

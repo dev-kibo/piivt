@@ -2,8 +2,9 @@ import React from "react";
 import { Row } from "react-bootstrap";
 import BaseNavigation from "../BaseNavigation";
 import IBaseNavigationProps from "../IBaseNavigationProps";
+import { withAuth } from "../../Hocs/withAuth";
 
-export default function CinemaPage() {
+function CinemaPage() {
   const props: IBaseNavigationProps = {
     options: [
       {
@@ -27,3 +28,5 @@ export default function CinemaPage() {
     </Row>
   );
 }
+
+export default withAuth(CinemaPage);

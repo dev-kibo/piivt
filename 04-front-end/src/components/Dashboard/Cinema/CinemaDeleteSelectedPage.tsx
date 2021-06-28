@@ -4,9 +4,9 @@ import { useHistory, useParams } from "react-router-dom";
 import CinemaService from "../../../services/CinemaService";
 import IParams from "../../Common/IParams";
 import useFetchCinema from "../../../hooks/useFetchCinema";
+import { withAuth } from "../../Hocs/withAuth";
 
-export default function CinemaDeleteSelectedPage() {
-  // const [cinema, setCinema] = useState<CinemaModel>();
+function CinemaDeleteSelectedPage() {
   const [status, setStatus] = useState<"success" | "failed" | "">("");
   const [message, setMessage] = useState<string>("");
   const { id } = useParams<IParams>();
@@ -111,3 +111,5 @@ export default function CinemaDeleteSelectedPage() {
     </Row>
   );
 }
+
+export default withAuth(CinemaDeleteSelectedPage);

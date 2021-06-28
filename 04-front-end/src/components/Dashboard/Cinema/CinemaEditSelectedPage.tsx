@@ -5,8 +5,9 @@ import IParams from "../../Common/IParams";
 import CinemaService from "../../../services/CinemaService";
 import CustomAlert from "../../Alert/CustomAlert";
 import useFetchCinema from "../../../hooks/useFetchCinema";
+import { withAuth } from "../../Hocs/withAuth";
 
-export default function CinemaEditSelectedPage() {
+function CinemaEditSelectedPage() {
   const [name, setName] = useState<string>("");
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
@@ -102,3 +103,5 @@ export default function CinemaEditSelectedPage() {
     </Row>
   );
 }
+
+export default withAuth(CinemaEditSelectedPage);

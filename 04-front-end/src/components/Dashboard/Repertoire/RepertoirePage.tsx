@@ -2,8 +2,9 @@ import React from "react";
 import IBaseNavigationProps from "../IBaseNavigationProps";
 import BaseNavigation from "../BaseNavigation";
 import { Row } from "react-bootstrap";
+import { withAuth } from "../../Hocs/withAuth";
 
-export default function RepertoirePage() {
+function RepertoirePage() {
   const props: IBaseNavigationProps = {
     options: [
       {
@@ -23,3 +24,5 @@ export default function RepertoirePage() {
     </Row>
   );
 }
+
+export default withAuth(RepertoirePage);

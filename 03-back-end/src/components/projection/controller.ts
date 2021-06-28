@@ -32,20 +32,6 @@ export default class ProjectionController extends BaseController {
     }
   }
 
-  async getAllBySearchTerm(req: Request, res: Response, next: NextFunction) {
-    const searchTerm = "" + req.params["search"] ?? "";
-
-    try {
-      res.send(
-        await this.services.projectionService.getAllProjectionsThatMatchSearchTerm(
-          searchTerm
-        )
-      );
-    } catch (error) {
-      next(error);
-    }
-  }
-
   async getAllProjectionsForMovie(
     req: Request,
     res: Response,

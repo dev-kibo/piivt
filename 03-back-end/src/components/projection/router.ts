@@ -18,9 +18,5 @@ export default class ProjectionRouter implements IRouter {
       "/projections/movies/:id",
       controller.getAllProjectionsForMovie.bind(controller)
     );
-    application.get(
-      "/projections/search/:search",
-      controller.getAllBySearchTerm.bind(controller)
-    );
   }
 }

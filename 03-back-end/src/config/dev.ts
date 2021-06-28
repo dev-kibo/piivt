@@ -52,7 +52,7 @@ const Config: IConfig = {
   },
   accessToken: {
     secret: process.env?.SECRET_KEY,
-    duration: 20,
+    duration: 60,
     issuer: "localhost",
   },
 };

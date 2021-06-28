@@ -20,7 +20,7 @@ export default function CinemaSearchPage({
   const [data] = useFetchCinemas(search);
 
   return (
-    <Row>
+    <Row className="align-items-center h-100">
       <Col>
         <Row>
           <Col className="text-center">

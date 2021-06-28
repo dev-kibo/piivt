@@ -21,7 +21,7 @@ export default function MovieSearchPage({
   const [data] = useFetchMovies(searchMovieQuery);
 
   return (
-    <Row>
+    <Row className="align-items-center h-100">
       <Col>
         <Row>
           <Col className="text-center">

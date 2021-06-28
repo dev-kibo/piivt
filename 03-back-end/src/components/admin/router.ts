@@ -11,6 +11,10 @@ export default class AdminRouter implements IRouter {
     const adminController: AdminController = new AdminController(resources);
 
     application.get(
+      "/admins/me",
+      adminController.getCurrent.bind(adminController)
+    );
+    application.get(
       "/admins/:id",
       adminController.getById.bind(adminController)
     );

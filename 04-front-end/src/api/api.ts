@@ -198,7 +198,7 @@ function responseHandler(
 }
 
 function getAuthToken(): string {
-  return localStorage.getItem("access_token") ?? "";
+  return localStorage.getItem("access-token") ?? "";
 }
 
 // function getRefreshToken(): string {
@@ -206,11 +206,11 @@ function getAuthToken(): string {
 // }
 
 export function saveAuthToken(token: string) {
-  localStorage.setItem("access_token", token);
+  localStorage.setItem("access-token", token);
 }
 
 export function saveRefreshToken(token: string) {
-  localStorage.setItem("refresh_token", token);
+  localStorage.setItem("refresh-token", token);
 }
 
 export function saveEmail(email: string) {

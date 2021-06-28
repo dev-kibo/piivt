@@ -1,8 +1,13 @@
 import React from "react";
-import { Container, Row, Button, Col } from "react-bootstrap";
+import { Row, Button, Col, DropdownButton, Dropdown } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
+import AdminModel from "../../../../03-back-end/src/components/admin/model";
 
-export default function Navigation() {
+interface INavigationProps {
+  admin: AdminModel;
+}
+
+export default function Navigation({ admin }: INavigationProps) {
   const history = useHistory();
   const location = useLocation();
 
@@ -37,14 +42,16 @@ export default function Navigation() {
   };
 
   return (
-    <Container fluid>
-      <Row className="p-2 justify-content-between align-items-center">
-        <Col xs={1}>{displayNav()}</Col>
-        <Col className="d-flex align-items-center" xs={2}>
-          <p className="m-0 me-3">bojan@example.com</p>
-          <Button variant="outline-secondary">Sign out</Button>
+    <nav className="border-bottom navbar fixed-top">
+      <Row className="w-100 align-items-center px-2">
+        <Col xs={6}>{displayNav()}</Col>
+        <Col xs={6} className="d-flex align-items-center justify-content-end">
+          <p className="m-0 me-3">{admin.email}</p>
+          <DropdownButton title="Options" variant="outline-dark">
+            <Dropdown.Item as="button">Sign out</Dropdown.Item>
+          </DropdownButton>
         </Col>
       </Row>
-    </Container>
+    </nav>
   );
 }

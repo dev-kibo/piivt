@@ -11,7 +11,7 @@ interface IActorSearchProps {
   relativePath: string;
 }
 
-export default function ActorSearch({
+export default function ActorSearchPage({
   title,
   relativePath,
   searchLabel,
@@ -21,7 +21,7 @@ export default function ActorSearch({
   const [data] = useFetchActors(searchActorQuery);
 
   return (
-    <Row>
+    <Row className="align-items-center h-100">
       <Col>
         <Row>
           <Col className="text-center">

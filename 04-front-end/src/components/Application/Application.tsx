@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container } from "react-bootstrap";
 import { Switch, Route } from "react-router-dom";
 import "./Application.sass";
@@ -26,15 +26,18 @@ import RepertoireEditPage from "../Dashboard/Repertoire/RepertoireEditPage";
 import MoviePage from "../MoviePage/MoviePage";
 import Navigation from "../Navigation/Navigation";
 import CinemaSearchPage from "../Dashboard/Cinema/CinemaSearchPage";
-import ActorSearch from "../Dashboard/Actor/ActorSearch";
+import ActorSearchPage from "../Dashboard/Actor/ActorSearchPage";
 import MovieSearchPage from "../Dashboard/Movie/MovieSearchPage";
 import RepertoireSearchPage from "../Dashboard/Repertoire/RepertoireSearchPage";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function Application() {
+  const admin = useContext(AuthContext);
+
   return (
-    <>
-      {/* <Navigation /> */}
-      <Container className="Application p-4 vh-100 min-vh-100">
+    <Container fluid className="Application px-0 mx-0 vh-100 min-vh-100">
+      {admin ? <Navigation admin={admin} /> : ""}
+      <Container className="min-vh-100 vh-100 p-4">
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route
@@ -128,7 +131,7 @@ export default function Application() {
             exact
             path="/dashboard/actors/edit"
             render={() => (
-              <ActorSearch
+              <ActorSearchPage
                 item={DashboardLink}
                 relativePath="/dashboard/actors/edit"
                 searchLabel="Search actors"
@@ -166,6 +169,6 @@ export default function Application() {
           />
         </Switch>
       </Container>
-    </>
+    </Container>
   );
 }

@@ -18,7 +18,6 @@ const IAddMovieValidator = new Ajv({ coerceTypes: true }).compile({
     description: {
       type: "string",
       minLength: 1,
-      maxLength: 255,
     },
     releasedAt: {
       type: "string",

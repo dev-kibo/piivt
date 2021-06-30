@@ -33,7 +33,7 @@ export default function MovieCard({ repertoire }: IMovieCardProps) {
     <Col className="gy-4">
       <Link
         to={`/movies/${movie.movieId}`}
-        className="btn btn-outline-light text-muted h-100 shadow-sm w-100"
+        className="btn btn-outline-light text-muted h-100 shadow-sm w-100 border"
       >
         <Row className="text-start h-100">
           <Col className="align-items-center d-flex">

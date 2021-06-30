@@ -1,0 +1,5266 @@
+{
+	"info": {
+		"_postman_id": "1ef1b2bb-ed0e-4eda-b2b3-5125880eedd3",
+		"name": "PIIVT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Administrator",
+			"item": [
+				{
+					"name": "Cinemas",
+					"item": [
+						{
+							"name": "Add new cinema",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Cinema 10\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/cinemas",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"cinemas"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Add new cinema - success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Cinema 10\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/cinemas",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"cinemas"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "34"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"22-X/ucB5aynFiFDT+YxpH0SvNEMBM\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 14:15:35 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"cinemaId\": 11,\n    \"name\": \"Cinema 10\"\n}"
+								},
+								{
+									"name": "Add new cinema - failed - cinema already exists",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Cinema 10\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/cinemas",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"cinemas"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "85"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"55-pbsMgMUbGMfnss5Z0xae0+Q4keQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 14:15:49 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"CINEMA_EXISTS\",\n    \"description\": \"Cinema with name 'Cinema 10' already exists.\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update cinema",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Cinema 1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/cinemas/123",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"cinemas",
+										"123"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update cinema - success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Cinema 1\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/cinemas/1",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"cinemas",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "32"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"20-4qL2wrWkTJ24DNM1jqZslybX8YY\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 14:50:42 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"cinemaId\": 1,\n    \"name\": \"Cinema 1\"\n}"
+								},
+								{
+									"name": "Update cinema - failed - cinema not found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Cinema 1\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/cinemas/123",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"cinemas",
+												"123"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 14:57:47 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						},
+						{
+							"name": "Delete cinema",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/cinemas/302",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"cinemas",
+										"302"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete cinema - success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/cinemas/30",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"cinemas",
+												"30"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a-bAsFyilMr4Ra1hIU5PyoyFRunpI\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 21 Jun 2021 09:51:35 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Delete cinema - failed - id not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/cinemas/302",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"cinemas",
+												"302"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 21 Jun 2021 09:53:55 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Actors",
+					"item": [
+						{
+							"name": "Add new actor",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Dwayne\",\r\n    \"lastName\":\"Johnsons\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/actors",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"actors"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Add new actor - failed - actor already exists",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"firstName\": \"Jamie\",\r\n    \"middleName\":\"Lee\",\r\n    \"lastName\":\"Curtis\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/actors",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"actors"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "98"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"62-ePEFaBwaCYrA4/yBIzpeoOzXj1M\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:19:00 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"ACTOR_ALREADY_EXISTS\",\n    \"description\": \"Actor with name 'Jamie Lee Curtis' already exists.\"\n}"
+								},
+								{
+									"name": "Add new actor - success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"firstName\": \"Robert\",\r\n    \"lastName\":\"Downey\",\r\n    \"middleName\": \"Jr.\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/actors",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"actors"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "73"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"49-UzS5eLdnc2rqhNDp8gAfe82jjX4\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:19:40 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"actorId\": 4,\n    \"firstName\": \"Robert\",\n    \"middleName\": \"Jr.\",\n    \"lastName\": \"Downey\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update actor",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Dwayne\",\r\n    \"lastName\": \"Johnson\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/actors/522",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"actors",
+										"522"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update actor - success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"firstName\": \"Dwayne\",\r\n    \"lastName\": \"Johnson\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/actors/5",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"actors",
+												"5"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "73"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"49-Zur/VqmQUWrEbYsH4SDVJGhS25s\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:21:17 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"actorId\": 5,\n    \"firstName\": \"Dwayne\",\n    \"middleName\": null,\n    \"lastName\": \"Johnson\"\n}"
+								},
+								{
+									"name": "Update actor - failed - id not found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"firstName\": \"Dwayne\",\r\n    \"lastName\": \"Johnson\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/actors/522",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"actors",
+												"522"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:21:27 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Movies",
+					"item": [
+						{
+							"name": "Add new movie",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "Film",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Opis",
+											"type": "text"
+										},
+										{
+											"key": "releasedAt",
+											"value": "1992-09-06",
+											"type": "text"
+										},
+										{
+											"key": "duration",
+											"value": "121222",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "poster",
+											"type": "file",
+											"src": "/C:/Users/slick/Downloads/pexels-francesco-ungaro-1525041.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{API_URL}}/movies",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"movies"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Add new movie - failed - missing movie poster",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "title",
+													"value": "Film",
+													"type": "text"
+												},
+												{
+													"key": "description",
+													"value": "Opis",
+													"type": "text"
+												},
+												{
+													"key": "releasedAt",
+													"value": "2021-01-07",
+													"type": "text"
+												},
+												{
+													"key": "duration",
+													"value": "121",
+													"contentType": "",
+													"type": "text"
+												},
+												{
+													"key": "poster",
+													"type": "file",
+													"src": []
+												}
+											]
+										},
+										"url": {
+											"raw": "{{API_URL}}/movies",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "html",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/html; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "29"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1d-it457iCXIvdhCIqgjfoBMTRt+NE\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:27:48 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "You must upload image poster."
+								},
+								{
+									"name": "Add new movie - failed - invalid image format",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "title",
+													"value": "Film",
+													"type": "text"
+												},
+												{
+													"key": "description",
+													"value": "Opis",
+													"type": "text"
+												},
+												{
+													"key": "releasedAt",
+													"value": "2021-01-07",
+													"type": "text"
+												},
+												{
+													"key": "duration",
+													"value": "121",
+													"contentType": "",
+													"type": "text"
+												},
+												{
+													"key": "poster",
+													"type": "file",
+													"src": "/C:/Users/slick/Downloads/Bjelasica - Bendovac.gpx"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{API_URL}}/movies",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "78"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"4e-aPkgvqzMlZcUvLFJKms4yUFmFLw\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:28:07 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"INVALID_IMAGE\",\n    \"description\": \"Image must be in .jpg or .png format.\"\n}"
+								},
+								{
+									"name": "Add new movie - success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "title",
+													"value": "Film",
+													"type": "text"
+												},
+												{
+													"key": "description",
+													"value": "Opis",
+													"type": "text"
+												},
+												{
+													"key": "releasedAt",
+													"value": "2021-01-07",
+													"type": "text"
+												},
+												{
+													"key": "duration",
+													"value": "121",
+													"contentType": "",
+													"type": "text"
+												},
+												{
+													"key": "poster",
+													"type": "file",
+													"src": "/C:/Users/slick/Downloads/pexels-francesco-ungaro-1525041.jpg"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{API_URL}}/movies",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "191"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"bf-bThwTNSE8wWdAMJzZ/4KdTu7jSY\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:28:40 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"movieId\": 9,\n    \"title\": \"Film\",\n    \"description\": \"Opis\",\n    \"duration\": 121,\n    \"releasedAt\": \"2021-01-07\",\n    \"posterUrl\": \"http://localhost:5000/static/uploads/movies/9/dba982d1-2162-4004-9015-85e70cbf5f3b.jpg\"\n}"
+								},
+								{
+									"name": "Add new movie - failed - invalid movie release date format",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "title",
+													"value": "Film",
+													"type": "text"
+												},
+												{
+													"key": "description",
+													"value": "Opis",
+													"type": "text"
+												},
+												{
+													"key": "releasedAt",
+													"value": "10-01-1991",
+													"type": "text"
+												},
+												{
+													"key": "duration",
+													"value": "121",
+													"contentType": "",
+													"type": "text"
+												},
+												{
+													"key": "poster",
+													"type": "file",
+													"src": "/C:/Users/slick/Downloads/pexels-francesco-ungaro-1525041.jpg"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{API_URL}}/movies",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "99"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"63-HrjMpRtGDj0go7u4UC367TirZwU\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:31:12 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"MOVIE_ADD_FAILED\",\n    \"description\": \"Invalid date format. Date must be in yyyy-MM-dd format.\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update movie",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "Test",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Test",
+											"type": "text"
+										},
+										{
+											"key": "duration",
+											"value": "81",
+											"type": "text"
+										},
+										{
+											"key": "releasedAt",
+											"value": "1992-01-01",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{API_URL}}/movies/11",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"movies",
+										"11"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update movie - success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "title",
+													"value": "Test",
+													"type": "text"
+												},
+												{
+													"key": "description",
+													"value": "Test",
+													"type": "text"
+												},
+												{
+													"key": "duration",
+													"value": "81",
+													"type": "text"
+												},
+												{
+													"key": "releasedAt",
+													"value": "1990-01-01",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{API_URL}}/movies/11",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"11"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "192"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"c0-Wsa09YMyUf9iz5lYXotQoYwhPlw\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:34:40 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"movieId\": 11,\n    \"title\": \"Test\",\n    \"description\": \"Test\",\n    \"duration\": 81,\n    \"releasedAt\": \"1990-01-01\",\n    \"posterUrl\": \"http://localhost:5000/static/uploads/movies/11/98442fda-a638-4e49-a840-345f6cce8b50.jpg\"\n}"
+								},
+								{
+									"name": "Update movie - failed - invalid movie released date format",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "title",
+													"value": "Test",
+													"type": "text"
+												},
+												{
+													"key": "description",
+													"value": "Test",
+													"type": "text"
+												},
+												{
+													"key": "duration",
+													"value": "81",
+													"type": "text"
+												},
+												{
+													"key": "releasedAt",
+													"value": "01-01-1992",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{API_URL}}/movies/11",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"11"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "99"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"63-HrjMpRtGDj0go7u4UC367TirZwU\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:34:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"MOVIE_ADD_FAILED\",\n    \"description\": \"Invalid date format. Date must be in yyyy-MM-dd format.\"\n}"
+								},
+								{
+									"name": "Update movie - failed - invalid image format",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "title",
+													"value": "Test",
+													"type": "text"
+												},
+												{
+													"key": "description",
+													"value": "Test",
+													"type": "text"
+												},
+												{
+													"key": "duration",
+													"value": "81",
+													"type": "text"
+												},
+												{
+													"key": "releasedAt",
+													"value": "1992-01-01",
+													"type": "text"
+												},
+												{
+													"key": "poster",
+													"type": "file",
+													"src": "/C:/Users/slick/Downloads/Bjelasica - Bendovac.gpx"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{API_URL}}/movies/11",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"11"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "78"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"4e-aPkgvqzMlZcUvLFJKms4yUFmFLw\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:35:35 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"INVALID_IMAGE\",\n    \"description\": \"Image must be in .jpg or .png format.\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete movie roles",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/movies/20/roles",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"movies",
+										"20",
+										"roles"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete movie roles - success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/movies/20/roles",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"20",
+												"roles"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a-bAsFyilMr4Ra1hIU5PyoyFRunpI\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 23 Jun 2021 14:55:45 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "Delete movie",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/movies/242",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"movies",
+										"242"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete movie - success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/movies/24",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"24"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a-bAsFyilMr4Ra1hIU5PyoyFRunpI\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 23 Jun 2021 16:13:42 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Delete movie - failed - id not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/movies/242",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"242"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 23 Jun 2021 16:13:51 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						},
+						{
+							"name": "Update movie roles",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"roleId\": \"5\",\r\n        \"role\": \"Batman\",\r\n        \"actorId\": 1,\r\n        \"movieId\": 8\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/movies/8/roles",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"movies",
+										"8",
+										"roles"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update movie roles - success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "[\r\n    {\r\n        \"roleId\": \"5\",\r\n        \"role\": \"Batman\",\r\n        \"actorId\": 1,\r\n        \"movieId\": 8\r\n    }\r\n]",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/movies/8/roles",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"8",
+												"roles"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a-bAsFyilMr4Ra1hIU5PyoyFRunpI\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Jun 2021 18:02:05 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Roles",
+					"item": [
+						{
+							"name": "Create role",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"actorId\": 1,\r\n    \"movieId\": 8,\r\n    \"role\" : \"Luke Skywalker\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/roles",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"roles"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create role - success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"actorId\": 1,\r\n    \"movieId\": 8,\r\n    \"role\" : \"Luke Skywalker\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/roles",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"roles"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "116"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"74-pod///yHGxCNYCzZrnwV3Ev9cek\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:57:19 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"roleId\": 13,\n    \"role\": \"Luke Skywalker\",\n    \"actor\": {\n        \"actorId\": 1,\n        \"firstName\": \"Mark\",\n        \"middleName\": null,\n        \"lastName\": \"Hamill\"\n    }\n}"
+								},
+								{
+									"name": "Create role - failed - actor not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"actorId\": 12,\r\n    \"movieId\": 8,\r\n    \"role\" : \"Luke Skywalker\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/roles",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"roles"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "72"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"48-KhNGFXxmY9X9Tg1XSPaZZ+e3hLI\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:57:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"ACTOR_NOT_FOUND\",\n    \"description\": \"Actor with id '12' not found.\"\n}"
+								},
+								{
+									"name": "Create role - failed - movie not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"actorId\": 1,\r\n    \"movieId\": 82,\r\n    \"role\" : \"Luke Skywalker\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/roles",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"roles"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "72"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"48-FKIr2GqqH7fibePDwffeNZzlpPQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:57:51 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"MOVIE_NOT_FOUND\",\n    \"description\": \"Movie with id '82' not found.\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update role",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"role\": \"Radi\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/roles/171",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"roles",
+										"171"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update role - success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"role\": \"Radi\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/roles/16",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"roles",
+												"16"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "106"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"6a-euy330T64WgJS9YC/Sd4hof/OxQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 23 Jun 2021 14:21:37 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"roleId\": 16,\n    \"role\": \"Radi\",\n    \"actor\": {\n        \"actorId\": 1,\n        \"firstName\": \"Mark\",\n        \"middleName\": null,\n        \"lastName\": \"Hamill\"\n    }\n}"
+								},
+								{
+									"name": "Update role - failed - id not found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"role\": \"Radi\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/roles/171",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"roles",
+												"171"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 23 Jun 2021 14:23:19 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						},
+						{
+							"name": "Delete role",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/roles/252",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"roles",
+										"252"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete role - failed - id not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/roles/252",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"roles",
+												"252"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 23 Jun 2021 14:58:47 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								},
+								{
+									"name": "Delete role - success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/roles/26",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"roles",
+												"26"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a-bAsFyilMr4Ra1hIU5PyoyFRunpI\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 23 Jun 2021 14:55:45 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Repertoire",
+					"item": [
+						{
+							"name": "Create new repertoire",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startsAt\": \"2021-06-22T12:00:00.000Z\",\r\n    \"projections\": [\r\n        {\r\n            \"cinemaId\": 1,\r\n            \"movieId\": 12\r\n        }, \r\n        {\r\n            \"cinemaId\": 1,\r\n            \"movieId\": 8\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/repertoires",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"repertoires"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create new repertoire - failed - date in the past",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"startsAt\": \"2021-06-12T12:00:00.000Z\",\r\n    \"projections\": [\r\n        {\r\n            \"cinemaId\": 1,\r\n            \"movieId\": 8\r\n        }, \r\n        {\r\n            \"cinemaId\": 1,\r\n            \"movieId\": 8\r\n        }\r\n    ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/repertoires",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "100"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"64-KoQh5zUytBKjD2+ot6EEvYQSyVU\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:20:02 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"PROJECTION_DATE_INVALID\",\n    \"description\": \"Invalid date. Projection can't start in the past.\"\n}"
+								},
+								{
+									"name": "Create new repertoire - success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"startsAt\": \"2021-06-22T12:00:00.000Z\",\r\n    \"projections\": [\r\n        {\r\n            \"cinemaId\": 1,\r\n            \"movieId\": 8\r\n        }, \r\n        {\r\n            \"cinemaId\": 1,\r\n            \"movieId\": 8\r\n        }\r\n    ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/repertoires",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "273"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"111-wJjCsXPK/Mbci1AIoPfO/FeUKOg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:21:44 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"date\": \"2021-06-22\",\n    \"repertoireId\": 37,\n    \"projections\": [\n        {\n            \"projectionId\": 59,\n            \"cinemaId\": 1,\n            \"movieId\": 8,\n            \"startsAt\": \"2021-06-22 12:00:00\",\n            \"endsAt\": \"2021-06-22 14:24:00\"\n        },\n        {\n            \"projectionId\": 60,\n            \"cinemaId\": 1,\n            \"movieId\": 8,\n            \"startsAt\": \"2021-06-22 14:24:00\",\n            \"endsAt\": \"2021-06-22 16:48:00\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "Create new repertoire - invalid date",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"startsAt\": \"2021-21-05T12:00:00.000Z\",\r\n    \"projections\": [\r\n        {\r\n            \"cinemaId\": 1,\r\n            \"movieId\": 8\r\n        }, \r\n        {\r\n            \"cinemaId\": 1,\r\n            \"movieId\": 8\r\n        }\r\n    ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/repertoires",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "95"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"5f-4NYM9U3omKyv2nHnOXVnGER394k\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:22:17 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"DATE_INVALID\",\n    \"description\": \"Invalid date format. Date must be in yyyy-MM-dd format.\"\n}"
+								},
+								{
+									"name": "Create new repertoire - failed - cinema not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"startsAt\": \"2021-06-22T12:00:00.000Z\",\r\n    \"projections\": [\r\n        {\r\n            \"cinemaId\": 22,\r\n            \"movieId\": 8\r\n        }, \r\n        {\r\n            \"cinemaId\": 1,\r\n            \"movieId\": 8\r\n        }\r\n    ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/repertoires",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "75"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"4b-REJ7cb4d9pgPxdWOPVjwwsAn4rg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:22:46 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"CINEMA_NOT_FOUND\",\n    \"description\": \"Cinema with id 8 doesn't exist.\"\n}"
+								},
+								{
+									"name": "Create new repertoire  - failed - movie not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"startsAt\": \"2021-06-22T12:00:00.000Z\",\r\n    \"projections\": [\r\n        {\r\n            \"cinemaId\": 1,\r\n            \"movieId\": 122\r\n        }, \r\n        {\r\n            \"cinemaId\": 1,\r\n            \"movieId\": 8\r\n        }\r\n    ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/repertoires",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "77"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"4d-3G+h7KYzTbOW/oaSk65aTHjZHYI\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:23:13 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"MOVIE_NOT_FOUND\",\n    \"description\": \"Movie with id '122' doesn't exist.\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update repertoire",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n        \"startsAt\": \"2021-06-20\",\r\n        \"projections\": [\r\n            {\r\n                \"projectionId\": 57,\r\n                \"cinemaId\": 1,\r\n                \"movieId\": 8\r\n            },\r\n            {\r\n                \"projectionId\": \"a3-b4\",\r\n                \"cinemaId\": 1,\r\n                \"movieId\": 8\r\n            }\r\n        ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/repertoires/36",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"repertoires",
+										"36"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update repertoire - success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": " {\r\n        \"startsAt\": \"2021-06-29\",\r\n        \"projections\": [\r\n            {\r\n                \"projectionId\": 57,\r\n                \"cinemaId\": 1,\r\n                \"movieId\": 8\r\n            },\r\n            {\r\n                \"projectionId\": \"a3-b4\",\r\n                \"cinemaId\": 1,\r\n                \"movieId\": 8\r\n            }\r\n        ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/repertoires/36",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires",
+												"36"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "482"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1e2-50zejSfYMb+P9G+pA2+oYgtk/dU\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 24 Jun 2021 10:35:09 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"date\": \"2021-06-29\",\n    \"repertoireId\": 36,\n    \"projections\": [\n        {\n            \"projectionId\": 57,\n            \"cinemaId\": 1,\n            \"movieId\": 8,\n            \"startsAt\": \"2021-06-12 12:00:00\",\n            \"endsAt\": \"2021-06-12 14:24:00\"\n        },\n        {\n            \"projectionId\": 58,\n            \"cinemaId\": 1,\n            \"movieId\": 8,\n            \"startsAt\": \"2021-06-12 14:24:00\",\n            \"endsAt\": \"2021-06-12 16:48:00\"\n        },\n        {\n            \"projectionId\": 63,\n            \"cinemaId\": 1,\n            \"movieId\": 8,\n            \"startsAt\": \"2021-06-29\",\n            \"endsAt\": \"2021-06-29 02:24:00\"\n        },\n        {\n            \"projectionId\": 64,\n            \"cinemaId\": 1,\n            \"movieId\": 8,\n            \"startsAt\": \"2021-06-29 02:24:00\",\n            \"endsAt\": \"2021-06-29 04:48:00\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "Update repertoire - failed - date invalid",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": " {\r\n        \"startsAt\": \"2021-06-20\",\r\n        \"projections\": [\r\n            {\r\n                \"projectionId\": 57,\r\n                \"cinemaId\": 1,\r\n                \"movieId\": 8\r\n            },\r\n            {\r\n                \"projectionId\": \"a3-b4\",\r\n                \"cinemaId\": 1,\r\n                \"movieId\": 8\r\n            }\r\n        ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/repertoires/36",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires",
+												"36"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "100"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"64-KoQh5zUytBKjD2+ot6EEvYQSyVU\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 24 Jun 2021 10:35:39 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"PROJECTION_DATE_INVALID\",\n    \"description\": \"Invalid date. Projection can't start in the past.\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete repertoire projections",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"projectionId\": 64\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/repertoires/36/projections",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"repertoires",
+										"36",
+										"projections"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete projections - failed - repertoire not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "[\r\n    {\r\n        \"projectionId\": 64\r\n    }\r\n]",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/repertoires/36/projections",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires",
+												"36",
+												"projections"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 24 Jun 2021 11:40:03 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								},
+								{
+									"name": "Delete projections - success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "[\r\n    {\r\n        \"projectionId\": 64\r\n    }\r\n]",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/repertoires/36/projections",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires",
+												"36",
+												"projections"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a-bAsFyilMr4Ra1hIU5PyoyFRunpI\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 24 Jun 2021 11:40:43 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Admin by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/admins/1",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"admins",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Admin by id - success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/admins/1",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"admins",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "304"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"130-cFE8z/r5Fik7F93W5RR/XShsDuY\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:31:09 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"adminId\": 1,\n    \"email\": \"bojan@example.com\",\n    \"passwordHash\": \"$2b$11$0WdiISQx3DtVQ4bpPMSpRevFtnw1xxgn.tY1wDUujkJZGKATZd50q\",\n    \"refreshToken\": \"864d11da7c5e4aaaa5fe8ababb02aa4146c0a6295918f2dbee03a06937258ff964a83b5aceaae6804e82959e6aade83299dbb538da1d8a7e48826e935f5cfc88\",\n    \"createdAt\": \"2021-06-08T20:11:10.000Z\"\n}"
+								},
+								{
+									"name": "Admin by id - failed - id not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/admins/122",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"admins",
+												"122"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:31:22 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						},
+						{
+							"name": "Get current admin",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/admins/me",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"admins",
+										"me"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get current admin",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/admins/me",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"admins",
+												"me"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "303"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"12f-ZqbrWoXyuLIo9TNDXY05/f9Rfhc\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Jun 2021 17:56:13 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"adminId\": 5,\n    \"email\": \"test@example.com\",\n    \"passwordHash\": \"$2b$11$fJ6d3xkqbRbWbe5ljVjyieqTog/BCusGe6.Juo23x2KCEjwui2Xse\",\n    \"refreshToken\": \"49eb8d4fe9c70830c910dc1ddda67fb4c41c162a5f4f6c75eaf3a33e3bcc1940c134437a9b66d8dfb244bc15048e2ee3c4532aa914b243034384026328c15b40\",\n    \"createdAt\": \"2021-06-20T17:53:58.000Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Add admin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"test@example.com\",\r\n    \"password\": \"sifra123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/admins",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"admins"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Add admin - failed - email in use",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"bojan@example.com\",\r\n    \"password\": \"sifra123\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/admins",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"admins"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "100"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"64-ScEB02dIYYNY8cVt9gZsPudusUI\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:53:44 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"ADMIN_ALREADY_EXISTS\",\n    \"description\": \"Admin with email 'bojan@example.com' already exists.\"\n}"
+								},
+								{
+									"name": "Add admin - success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"test@example.com\",\r\n    \"password\": \"sifra123\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/admins",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"admins"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "177"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"b1-+1mfZpSO7N1RCcRDlW46QZS9jkk\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:53:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"adminId\": 5,\n    \"email\": \"test@example.com\",\n    \"passwordHash\": \"$2b$11$fJ6d3xkqbRbWbe5ljVjyieqTog/BCusGe6.Juo23x2KCEjwui2Xse\",\n    \"refreshToken\": null,\n    \"createdAt\": \"2021-06-20T17:53:58.000Z\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Refresh token",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"refreshToken\": \"5e32fddef92017ae2ef3546d9e4cc3562d755c0075f49093ec64afdd4d201b365cea881d7f9ddb5e050d724eb052e64f3ab2ea75041d6933c51be57f5d3a9bb122\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/token/refresh",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"token",
+										"refresh"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Refresh token - success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"refreshToken\": \"5e32fddef92017ae2ef3546d9e4cc3562d755c0075f49093ec64afdd4d201b365cea881d7f9ddb5e050d724eb052e64f3ab2ea75041d6933c51be57f5d3a9bb2\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/auth/token/refresh",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"token",
+												"refresh"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "383"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"17f-vtuAY1Q2FFx150Cs/PttObwF3jU\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:57:48 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJib2phbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYyNDIxMTg2OCwiZXhwIjoxNjI0MjE1NDY4LCJpc3MiOiJsb2NhbGhvc3QifQ.K068_lnCI4RlMo2IDHgDK9S9yQp_3DFsdbiJ0IfqLsU\",\n    \"refreshToken\": \"0d74f5d5ec0ec21b8c9e65093f1748ee97029cf971af83d22ae8cd134248f1009f7b5180e9bd92258a2384ef5dee83a0e59f493d9f1a58d62af9f28d28af5169\"\n}"
+								},
+								{
+									"name": "Refresh token - failed - invalid token",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"refreshToken\": \"5e32fddef92017ae2ef3546d9e4cc3562d755c0075f49093ec64afdd4d201b365cea881d7f9ddb5e050d724eb052e64f3ab2ea75041d6933c51be57f5d3a9bb122\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/auth/token/refresh",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"token",
+												"refresh"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:58:25 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjI0OTAzMjcyLCJleHAiOjE2MjQ5MDMzMzIsImlzcyI6ImxvY2FsaG9zdCJ9.xMTyQa0ES5mAv2Qf7Trqqrur4Jm_EAeAHi_OqMjSjtk",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Administrator and Visitor",
+			"item": [
+				{
+					"name": "Cinemas",
+					"item": [
+						{
+							"name": "All cinemas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/cinemas",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"cinemas"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "All cinemas",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/cinemas",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"cinemas"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "102"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"66-ObiFm1OuxDORJCsLkoRnGjvKGw4\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:03:56 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"cinemaId\": 1,\n        \"name\": \"Cinema 1\"\n    },\n    {\n        \"cinemaId\": 11,\n        \"name\": \"Cinema 10\"\n    },\n    {\n        \"cinemaId\": 4,\n        \"name\": \"Cinema 2\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Cinema by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/cinemas/123",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"cinemas",
+										"123"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Cinema by id - success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/cinemas/1",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"cinemas",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "32"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"20-4qL2wrWkTJ24DNM1jqZslybX8YY\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:04:16 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"cinemaId\": 1,\n    \"name\": \"Cinema 1\"\n}"
+								},
+								{
+									"name": "Cinema by id - failed - id not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/cinemas/123",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"cinemas",
+												"123"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 15:04:30 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						},
+						{
+							"name": "Cinemas that match search term",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/cinemas?q=Cin",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"cinemas"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "Cin"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Cinemas that match search term",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/cinemas?q=Cin",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"cinemas"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "Cin"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "206"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"ce-TNesfynHFj05pHuwbeC03o6XY3E\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Jun 2021 17:58:38 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"cinemaId\": 1,\n        \"name\": \"Cinema 1\"\n    },\n    {\n        \"cinemaId\": 4,\n        \"name\": \"Cinema 2\"\n    },\n    {\n        \"cinemaId\": 11,\n        \"name\": \"Cinema 9\"\n    },\n    {\n        \"cinemaId\": 25,\n        \"name\": \"Cinema 13\"\n    },\n    {\n        \"cinemaId\": 26,\n        \"name\": \"Cinema 14\"\n    },\n    {\n        \"cinemaId\": 27,\n        \"name\": \"Cinema 12\"\n    }\n]"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Actors",
+					"item": [
+						{
+							"name": "All actors",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJib2phbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYyNDgyNzI1OCwiZXhwIjoxNjI0ODMwODU4LCJpc3MiOiJsb2NhbGhvc3QifQ.Et8EMN0P6sVZfN6sWvlVSdYzRrLr9enz9k4Jxebasew",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/actors",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"actors"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "All actors - success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/actors",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"actors"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "293"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"125-cSZlqwtbexb0xQEi/JLm7Fk0szA\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:51:03 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"actorId\": 5,\n        \"firstName\": \"Dwayne\",\n        \"middleName\": null,\n        \"lastName\": \"Johnson\"\n    },\n    {\n        \"actorId\": 2,\n        \"firstName\": \"Jamie\",\n        \"middleName\": \"Lee\",\n        \"lastName\": \"Curtis\"\n    },\n    {\n        \"actorId\": 1,\n        \"firstName\": \"Mark\",\n        \"middleName\": null,\n        \"lastName\": \"Hamill\"\n    },\n    {\n        \"actorId\": 4,\n        \"firstName\": \"Robert\",\n        \"middleName\": \"Jr.\",\n        \"lastName\": \"Downey\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Actors by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/actors/123",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"actors",
+										"123"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Actors by id - success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/actors/1",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"actors",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "70"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"46-eagbjMmGQDqJhvP3xlOuCG7Kq6k\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:51:16 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"actorId\": 1,\n    \"firstName\": \"Mark\",\n    \"middleName\": null,\n    \"lastName\": \"Hamill\"\n}"
+								},
+								{
+									"name": "Actors by id - failed - id not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/actors/123",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"actors",
+												"123"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:51:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						},
+						{
+							"name": "Actors that match search term",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/actors?q=John",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"actors"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "John"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Actors that match search term",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/actors?q=John",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"actors"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "John"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "136"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"88-WDbkoFrziVUihelstKyRVms60FU\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Jun 2021 17:55:02 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"actorId\": 6,\n        \"firstName\": \"John\",\n        \"middleName\": \"\",\n        \"lastName\": \"Smith\"\n    },\n    {\n        \"actorId\": 8,\n        \"firstName\": \"John\",\n        \"middleName\": \"\",\n        \"lastName\": \"Boyd\"\n    }\n]"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Movies",
+					"item": [
+						{
+							"name": "All movies",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/movies",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"movies"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "All movies - success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/movies",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "772"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"304-tQc2TSY+2QU3zFloNbO28QbpBJ4\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:51:43 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"movieId\": 8,\n        \"title\": \"Test\",\n        \"description\": \"Test\",\n        \"duration\": 119,\n        \"releasedAt\": \"2021-06-09\",\n        \"posterUrl\": \"http://localhost:5000/static/uploads/movies/8/095a07ed-a0fb-40b8-a936-2681909f317b.jpg\"\n    },\n    {\n        \"movieId\": 9,\n        \"title\": \"Film\",\n        \"description\": \"Opis\",\n        \"duration\": 121,\n        \"releasedAt\": \"2021-01-07\",\n        \"posterUrl\": \"http://localhost:5000/static/uploads/movies/9/dba982d1-2162-4004-9015-85e70cbf5f3b.jpg\"\n    },\n    {\n        \"movieId\": 10,\n        \"title\": \"Film\",\n        \"description\": \"Opis\",\n        \"duration\": 121,\n        \"releasedAt\": \"1992-09-06\",\n        \"posterUrl\": \"http://localhost:5000/static/uploads/movies/10/63172986-7b01-446f-ba9b-959386acb82e.jpg\"\n    },\n    {\n        \"movieId\": 11,\n        \"title\": \"Test\",\n        \"description\": \"Test\",\n        \"duration\": 81,\n        \"releasedAt\": \"1990-01-01\",\n        \"posterUrl\": \"http://localhost:5000/static/uploads/movies/11/98442fda-a638-4e49-a840-345f6cce8b50.jpg\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Movies by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/movies/811",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"movies",
+										"811"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Movies by id - success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/movies/8",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"8"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "191"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"bf-MH/fiOF0pfBh2lB3ImmSxP6fonM\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:52:12 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"movieId\": 8,\n    \"title\": \"Test\",\n    \"description\": \"Test\",\n    \"duration\": 119,\n    \"releasedAt\": \"2021-06-09\",\n    \"posterUrl\": \"http://localhost:5000/static/uploads/movies/8/095a07ed-a0fb-40b8-a936-2681909f317b.jpg\"\n}"
+								},
+								{
+									"name": "Movies by id - failed - id not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/movies/811",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"811"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:52:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						},
+						{
+							"name": "Movie by id with roles",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/movies/24/roles",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"movies",
+										"24",
+										"roles"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Movie by id with roles - success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/movies/8/roles",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"8",
+												"roles"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "423"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1a7-k+oeK8Zty0HpRmT0SSuRkGb3+kk\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:52:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"movieId\": 8,\n    \"title\": \"Test\",\n    \"description\": \"Test\",\n    \"duration\": 119,\n    \"releasedAt\": \"2021-06-09\",\n    \"posterUrl\": \"http://localhost:5000/static/uploads/movies/8/095a07ed-a0fb-40b8-a936-2681909f317b.jpg\",\n    \"roles\": [\n        {\n            \"roleId\": 5,\n            \"role\": \"Test\",\n            \"actor\": {\n                \"actorId\": 1,\n                \"firstName\": \"Mark\",\n                \"middleName\": null,\n                \"lastName\": \"Hamill\"\n            }\n        },\n        {\n            \"roleId\": 6,\n            \"role\": \"Luke Skywalker\",\n            \"actor\": {\n                \"actorId\": 1,\n                \"firstName\": \"Mark\",\n                \"middleName\": null,\n                \"lastName\": \"Hamill\"\n            }\n        }\n    ]\n}"
+								},
+								{
+									"name": "Movie by id with roles - failed - id not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/movies/1/roles",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"1",
+												"roles"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:52:47 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								},
+								{
+									"name": "Movie by id with roles - success - no roles",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/movies/9/roles",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies",
+												"9",
+												"roles"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "204"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"cc-sxDxJoEXeZwdJxbu77W3H9cOeBw\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 16:53:04 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"movieId\": 9,\n    \"title\": \"Film\",\n    \"description\": \"Opis\",\n    \"duration\": 121,\n    \"releasedAt\": \"2021-01-07\",\n    \"posterUrl\": \"http://localhost:5000/static/uploads/movies/9/dba982d1-2162-4004-9015-85e70cbf5f3b.jpg\",\n    \"roles\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "Get all movies that match search term",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/movies?q=Te",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"movies"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "Te"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get all movies that match search term",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/movies?q=Te",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"movies"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "Te"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "880"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"370-4pcjZO0Nq1R7czW97COrjGavYyQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Jun 2021 18:03:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"movieId\": 8,\n        \"title\": \"Test 2\",\n        \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque euismod ante in risus imperdiet, id viverra quam hendrerit. Aenean et ullamcorper dui. Etiam eu arcu pellentesque, vulputate massa vitae, pretium justo. Nullam sapien orci, interdum non egestas eu, condimentum non massa. Sed ac dui et neque lobortis pharetra. Quisque nec nibh lectus. Ut tempus nisl non magna ullamcorper dictum. Sed sagittis tincidunt orci tincidunt accumsan. Donec mauris leo, sodales non suscipit a, faucibus sed felis. Sed id urna leo. Phasellus sit amet rhoncus sapien. Aenean et laoreet purus. Proin et gravida tellus, vitae tempor massa. Nullam quis dui quis arcu pellentesque dignissim nec et velit.\",\n        \"duration\": 119,\n        \"releasedAt\": \"2021-06-09\",\n        \"posterUrl\": \"http://localhost:5000/static/uploads/movies/8/095a07ed-a0fb-40b8-a936-2681909f317b.jpg\"\n    }\n]"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Repertoire",
+					"item": [
+						{
+							"name": "All repertoires",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/repertoires",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"repertoires"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "All repertoires - success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/repertoires",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "275"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"113-ptLGlEvnX9TR8Cx3G5BJySAVSP0\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:02:52 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"date\": \"2021-06-20\",\n        \"repertoireId\": 36,\n        \"projections\": [\n            {\n                \"projectionId\": 57,\n                \"cinemaId\": 1,\n                \"movieId\": 8,\n                \"startsAt\": \"2021-06-12 12:00:00\",\n                \"endsAt\": \"2021-06-12 14:24:00\"\n            },\n            {\n                \"projectionId\": 58,\n                \"cinemaId\": 1,\n                \"movieId\": 8,\n                \"startsAt\": \"2021-06-12 14:24:00\",\n                \"endsAt\": \"2021-06-12 16:48:00\"\n            }\n        ]\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Repertoire by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/repertoires/36",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"repertoires",
+										"36"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Repertoire by id - success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/repertoires/36",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires",
+												"36"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "273"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"111-WM1UJHAK1+P1rBQEvkIN0iFZEN0\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:12:49 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"date\": \"2021-06-20\",\n    \"repertoireId\": 36,\n    \"projections\": [\n        {\n            \"projectionId\": 57,\n            \"cinemaId\": 1,\n            \"movieId\": 8,\n            \"startsAt\": \"2021-06-12 12:00:00\",\n            \"endsAt\": \"2021-06-12 14:24:00\"\n        },\n        {\n            \"projectionId\": 58,\n            \"cinemaId\": 1,\n            \"movieId\": 8,\n            \"startsAt\": \"2021-06-12 14:24:00\",\n            \"endsAt\": \"2021-06-12 16:48:00\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "Repertoire by id - failed - id not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/repertoires/362",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires",
+												"362"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:12:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						},
+						{
+							"name": "Repertoire by date",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/repertoires/date/2021-06-22",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"repertoires",
+										"date",
+										"2021-06-22"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Repertoire by date - success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/repertoires/date/2021-06-20",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires",
+												"date",
+												"2021-06-20"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "273"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"111-WM1UJHAK1+P1rBQEvkIN0iFZEN0\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:10:44 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"date\": \"2021-06-20\",\n    \"repertoireId\": 36,\n    \"projections\": [\n        {\n            \"projectionId\": 57,\n            \"cinemaId\": 1,\n            \"movieId\": 8,\n            \"startsAt\": \"2021-06-12 12:00:00\",\n            \"endsAt\": \"2021-06-12 14:24:00\"\n        },\n        {\n            \"projectionId\": 58,\n            \"cinemaId\": 1,\n            \"movieId\": 8,\n            \"startsAt\": \"2021-06-12 14:24:00\",\n            \"endsAt\": \"2021-06-12 16:48:00\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "Repertoire by date - failed - invalid date",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/repertoires/date/2021-20-06",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires",
+												"date",
+												"2021-20-06"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "95"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"5f-4NYM9U3omKyv2nHnOXVnGER394k\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:10:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"DATE_INVALID\",\n    \"description\": \"Invalid date format. Date must be in yyyy-MM-dd format.\"\n}"
+								},
+								{
+									"name": "Repertoire by date - failed - nothing found for provided date",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/repertoires/date/2021-06-22",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"repertoires",
+												"date",
+												"2021-06-22"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:12:21 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Projections",
+					"item": [
+						{
+							"name": "Get movie projections",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/projections/movies/9",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"projections",
+										"movies",
+										"9"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get movie projections - success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/projections/movies/8",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"projections",
+												"movies",
+												"8"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "437"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1b5-KDbfdk6og46oKsrPY0tC12HqQm4\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:27:11 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"projectionId\": 57,\n        \"cinemaId\": 1,\n        \"movieId\": 8,\n        \"startsAt\": \"2021-06-12 12:00:00\",\n        \"endsAt\": \"2021-06-12 14:24:00\"\n    },\n    {\n        \"projectionId\": 58,\n        \"cinemaId\": 1,\n        \"movieId\": 8,\n        \"startsAt\": \"2021-06-12 14:24:00\",\n        \"endsAt\": \"2021-06-12 16:48:00\"\n    },\n    {\n        \"projectionId\": 59,\n        \"cinemaId\": 1,\n        \"movieId\": 8,\n        \"startsAt\": \"2021-06-22 12:00:00\",\n        \"endsAt\": \"2021-06-22 14:24:00\"\n    },\n    {\n        \"projectionId\": 60,\n        \"cinemaId\": 1,\n        \"movieId\": 8,\n        \"startsAt\": \"2021-06-22 14:24:00\",\n        \"endsAt\": \"2021-06-22 16:48:00\"\n    }\n]"
+								},
+								{
+									"name": "Get movie projections - failed - movie id not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/projections/movies/822",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"projections",
+												"movies",
+												"822"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:29:04 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								},
+								{
+									"name": "Get movie projections - success - no projections found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/projections/movies/9",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"projections",
+												"movies",
+												"9"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "2"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:29:30 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[]"
+								}
+							]
+						},
+						{
+							"name": "Get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/projections",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"projections"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get all",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/projections",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"projections"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "924"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"39c-upEA45R5M+lAQiIOrRtteWEk6xY\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Jun 2021 18:03:46 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"projectionId\": 1,\n        \"startsAt\": \"2021-06-24 13:45:00\",\n        \"endsAt\": \"2021-06-24 16:11:00\"\n    },\n    {\n        \"projectionId\": 13,\n        \"startsAt\": \"2021-06-27 10:00:00\",\n        \"endsAt\": \"2021-06-27 12:24:00\"\n    },\n    {\n        \"projectionId\": 18,\n        \"startsAt\": \"2021-06-27 19:01:00\",\n        \"endsAt\": \"2021-06-27 21:25:00\"\n    },\n    {\n        \"projectionId\": 19,\n        \"startsAt\": \"2021-06-27 21:25:00\",\n        \"endsAt\": \"2021-06-27 23:49:00\"\n    },\n    {\n        \"projectionId\": 20,\n        \"startsAt\": \"2021-06-26 21:20:00\",\n        \"endsAt\": \"2021-06-26 23:44:00\"\n    },\n    {\n        \"projectionId\": 21,\n        \"startsAt\": \"2021-06-26 23:44:00\",\n        \"endsAt\": \"2021-06-27 02:08:00\"\n    },\n    {\n        \"projectionId\": 22,\n        \"startsAt\": \"2021-06-27 02:08:00\",\n        \"endsAt\": \"2021-06-27 04:34:00\"\n    },\n    {\n        \"projectionId\": 23,\n        \"startsAt\": \"2021-07-02 16:00:00\",\n        \"endsAt\": \"2021-07-02 18:26:00\"\n    },\n    {\n        \"projectionId\": 24,\n        \"startsAt\": \"2021-07-02 18:26:00\",\n        \"endsAt\": \"2021-07-02 20:50:00\"\n    },\n    {\n        \"projectionId\": 34,\n        \"startsAt\": \"2021-06-28 19:00:00\",\n        \"endsAt\": \"2021-06-28 21:24:00\"\n    },\n    {\n        \"projectionId\": 35,\n        \"startsAt\": \"2021-06-28 21:24:00\",\n        \"endsAt\": \"2021-06-28 23:50:00\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/projections/24",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"projections",
+										"24"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get by id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{API_URL}}/projections/24",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"projections",
+												"24"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "83"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"53-LwsyGMZBHVqBqc/XJ+j5cY9acQo\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Jun 2021 18:04:26 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"projectionId\": 24,\n    \"startsAt\": \"2021-07-02 18:26:00\",\n    \"endsAt\": \"2021-07-02 20:50:00\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Sign in",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"test@example.com\",\r\n    \"password\": \"sifra123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/sign-in",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"sign-in"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Sign in - success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"bojan@example.com\",\r\n    \"password\": \"sifra123\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/auth/sign-in",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"sign-in"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "383"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"17f-T80h2Wre0vIEpcec2QH1eiNyvHg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:55:04 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJib2phbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYyNDIxMTcwNCwiZXhwIjoxNjI0MjE1MzA0LCJpc3MiOiJsb2NhbGhvc3QifQ.RnrDxHBv1R0TiCnBzMgFSmZV2KKL5Dhxun22SKb2lWQ\",\n    \"refreshToken\": \"5e32fddef92017ae2ef3546d9e4cc3562d755c0075f49093ec64afdd4d201b365cea881d7f9ddb5e050d724eb052e64f3ab2ea75041d6933c51be57f5d3a9bb2\"\n}"
+								},
+								{
+									"name": "Sign in - email not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"t@example.com\",\r\n    \"password\": \"sifra123\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/auth/sign-in",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"sign-in"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "9"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:56:13 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Not Found"
+								},
+								{
+									"name": "Sign in - invalid password",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"test@example.com\",\r\n    \"password\": \"sifra1234\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_URL}}/auth/sign-in",
+											"host": [
+												"{{API_URL}}"
+											],
+											"path": [
+												"auth",
+												"sign-in"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "html",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/html; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "31"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1f-6m/3ihwm3QpkaqHI5ehdTGQq6J0\""
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jun 2021 17:56:26 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Invalid administrator password."
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_URL",
+			"value": "http://localhost:5000"
+		}
+	]
+}

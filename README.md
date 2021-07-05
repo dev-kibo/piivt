@@ -9,5 +9,4 @@
 
 ### Dodatne informacije
 
- - Ruta za prijavu administratora je sakrivena (ne postoji navigacija do nje) i nalazi se na **/admin**
- - U bazi postoje dva admin naloga, password za oba je **sifra123**
+ - [Videti dokumentaciju](./01-documentation)
